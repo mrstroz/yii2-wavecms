@@ -1,0 +1,17 @@
+.header {
+  margin-bottom: 0px;
+  border: none;
+  border-bottom:1px solid $table-border-color;
+  border-radius: 0px;
+
+  .nav {
+    li {
+      a {
+        .fa {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+}

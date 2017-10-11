@@ -1,0 +1,22 @@
+.select2-container--krajee {
+  .select2-selection--single {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: 36px;
+    font-size: 13px;
+    line-height: 1.42857;
+
+    .select2-selection__arrow {
+      height: 34px;
+      border-color: $table-border-color;
+    }
+  }
+
+  .select2-selection__clear {
+    line-height: 1.1;
+  }
+
+  .select2-selection {
+    border-color: $table-border-color;
+  }
+}

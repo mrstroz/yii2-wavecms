@@ -1,0 +1,22 @@
+.wavecms-tabs {
+  li {
+    a {
+      &:before {
+        content: "";
+        @include font-awesome;
+      }
+    }
+  }
+
+  li.has-error {
+    a {
+      color: $state-danger-text;
+
+      &:before {
+        content: "\f071";
+        padding-right: 5px;
+        color: $state-danger-text;
+      }
+    }
+  }
+}

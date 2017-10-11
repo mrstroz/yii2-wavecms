@@ -1,0 +1,38 @@
+{
+  "name": "mrstroz/yii2-wavecms",
+  "description": "Yii2 Wavecms",
+  "type": "yii2-extension",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Mariusz Stróż",
+      "email": "mariusz.stroz@gmail.com",
+      "homepage": "http://inwave.eu",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": "~2.0.6",
+    "yiisoft/yii2-imagine": "~2.1.0",
+    "2amigos/yii2-translateable-behavior": "@dev",
+    "kartik-v/yii2-widget-select2": "@dev",
+    "kartik-v/yii2-widget-datepicker": "@dev",
+    "kartik-v/yii2-widget-growl": "*",
+    "himiklab/yii2-sortable-grid-view-widget": "*",
+    "mihaildev/yii2-elfinder": "*",
+    "mihaildev/yii2-ckeditor": "*",
+    "modernkernel/yii2-slugify": "*",
+    "yii2mod/yii2-settings": "*"
+  },
+  "require-dev": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": "~2.0.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "mrstroz\\wavecms\\": ""
+    }
+  }
+}

@@ -1,0 +1,34 @@
+body {
+  //background-color: $btn-default-bg;
+  background-color: #FCFCFC;;
+}
+
+a, button {
+  @include transition;
+}
+
+h1, h2, h3 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+.btn {
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+}
+
+.btn-sub-list {
+  @include mt;
+}
+
+.btn-light-gray {
+  @include button-variant($btn-default-bg, $gray-lighter, $gray-lighter);
+}
+
+.label-light-gray {
+  @include label-variant($gray-light);
+}
+
+code {
+  color: $brand-primary;
+}

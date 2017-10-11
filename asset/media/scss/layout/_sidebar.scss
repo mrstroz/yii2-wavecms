@@ -1,0 +1,100 @@
+.sidebar {
+  padding: 0;
+
+  .brand {
+    margin-left: 15px;
+
+    span {
+      font-weight: 900;
+    }
+  }
+
+  .nav {
+    @include mt;
+
+    li {
+      a {
+        border-right: 4px solid #fff;
+        color: $gray-dark;
+
+        .fa {
+          margin-right: 10px;
+          color: $gray;
+        }
+
+        &:hover {
+          border-color: $gray-lighter;
+          ////color: $brand-primary;
+          //color: $text-color;
+        }
+      }
+
+      &.active {
+        a {
+          border-right: 4px solid $gray-lighter;
+        }
+
+        > a {
+          color: $brand-primary;
+          border-right: 4px solid $brand-primary;
+        }
+
+        > .nav-submenu {
+          display: block;
+        }
+      }
+
+
+    }
+
+    .drop-down {
+
+      > a {
+        &:after {
+          content: "\f107";
+          @include font-awesome;
+          position: absolute;
+          top: 11px;
+          right: 15px;
+        }
+      }
+      &.opened {
+        > a {
+          &:after {
+            content: "\f106";
+          }
+        }
+      }
+
+      &.active.opened {
+        > a {
+          color: $gray-dark;
+          border-right: 4px solid $gray-lighter;
+        }
+      }
+
+    }
+
+    .nav-submenu {
+      margin-top: 0px;
+      display: none;
+      padding-left: 22px;
+    }
+  }
+
+  .btn-group {
+    @include mt;
+    margin-left: 15px;
+    float: left;
+    white-space: nowrap;
+
+    &:last-child {
+      @include mb;
+    }
+
+    &.uppercase {
+      text-transform: uppercase;
+    }
+
+  }
+}

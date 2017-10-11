@@ -1,0 +1,29 @@
+#login-form {
+  display: block;
+  padding: 20px;
+  background-color: #fff;
+
+  border-radius: $border-radius-base;
+  border: 1px solid $gray-lighter;
+
+
+  width: 90%;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+
+  @media (min-width: $screen-md) {
+    width: 460px;
+    top: 30%;
+    transform: translate(-50%, -30%);
+  }
+
+  h2 {
+    margin-bottom: 20px;
+
+    span {
+      font-weight: 900;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+.wavecms-form {
+
+  .form-group {
+
+    &.required {
+      label.control-label {
+        &:after {
+          content: '*';
+        }
+      }
+    }
+
+    .language-checkboxes {
+
+      @include clearfix;
+
+      .checkbox {
+        float: left;
+        margin-top: 10px;
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .sub-list {
+    @include mb;
+  }
+
+  .panel {
+    .panel-body {
+      .form-group:last-child {
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+  .tab-content {
+    @include mt();
+  }
+
+  .thumbnail-outer {
+    @include mt();
+
+    .thumbnail {
+      margin-bottom: 5px;
+    }
+
+    .action-column {
+      width: 41px;
+    }
+  }
+}

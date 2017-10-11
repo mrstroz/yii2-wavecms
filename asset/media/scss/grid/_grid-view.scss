@@ -1,0 +1,58 @@
+.grid-view {
+
+
+  table {
+    .ui-sortable {
+      tr {
+        cursor: move;
+      }
+    }
+
+    tr {
+      &.filters {
+        .form-control {
+          font-size: 12px;
+          height: 28px;
+          padding: 2px 8px;
+        }
+      }
+
+      th {
+        .asc, .desc {
+          &:before {
+            margin-right: 10px;
+            @include font-awesome;
+          }
+        }
+
+        .asc {
+          &:before {
+            content: "\f160";
+          }
+        }
+
+        .desc {
+          &:before {
+            content: "\f161";
+          }
+        }
+
+        &.action-column {
+          width: 65px;
+        }
+
+        &.sort-column {
+          width: 67px;
+        }
+
+        &.publish-column {
+          width: 41px;
+        }
+      }
+      td {
+        vertical-align: middle;
+
+      }
+    }
+  }
+}

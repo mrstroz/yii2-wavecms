@@ -1,0 +1,1 @@
+<h4><?php echo Yii::t('wavecms/base/main', 'Welcome in WaveCMS!'); ?></h4>
