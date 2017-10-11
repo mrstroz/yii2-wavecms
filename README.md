@@ -89,7 +89,7 @@ Required steps
 2. Uncomment `urlManager` section in `backend/config/main.php` and add .htaccess
 
 3. Update `common/config/main.php` (Yii2 advanced template) 
-```
+```php
 'components' => [
     'authManager' => [
         'class' => 'yii\rbac\DbManager',
@@ -106,7 +106,7 @@ yii migrate --migrationPath=@vendor/yii2mod/yii2-settings/migrations
 ```
 
 5. Update `console/config/main.php` (Yii2 advanced template)
-```
+```php
 'bootstrap' => [
     // ...
     'mrstroz\wavecms\Bootstrap'
@@ -127,7 +127,66 @@ yii wavecms/create [email] [password]
 Optional steps
 --------------
 
+1. For **shared hosting**, copy and replace `environments` folder `vendor\mrstroz\wavecms` and type `php init`. Frontend: `/public`, Backend: `/public/admin`
+2. Use **[themes](http://www.yiiframework.com/doc-2.0/guide-output-theming.html)** for better code structure.
+```php
+'components' => [
+    // ...
+    'view' => [
+        'theme' => [
+            'basePath' => '@app/themes/basic',
+            'baseUrl' => '@web/themes/basic',
+            'pathMap' => [
+                '@app/views' => '@app/themes/basic',
+            ],
+        ],
+    ],
+    // ...
+],
+```
 
+Multilingual
+--------------
+1. Many languages can be handle by [yii2-localeurls](https://github.com/codemix/yii2-localeurls). Follow all steps from Locale Urls installation.
+
+2. Change CMS languages in `backend/config/main.php` component
+```php
+'components' => [
+    // ...
+    'wavecms' => [
+        'class' => 'mrstroz\wavecms\WavecmsComponent',
+        'languages' => ['en','pl'] //Edited languages in CMS
+    ],
+    // ...
+]
+```
+
+3. Configure message sources [see docs](http://www.yiiframework.com/doc-2.0/guide-tutorial-i18n.html#2-configure-one-or-multiple-message-sources)
+```php
+'components' => [
+    // ...
+    'i18n' => [
+        'translations' => [
+            'app*' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                //'basePath' => '@app/messages',
+                //'sourceLanguage' => 'en-US',
+                'fileMap' => [
+                    'app' => 'app.php',
+                    'app/error' => 'error.php',
+                ],
+            ],
+        ],
+    ],
+],
+```
+
+Available WaveCMS modules
+-------------------------
+
+[Page](https://github.com/mrstroz/yii2-wavecms-page) (home page, text pages, menu) - https://github.com/mrstroz/yii2-wavecms-page
+
+[Example](https://github.com/mrstroz/yii2-wavecms-example) (example module) - https://github.com/mrstroz/yii2-wavecms-example
 
 
 
