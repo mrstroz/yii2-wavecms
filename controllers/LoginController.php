@@ -16,6 +16,10 @@ use yii\web\BadRequestHttpException;
 class LoginController extends Controller
 {
 
+    public function actions()
+    {
+        return [];
+    }
 
     public function behaviors()
     {
