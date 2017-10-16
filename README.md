@@ -127,7 +127,7 @@ yii wavecms/create [email] [password]
 Optional steps
 --------------
 
-1. For **shared hosting**, copy and replace `environments` folder `vendor\mrstroz\wavecms` and type `php init`. Frontend: `/public`, Backend: `/public/admin`
+1. For **shared hosting**, copy and replace `environments` folder from `vendor/mrstroz/wavecms` and type `php init`. Frontend url: `/public`, Backend url: `/public/admin`
 2. Use **[themes](http://www.yiiframework.com/doc-2.0/guide-output-theming.html)** for better code structure.
 ```php
 'components' => [

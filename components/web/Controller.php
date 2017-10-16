@@ -3,14 +3,17 @@
 namespace mrstroz\wavecms\components\web;
 
 use himiklab\sortablegrid\SortableGridAction;
-use mrstroz\wavecms\components\behaviors\TranslateBehavior;
-use mrstroz\wavecms\components\event\ModelEvent;
-use mrstroz\wavecms\components\helpers\Flash;
-use mrstroz\wavecms\components\helpers\NavHelper;
+use mrstroz\wavecms\components\actions\CreateAction;
+use mrstroz\wavecms\components\actions\DeleteAction;
+use mrstroz\wavecms\components\actions\DeleteSubListAction;
+use mrstroz\wavecms\components\actions\IndexAction;
+use mrstroz\wavecms\components\actions\PageAction;
+use mrstroz\wavecms\components\actions\PublishAction;
+use mrstroz\wavecms\components\actions\SubListAction;
+use mrstroz\wavecms\components\actions\UpdateAction;
+use mrstroz\wavecms\components\actions\UpDownAction;
 use mrstroz\wavecms\models\AuthItem;
 use Yii;
-use yii\base\InvalidConfigException;
-use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -18,8 +21,6 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller as yiiController;
 use yii\web\ForbiddenHttpException;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 /**
  * Class Controller
@@ -120,8 +121,8 @@ class Controller extends yiiController
 
 
     /**
+     * Actions
      * @return array
-     * Additional actions
      */
     public function actions()
     {
@@ -134,9 +135,49 @@ class Controller extends yiiController
             ];
         }
 
+        $actions['index'] = [
+            'class' => IndexAction::className()
+        ];
+
+        $actions['sub-list'] = [
+            'class' => SubListAction::className()
+        ];
+
+        $actions['create'] = [
+            'class' => CreateAction::className()
+        ];
+
+        $actions['update'] = [
+            'class' => UpdateAction::className()
+        ];
+
+        $actions['page'] = [
+            'class' => PageAction::className()
+        ];
+
+        $actions['delete'] = [
+            'class' => DeleteAction::className()
+        ];
+
+        $actions['delete-sub-list'] = [
+            'class' => DeleteSubListAction::className()
+        ];
+
+        $actions['publish'] = [
+            'class' => PublishAction::className()
+        ];
+
+        $actions['up-down'] = [
+            'class' => UpDownAction::className()
+        ];
+
         return $actions;
     }
 
+    /**
+     * Behaviors
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -189,417 +230,6 @@ class Controller extends yiiController
         }
 
         return parent::beforeAction($action);
-    }
-
-    /**
-     * @return string
-     * @throws \yii\base\InvalidParamException
-     * Index action - display GridView with all entries form $this->query model.
-     */
-    public function actionIndex()
-    {
-        $this->_checkConfig();
-
-        $this->view->params['h1'] = $this->heading;
-        array_unshift($this->view->params['buttons_top'],
-            Html::a(Yii::t('wavecms/base/main', 'Create new'), array_merge(['create'], $this->_forwardParams()), ['class' => 'btn btn-primary']));
-
-        /**
-         * Create dataProvider based on $this->query if not exist
-         */
-        if (!$this->dataProvider) {
-            $this->dataProvider = new ActiveDataProvider([
-                'query' => $this->query
-            ]);
-        }
-
-        if ($this->sort) {
-            $modelClass = $this->query->modelClass;
-            $this->query->orderBy($modelClass::tableName() . '.sort');
-
-            $this->dataProvider->sort = false;
-        }
-
-        if ($this->filterModel) {
-            $this->filterModel->search($this->dataProvider);
-        }
-
-        $this->view->title = $this->view->params['h1'];
-        return $this->render($this->viewIndex, array(
-            'dataProvider' => $this->dataProvider,
-            'filterModel' => $this->filterModel,
-            'columns' => $this->columns,
-            'sort' => $this->sort
-        ));
-    }
-
-    public function actionSubList($parentField, $parentId, $parentRoute)
-    {
-        $this->_checkConfig();
-        $this->layout = false;
-
-        $this->query->andWhere([$parentField => $parentId]);
-
-        array_unshift($this->view->params['buttons_sublist'],
-            Html::a(Yii::t('wavecms/base/main', 'Create new'),
-                array_merge(['create', 'parentField' => $parentField, 'parentId' => $parentId, 'parentRoute' => $parentRoute], $this->_forwardParams()), ['class' => 'btn btn-primary btn-sm btn-sub-list']));
-
-        /**
-         * Create dataProvider based on $this->query if not exist
-         */
-        if (!$this->dataProvider) {
-            $this->dataProvider = new ActiveDataProvider([
-                'query' => $this->query,
-                'sort' => false
-            ]);
-        }
-
-        if ($this->sort) {
-            $modelClass = $this->query->modelClass;
-            $this->query->orderBy($modelClass::tableName() . '.sort');
-
-            $this->dataProvider->sort = false;
-        }
-
-        if ($this->filterModel) {
-            $this->filterModel->search($this->dataProvider);
-        }
-
-
-        return $this->render($this->viewSubList, array(
-            'dataProvider' => $this->dataProvider,
-            'filterModel' => $this->filterModel,
-            'columns' => $this->columns,
-            'sort' => $this->sort
-        ));
-    }
-
-    public function actionCreate($parentField = null, $parentId = null, $parentRoute = null)
-    {
-        $this->_checkConfig();
-
-        $this->view->params['h1'] = $this->heading;
-
-        if (!$this->returnUrl) {
-            if ($parentField && $parentId && $parentRoute) {
-                $this->returnUrl = array_merge(['/' . ltrim(urldecode($parentRoute), '/'), 'id' => $parentId], $this->_forwardParams());
-            } else {
-                $this->returnUrl = array_merge(['index'], $this->_forwardParams());
-            }
-        }
-        array_unshift($this->view->params['buttons_top'], Html::a(Yii::t('wavecms/base/main', 'Return'), $this->returnUrl, ['class' => 'btn btn-default']));
-
-
-        /***
-         * Set index element as active in left navigation
-         */
-        NavHelper::$active = $this->activeActions;
-
-        $modelClass = $this->query->modelClass;
-        $model = new $modelClass();
-        if ($this->scenario) {
-            $model->scenario = $this->scenario;
-        }
-
-        foreach ($model->behaviors as $behavior) {
-            if ($behavior instanceof TranslateBehavior) {
-                $behavior->setLanguage(Yii::$app->wavecms->editedLanguage);
-            }
-        }
-
-        $eventModel = new ModelEvent();
-        $eventModel->model = $model;
-        $this->trigger(self::EVENT_AFTER_MODEL_CREATE, $eventModel);
-
-        if (Yii::$app->request->isPost) {
-            $model->load(Yii::$app->request->post());
-            if ($model->validate()) {
-
-                if ($parentField && $parentId && $parentRoute) {
-                    $model->{$parentField} = $parentId;
-                }
-
-                $this->trigger(self::EVENT_BEFORE_MODEL_SAVE, $eventModel);
-                $model->save();
-                $this->trigger(self::EVENT_AFTER_MODEL_SAVE, $eventModel);
-
-                Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/base/main', 'Element has been created')]);
-
-                if (Yii::$app->request->post('save_and_return')) {
-                    return $this->redirect($this->returnUrl);
-                }
-
-                return $this->redirect(array_merge([
-                    'update',
-                    'id' => $model->id,
-                    'parentField' => $parentField,
-                    'parentId' => $parentId,
-                    'parentRoute' => $parentRoute,
-                ], $this->_forwardParams()));
-
-            }
-
-            Flash::message('create_error', 'danger', ['message' => Html::errorSummary($model)]);
-        }
-
-        $this->view->title = $this->view->params['h1'];
-        return $this->render($this->viewForm, array(
-            'model' => $model
-        ));
-    }
-
-    public function actionUpdate($id, $parentField = null, $parentId = null, $parentRoute = null)
-    {
-        $this->_checkConfig();
-
-        $this->view->params['h1'] = $this->heading;
-
-        if (!$this->returnUrl) {
-            if ($parentField && $parentId && $parentRoute) {
-                $this->returnUrl = array_merge(['/' . ltrim(urldecode($parentRoute), '/'), 'id' => $parentId], $this->_forwardParams());
-            } else {
-                $this->returnUrl = array_merge(['index'], $this->_forwardParams());
-            }
-        }
-
-        array_unshift($this->view->params['buttons_top'], Html::a(Yii::t('wavecms/base/main', 'Return'), $this->returnUrl, ['class' => 'btn btn-default']));
-
-        /***
-         * Set index element as active in left navigation
-         */
-        NavHelper::$active = $this->activeActions;
-
-        $model = $this->_fetchOne($id);
-
-        foreach ($model->behaviors as $behavior) {
-            if ($behavior instanceof TranslateBehavior) {
-                $behavior->setLanguage(Yii::$app->wavecms->editedLanguage);
-            }
-        }
-
-        $eventModel = new ModelEvent();
-        $eventModel->model = $model;
-        $this->trigger(self::EVENT_AFTER_MODEL_CREATE, $eventModel);
-
-        if (Yii::$app->request->isPost) {
-
-            $model->load(Yii::$app->request->post());
-
-            if ($model->validate()) {
-
-                $this->trigger(self::EVENT_BEFORE_MODEL_SAVE, $eventModel);
-                $model->save();
-                $this->trigger(self::EVENT_AFTER_MODEL_SAVE, $eventModel);
-
-                Flash::message('after_update', 'success', ['message' => Yii::t('wavecms/base/main', 'Element has been updated')]);
-
-                if (Yii::$app->request->post('save_and_return')) {
-                    return $this->redirect($this->returnUrl);
-                }
-
-                return $this->redirect(array_merge([
-                    'update',
-                    'id' => $model->id,
-                    'parentField' => $parentField,
-                    'parentId' => $parentId,
-                    'parentRoute' => $parentRoute,
-                ], $this->_forwardParams()));
-            }
-
-            Flash::message('create_error', 'danger', ['message' => Html::errorSummary($model)]);
-        }
-
-        $this->view->title = $this->view->params['h1'];
-        return $this->render($this->viewForm, array(
-            'model' => $model
-        ));
-    }
-
-    public function actionPage()
-    {
-        $this->_checkConfig();
-
-        $this->view->params['h1'] = $this->heading;
-
-        $query = $this->query;
-        $model = $query->one();
-
-        if (!$model) {
-            $modelClass = $query->modelClass;
-            $model = new $modelClass();
-        }
-
-        if ($this->scenario) {
-            $model->scenario = $this->scenario;
-        }
-
-        foreach ($model->behaviors as $behavior) {
-            if ($behavior instanceof TranslateBehavior) {
-                $behavior->setLanguage(Yii::$app->wavecms->editedLanguage);
-            }
-        }
-
-        $eventModel = new ModelEvent();
-        $eventModel->model = $model;
-        $this->trigger(self::EVENT_AFTER_MODEL_CREATE, $eventModel);
-
-        if (Yii::$app->request->isPost) {
-            $model->load(Yii::$app->request->post());
-            if ($model->validate()) {
-
-                $this->trigger(self::EVENT_BEFORE_MODEL_SAVE, $eventModel);
-                $model->save();
-                $this->trigger(self::EVENT_AFTER_MODEL_SAVE, $eventModel);
-
-                Flash::message('after_update', 'success', ['message' => Yii::t('wavecms/base/main', 'Element has been updated')]);
-            } else {
-                Flash::message('create_error', 'danger', ['message' => Html::errorSummary($model)]);
-            }
-        }
-
-        $this->view->title = $this->view->params['h1'];
-        return $this->render($this->viewForm, array(
-            'model' => $model
-        ));
-
-    }
-
-    public function actionDelete($id, $parentField = null, $parentId = null, $parentRoute = null)
-    {
-
-        if (!$this->returnUrl) {
-            if ($parentField && $parentId && $parentRoute) {
-                $this->returnUrl = array_merge(['/' . ltrim(urldecode($parentRoute), '/'), 'id' => $parentId], $this->_forwardParams());
-            } else {
-                $this->returnUrl = array_merge(['index'], $this->_forwardParams());
-            }
-        }
-
-        $this->_checkConfig();
-        $model = $this->_fetchOne($id);
-
-        $model->delete();
-        Flash::message('delete', 'success', ['message' => Yii::t('wavecms/base/main', 'Element has been deleted')]);
-        return $this->redirect($this->returnUrl);
-    }
-
-    public function actionDeleteSubList($parentField, $parentId, $parentRoute)
-    {
-        $this->_checkConfig();
-        $query = $this->query;
-        $modelClass = $query->modelClass;
-        /** @var ActiveRecord $model */
-        $models = $query->andWhere([$modelClass::tableName() . '.' . $parentField => $parentId])->all();
-
-        if ($models) {
-            foreach ($models as $model) {
-                if ($this->scenario) {
-                    $model->scenario = $this->scenario;
-                }
-                $model->delete();
-            }
-        }
-        Flash::message('delete_sub_list', 'success', ['message' => Yii::t('wavecms/base/main', 'Elements from list "{heading}" has been deleted', ['heading' => $this->heading])]);
-    }
-
-    public function actionPublish($id)
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
-        $this->_checkConfig();
-        $model = $this->_fetchOne($id);
-
-
-        if ($model->{$this->publishColumn} === 1) {
-            $model->{$this->publishColumn} = 0;
-        } else {
-            $model->{$this->publishColumn} = 1;
-        }
-
-        $model->save(false);
-
-        return ['publish' => $model->{$this->publishColumn}, 'model' => $model->toArray()];
-
-    }
-
-    public function actionUpDown($id, $dir)
-    {
-        $upDownQuery = clone $this->query;
-        $model = $this->_fetchOne($id);
-
-        if (!$model)
-            throw new NotFoundHttpException(Yii::t('wavecms/base/main', 'Element not found'));
-
-        $compare = '<';
-        $order = 'sort DESC';
-        if ($dir === 'down') {
-            $compare = '>';
-            $order = 'sort ASC';
-        }
-
-        $query = $this->query;
-        $modelClass = $query->modelClass;
-        $modelSort = $upDownQuery->andWhere([$compare, $modelClass::tableName() . '.sort', $model->sort])->orderBy($order)->one();
-
-        if ($modelSort) {
-            $sort = $modelSort->sort;
-            $modelSort->sort = $model->sort;
-            $model->sort = $sort;
-            $modelSort->save();
-            $model->save();
-
-            if ($dir == 'up') {
-                Flash::message('up_down', 'success', ['message' => Yii::t('wavecms/base/main', 'Elements has been moved up')]);
-            } else {
-                Flash::message('up_down', 'success', ['message' => Yii::t('wavecms/base/main', 'Elements has been moved down')]);
-            }
-
-        } else {
-            if ($dir == 'up') {
-                Flash::message('up_down', 'warning', ['message' => Yii::t('wavecms/base/main', 'Elements cannot be moved up')]);
-            } else {
-                Flash::message('up_down', 'warning', ['message' => Yii::t('wavecms/base/main', 'Elements cannot be moved down')]);
-            }
-        }
-
-        return $this->redirect(Yii::$app->request->referrer);
-    }
-
-    protected function _fetchOne($id)
-    {
-        $query = $this->query;
-        $modelClass = $query->modelClass;
-        /** @var ActiveRecord $model */
-        $model = $query->andWhere([$modelClass::tableName() . '.id' => $id])->one();
-
-        if (!$model)
-            throw new NotFoundHttpException(Yii::t('wavecms/base/main', 'Element not found'));
-
-        if ($this->scenario) {
-            $model->scenario = $this->scenario;
-        }
-
-        return $model;
-    }
-
-    protected function _checkConfig()
-    {
-        if (!$this->query)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'The "query" property must be set.'));
-
-        if (!$this->query instanceof ActiveQuery)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'The "query" property is not instance of ActiveQuery.'));
-    }
-
-    protected function _forwardParams()
-    {
-        $return = [];
-
-        foreach ($this->forwardParams as $param) {
-            $return[$param] = Yii::$app->request->get($param);
-        }
-
-        return $return;
     }
 
 }
