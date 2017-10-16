@@ -13,8 +13,10 @@ use mrstroz\wavecms\models\AuthAssignment;
 use mrstroz\wavecms\models\User;
 use mrstroz\wavecms\models\UserSearch;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 use yii\grid\DataColumn;
 use yii\web\NotFoundHttpException;
 
@@ -112,14 +114,15 @@ class UserController extends Controller
     public function actionAssign($id)
     {
 
-        parent::_checkConfig();
+        $this->_checkConfig();
+        $model = $this->_fetchOne($id);
+
         $this->returnUrl = ['index'];
+        $this->view->params['h1'] = Yii::t('wavecms/user/login', 'Assign role to user <b>{user}</b>', ['user' => $model->email]);
 
         array_unshift($this->view->params['buttons_top'], Html::a('Return', $this->returnUrl, ['class' => 'btn btn-default']));
         NavHelper::$active[] = Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/index';
 
-        $model = parent::_fetchOne($id);
-        $this->view->params['h1'] = Yii::t('wavecms/user/login', 'Assign role to user <b>{user}</b>', ['user' => $model->email]);
 
         $roleForm = new AssignRoleForm();
 
@@ -128,9 +131,7 @@ class UserController extends Controller
         ]);
 
         if (Yii::$app->request->isPost) {
-
             $roleForm->load(Yii::$app->request->post());
-
             if ($roleForm->validate()) {
                 $auth = Yii::$app->authManager;
                 $role = $auth->getRole($roleForm->role);
@@ -140,7 +141,11 @@ class UserController extends Controller
 
                 $auth->assign($role, $id);
 
-                Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user/login', 'Role has been assigned')]);
+                Flash::message(
+                    'after_create',
+                    'success',
+                    ['message' => Yii::t('wavecms/user/login', 'Role has been assigned')]
+                );
 
                 return $this->redirect([
                     'assign',
@@ -160,8 +165,8 @@ class UserController extends Controller
     public function actionUnAssign($id, $role)
     {
 
-        parent::_checkConfig();
-        $model = parent::_fetchOne($id);
+        $this->_checkConfig();
+        $model = $this->_fetchOne($id);
 
         $auth = Yii::$app->authManager;
         $role = $auth->getRole($role);
@@ -171,13 +176,42 @@ class UserController extends Controller
 
         $auth->revoke($role, $model->id);
 
-
         Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user/login', 'Role has been revoked')]);
 
         return $this->redirect([
             'assign',
             'id' => $model->id
         ]);
+    }
+
+    protected function _fetchOne($id)
+    {
+        $query = $this->query;
+        $modelClass = $query->modelClass;
+        /** @var ActiveRecord $model */
+        $model = $query->andWhere([$modelClass::tableName() . '.id' => $id])->one();
+
+        if (!$model)
+            throw new NotFoundHttpException(Yii::t('wavecms/base/main', 'Element not found'));
+
+        if ($this->scenario) {
+            $model->scenario = $this->scenario;
+        }
+
+        return $model;
+    }
+
+    /**
+     * Check if $this->query is set
+     * @throws \yii\base\InvalidConfigException
+     */
+    protected function _checkConfig()
+    {
+        if (!$this->query)
+            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'The "query" property must be set.'));
+
+        if (!$this->query instanceof ActiveQuery)
+            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'The "query" property is not instance of ActiveQuery.'));
     }
 
 }

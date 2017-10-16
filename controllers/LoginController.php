@@ -87,6 +87,7 @@ class LoginController extends Controller
         $this->view->params['h1'] = Yii::t('wavecms/user/login', 'My account');
         NavHelper::$active[] = 'my-account';
 
+        /** @var User $model */
         $model = User::find()->where(['id' => Yii::$app->user->id])->one();
         $model->scenario = User::SCENARIO_MY_ACCOUNT;
 
