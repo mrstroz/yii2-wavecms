@@ -62,6 +62,7 @@ class NavHelper extends Component
 
                         $url = $one['url'][0];
                         $route = Yii::$app->requestedRoute;
+                        $params = Yii::$app->request->getQueryParams();
 
                         if ($url === '/' && $route === Yii::$app->controller->module->id . '/dashboard/index') {
                             $one['active'] = true;
@@ -82,6 +83,17 @@ class NavHelper extends Component
                                             'class' => 'hidden'
                                         ]
                                     ];
+
+                                if ('/' . Yii::$app->request->getQueryParam('parentRoute') === trim($url[0])) {
+                                    $one['items'][] =
+                                        [
+                                            'label' => $one['label'] . ' - Sub List',
+                                            'url' => array_merge(['/' . $route], $params),
+                                            'options' => [
+                                                'class' => 'hidden'
+                                            ]
+                                        ];
+                                }
                             }
                         }
                     }
