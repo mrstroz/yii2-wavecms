@@ -9,36 +9,38 @@ use mrstroz\wavecms\components\actions\DeleteSubListAction;
 use mrstroz\wavecms\components\actions\IndexAction;
 use mrstroz\wavecms\components\actions\PageAction;
 use mrstroz\wavecms\components\actions\PublishAction;
+use mrstroz\wavecms\components\actions\SettingsAction;
 use mrstroz\wavecms\components\actions\SubListAction;
 use mrstroz\wavecms\components\actions\UpdateAction;
 use mrstroz\wavecms\components\actions\UpDownAction;
-use mrstroz\wavecms\models\AuthItem;
-use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller as yiiController;
-use yii\web\ForbiddenHttpException;
 
 /**
  * Class Controller
  * @package mrstroz\wavecms\components\web
  * Main controller class used to manage data in Wavecms modules
  */
-class Controller extends yiiController
+class Controller extends BaseController
 {
 
     /**
-     * @var string Admin layout
+     * @var string Type of controller (list,page,settings)
      */
-    public $layout = '@wavecms/views/layouts/admin.php';
+    public $type = 'list';
 
     /**
      * @var ActiveQuery Query object
      */
     public $query;
+
+    /**
+     * @var string Class name of the model which will be used to validate the attributes in settings action
+     */
+    public $modelClass;
 
     /**
      * @var string Scenario for model
@@ -71,7 +73,7 @@ class Controller extends yiiController
     public $viewSubList = '@wavecms/views/crud/subList';
 
     /**
-     * @var string Form view used for create, update, page action
+     * @var string Form view used for create, update, page, settings action
      */
     public $viewForm = 'form';
 
@@ -103,12 +105,7 @@ class Controller extends yiiController
     /**
      * @var array List of active actions to set in left menu
      */
-    public $activeActions = ['create', 'update'];
-
-    /**
-     * @var array Actions that are not checked in `beforeAction` function with RBAC permissions
-     */
-    public $actionsDisabledFromAccessControl = [];
+    public $activeActions = ['create', 'update', 'page'];
 
 
     /**
@@ -128,48 +125,58 @@ class Controller extends yiiController
     {
         $actions = [];
 
-        if (isset($this->query)) {
-            $actions['sort'] = [
-                'class' => SortableGridAction::className(),
-                'modelName' => $this->query->modelClass
+        if ($this->type === 'list') {
+            if (isset($this->query)) {
+                $actions['sort'] = [
+                    'class' => SortableGridAction::className(),
+                    'modelName' => $this->query->modelClass
+                ];
+            }
+
+            $actions['index'] = [
+                'class' => IndexAction::className()
+            ];
+
+            $actions['sub-list'] = [
+                'class' => SubListAction::className()
+            ];
+
+            $actions['create'] = [
+                'class' => CreateAction::className()
+            ];
+
+            $actions['update'] = [
+                'class' => UpdateAction::className()
+            ];
+
+            $actions['delete'] = [
+                'class' => DeleteAction::className()
+            ];
+
+            $actions['delete-sub-list'] = [
+                'class' => DeleteSubListAction::className()
+            ];
+
+            $actions['publish'] = [
+                'class' => PublishAction::className()
+            ];
+
+            $actions['up-down'] = [
+                'class' => UpDownAction::className()
             ];
         }
 
-        $actions['index'] = [
-            'class' => IndexAction::className()
-        ];
+        if ($this->type === 'page') {
+            $actions['page'] = [
+                'class' => PageAction::className()
+            ];
+        }
 
-        $actions['sub-list'] = [
-            'class' => SubListAction::className()
-        ];
-
-        $actions['create'] = [
-            'class' => CreateAction::className()
-        ];
-
-        $actions['update'] = [
-            'class' => UpdateAction::className()
-        ];
-
-        $actions['page'] = [
-            'class' => PageAction::className()
-        ];
-
-        $actions['delete'] = [
-            'class' => DeleteAction::className()
-        ];
-
-        $actions['delete-sub-list'] = [
-            'class' => DeleteSubListAction::className()
-        ];
-
-        $actions['publish'] = [
-            'class' => PublishAction::className()
-        ];
-
-        $actions['up-down'] = [
-            'class' => UpDownAction::className()
-        ];
+        if ($this->type === 'settings') {
+            $actions['settings'] = [
+                'class' => SettingsAction::className()
+            ];
+        }
 
         return $actions;
     }
@@ -191,12 +198,13 @@ class Controller extends yiiController
                             'sub-list',
                             'create',
                             'update',
-                            'page',
                             'delete',
                             'delete-sub-list',
                             'publish',
                             'up-down',
-                            'sort'
+                            'sort',
+                            'page',
+                            'settings',
                         ],
                         'roles' => [
                             '@'
@@ -211,25 +219,4 @@ class Controller extends yiiController
             ],
         ];
     }
-
-    public function init()
-    {
-        parent::init();
-    }
-
-    public function beforeAction($action)
-    {
-        if (!in_array(Yii::$app->controller->action->id, $this->actionsDisabledFromAccessControl)) {
-            if (!Yii::$app->user->can(AuthItem::SUPER_ADMIN)) {
-                if (!Yii::$app->user->can(Yii::$app->controller->module->id . '/' . Yii::$app->controller->id)) {
-                    if (!Yii::$app->user->isGuest) {
-                        throw new ForbiddenHttpException(Yii::t('wavecms/base/main', 'You are not allowed to perform this action'));
-                    }
-                }
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
-
 }
