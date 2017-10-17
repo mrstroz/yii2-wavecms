@@ -1,5 +1,7 @@
 <?php
 
+use dosamigos\switchinput\SwitchBox;
+use dosamigos\switchinput\SwitchRadio;
 use mrstroz\wavecms\components\helpers\FontAwesome;
 use mrstroz\wavecms\components\helpers\FormHelper;
 use mrstroz\wavecms\components\helpers\WavecmsForm;
@@ -38,6 +40,7 @@ use yii\helpers\Html;
                         User::IS_ADMIN_YES => Yii::t('wavecms/user/login', 'Yes')
                     ]
                 ); ?>
+
             </div>
 
         </div>

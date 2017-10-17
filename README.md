@@ -69,21 +69,7 @@ Required steps
         ],
     ],
 ]
-'controllerMap' => [
-    'elfinder' => [
-        'class' => 'mihaildev\elfinder\Controller',
-        'access' => ['@'],
-        'disabledCommands' => ['netmount'],
-        'roots' => [
-            [
-                'baseUrl'=>'@frontWeb',
-                'basePath'=>'@frontWebroot',
-                'path' => 'userfiles',
-                'name' => 'Files'
-            ]
-        ]
-    ]
-]
+
 ```
 
 2. Uncomment `urlManager` section in `backend/config/main.php` and add .htaccess

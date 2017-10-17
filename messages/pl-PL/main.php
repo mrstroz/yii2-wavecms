@@ -60,5 +60,6 @@ return [
     'Sort' => 'Kolejność',
     'Page' => 'Strona',
     'Url' => 'Url',
-    'Image' => 'Obraz'
+    'Image' => 'Obraz',
+    'Settings' => 'Ustawienia'
 ];
