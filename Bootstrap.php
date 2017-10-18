@@ -58,13 +58,13 @@ class Bootstrap implements BootstrapInterface
                 Yii::$app->view->params['buttons_btm'] = [];
                 Yii::$app->view->params['buttons_sublist'] = [];
 
-                Yii::$app->params['nav'][] = [
+                Yii::$app->params['nav']['dashboard'] = [
                     'label' => FontAwesome::icon('home') . Yii::t('wavecms/base/main', 'Dashboard'),
                     'url' => ['/'],
                     'position' => 500
                 ];
 
-                Yii::$app->params['nav'][] = [
+                Yii::$app->params['nav']['user'] = [
                     'label' => FontAwesome::icon('users') . Yii::t('wavecms/user/login', 'Users'),
                     'url' => 'javascript: ;',
                     'options' => [
