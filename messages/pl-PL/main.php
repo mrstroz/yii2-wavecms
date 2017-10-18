@@ -61,5 +61,7 @@ return [
     'Page' => 'Strona',
     'Url' => 'Url',
     'Image' => 'Obraz',
-    'Settings' => 'Ustawienia'
+    'Settings' => 'Ustawienia',
+    'Created At' => 'Utworzono',
+    'Updated At' => 'Zaktualizowano'
 ];

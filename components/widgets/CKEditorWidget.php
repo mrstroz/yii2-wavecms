@@ -12,7 +12,7 @@ class CKEditorWidget extends CKEditor
     {
         if (!$this->editorOptions) {
             $this->editorOptions = ElFinder::ckeditorOptions(['elfinder'], [
-                'preset' => 'standard',
+                'preset' => 'full',
                 'inline' => false,
                 'toolbar' => [
                     ['Source'],
@@ -23,10 +23,11 @@ class CKEditorWidget extends CKEditor
                         'Blockquote', 'HorizontalRule'],
                     ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
                         'JustifyBlock'],
-                    ['Image', 'oembed', 'Video', 'Iframe'],
+                    ['Image', 'Embed', 'Video', 'Iframe'],
+                    ['Table'],
                     ['Link', 'Unlink'],
                     ['Maximize', 'ShowBlocks'],
-                    ['test']
+
                 ],
             ]);
         }
