@@ -49,7 +49,6 @@ class SubListAction extends Action
         if (!$this->controller->dataProvider) {
             $this->controller->dataProvider = new ActiveDataProvider([
                 'query' => $this->controller->query,
-                'sort' => false
             ]);
         }
 

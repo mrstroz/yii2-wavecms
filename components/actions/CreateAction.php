@@ -85,7 +85,7 @@ class CreateAction extends Action
         /** Add model event and trigger them */
         $eventModel = new ModelEvent();
         $eventModel->model = $model;
-        $this->trigger(Controller::EVENT_AFTER_MODEL_CREATE, $eventModel);
+        $this->controller->trigger(Controller::EVENT_AFTER_MODEL_CREATE, $eventModel);
 
         /** Validate & save model */
         if (Yii::$app->request->isPost) {
@@ -96,9 +96,9 @@ class CreateAction extends Action
                     $model->{$parentField} = $parentId;
                 }
 
-                $this->trigger(Controller::EVENT_BEFORE_MODEL_SAVE, $eventModel);
+                $this->controller->trigger(Controller::EVENT_BEFORE_MODEL_SAVE, $eventModel);
                 $model->save();
-                $this->trigger(Controller::EVENT_AFTER_MODEL_SAVE, $eventModel);
+                $this->controller->trigger(Controller::EVENT_AFTER_MODEL_SAVE, $eventModel);
 
                 Flash::message(
                     'after_create',

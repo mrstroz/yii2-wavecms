@@ -57,7 +57,7 @@ use yii\helpers\Html;
         <?php echo $form->field($model, 'last_name'); ?>
         <?php echo $form->field($model, 'lang')->dropDownList([
             '' => Yii::t('wavecms/user/login', 'English'),
-            'pl-PL' => Yii::t('wavecms/user/login', 'Polish')
+            'pl' => Yii::t('wavecms/user/login', 'Polish')
         ]); ?>
 
 

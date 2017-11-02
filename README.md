@@ -87,8 +87,26 @@ Required steps
 4. Run migration 
 ```yii
 yii migrate --migrationPath=@yii/rbac/migrations
+yii migrate --migrationPath=@yii/i18n/migrations/
 yii migrate --migrationPath=@vendor/mrstroz/yii2-wavecms/migrations
 yii migrate --migrationPath=@vendor/yii2mod/yii2-settings/migrations
+```
+
+Or use the namespaced migration and update `console/config/main.php` (requires at least Yii 2.0.10):
+
+```php
+// Add namespace to console config:
+'controllerMap' => [
+    'migrate' => [
+        'class' => 'yii\console\controllers\MigrateController',
+        'migrationNamespaces' => [
+            'yii\rbac\migrations',
+            'yii\i18n\migrations',
+            'mrstroz\wavecms\migrations',
+            'yii2mod\settings\migrations',
+        ],
+    ],
+],
 ```
 
 5. Update `console/config/main.php` (Yii2 advanced template)
@@ -153,18 +171,18 @@ Multilingual
     // ...
     'i18n' => [
         'translations' => [
-            'app*' => [
-                'class' => 'yii\i18n\PhpMessageSource',
-                //'basePath' => '@app/messages',
-                //'sourceLanguage' => 'en-US',
-                'fileMap' => [
-                    'app' => 'app.php',
-                    'app/error' => 'error.php',
-                ],
+            '*' => [
+                'class' => 'yii\i18n\DbMessageSource',
             ],
         ],
     ],
 ],
+```
+
+4. Use `message` command to add translations added in templates
+```
+yii message/config-template path/to/config.php
+yii message path/to/config.php
 ```
 
 Available WaveCMS modules
@@ -174,5 +192,7 @@ Available WaveCMS modules
 
 [Example](https://github.com/mrstroz/yii2-wavecms-example) (example module) - https://github.com/mrstroz/yii2-wavecms-example
 
+
+[Form](https://github.com/mrstroz/yii2-wavecms-form) (form module) - https://github.com/mrstroz/yii2-wavecms-form
 
 

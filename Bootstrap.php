@@ -84,6 +84,22 @@ class Bootstrap implements BootstrapInterface
                     ]
                 ];
 
+                Yii::$app->params['nav']['wavecms_settings'] = [
+                    'label' => FontAwesome::icon('cog') . Yii::t('wavecms/base/main', 'Settings'),
+                    'url' => 'javascript: ;',
+                    'options' => [
+                        'class' => 'drop-down'
+                    ],
+                    'permission' => 'user',
+                    'position' => 10000,
+                    'items' => [
+                        [
+                            'label' => FontAwesome::icon('flag') . Yii::t('wavecms/base/main', 'Translations'),
+                            'url' => ['/wavecms/translation/index']
+                        ]
+                    ]
+                ];
+
                 Yii::$app->getUrlManager()->addRules(['/' => 'wavecms/dashboard/index']);
                 Yii::$app->getUrlManager()->addRules(['login' => 'wavecms/login/login']);
                 Yii::$app->getUrlManager()->addRules(['logout' => 'wavecms/login/logout']);

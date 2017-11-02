@@ -43,6 +43,10 @@ return [
     'Edited language has been changed to {lang}' => 'Edytowany język został zmieniony na {lang}',
     'Attribute {attribute} is not defined' => 'Atrybut {attribute} nie jest zdefiniowany',
     'choose' => 'wybierz',
+    'Translations' => 'Tłumaczenia',
+    'Category' => 'Kategoria',
+    'Message' => 'Wiadomość',
+    'Translation' => 'Tłumaczenie',
 
     /* COMMON WORDS */
     'Title' => 'Tytuł',
