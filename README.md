@@ -85,28 +85,32 @@ Required steps
 ```
 
 4. Run migration 
+
+Add the `migrationPath` in `console/config/main.php` and run `yii migrate`:
+
+```php
+// Add migrationPaths to console config:
+'controllerMap' => [
+    'migrate' => [
+        'class' => 'yii\console\controllers\MigrateController',
+        'migrationPath' => [
+            '@app/migrations',
+            '@yii/rbac/migrations/',
+            '@yii/i18n/migrations/',
+            '@wavecms/migrations/',
+            '@vendor/yii2mod/yii2-settings/migrations/'    
+        ],
+    ],
+],
+```
+
+Or run migrates directly
+
 ```yii
 yii migrate --migrationPath=@yii/rbac/migrations
 yii migrate --migrationPath=@yii/i18n/migrations/
 yii migrate --migrationPath=@vendor/mrstroz/yii2-wavecms/migrations
 yii migrate --migrationPath=@vendor/yii2mod/yii2-settings/migrations
-```
-
-Or use the namespaced migration and update `console/config/main.php` (requires at least Yii 2.0.10):
-
-```php
-// Add namespace to console config:
-'controllerMap' => [
-    'migrate' => [
-        'class' => 'yii\console\controllers\MigrateController',
-        'migrationNamespaces' => [
-            'yii\rbac\migrations',
-            'yii\i18n\migrations',
-            'mrstroz\wavecms\migrations',
-            'yii2mod\settings\migrations',
-        ],
-    ],
-],
 ```
 
 5. Update `console/config/main.php` (Yii2 advanced template)
