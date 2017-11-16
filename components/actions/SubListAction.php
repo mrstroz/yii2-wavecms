@@ -57,6 +57,8 @@ class SubListAction extends Action
             /** @var ActiveRecord $modelClass */
             $modelClass = $this->controller->query->modelClass;
             $this->controller->query->orderBy($modelClass::tableName() . '.sort');
+
+            $this->controller->dataProvider->sort = false;
         }
 
         /** Add filter model */
