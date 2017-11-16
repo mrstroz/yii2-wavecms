@@ -63,6 +63,8 @@ class IndexAction extends Action
             $this->controller->filterModel->search($this->controller->dataProvider);
         }
 
+        $this->controller->trigger(Controller::EVENT_BEFORE_RENDER);
+
         return $this->controller->render($this->controller->viewIndex, array(
             'dataProvider' => $this->controller->dataProvider,
             'filterModel' => $this->controller->filterModel,

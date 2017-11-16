@@ -115,6 +115,7 @@ class Controller extends BaseController
     const EVENT_BEFORE_MODEL_SAVE = 'eventBeforeModelSave';
     const EVENT_AFTER_MODEL_SAVE = 'eventAfterModelSave';
     const EVENT_CONTROLLER_INIT = 'eventControllerInit';
+    const EVENT_BEFORE_RENDER = 'eventBeforeRender';
 
 
     /**

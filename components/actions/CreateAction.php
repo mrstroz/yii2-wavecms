@@ -127,6 +127,7 @@ class CreateAction extends Action
             );
         }
 
+        $this->controller->trigger(Controller::EVENT_BEFORE_RENDER);
 
         return $this->controller->render($this->controller->viewForm, array(
             'model' => $model

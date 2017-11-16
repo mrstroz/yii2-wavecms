@@ -63,6 +63,8 @@ class SettingsAction extends Action
             $model->{$attribute} = Yii::$app->settings->get($model->formName(), $attribute);
         }
 
+        $this->controller->trigger(Controller::EVENT_BEFORE_RENDER);
+
         return $this->controller->render($this->controller->viewForm, array(
             'model' => $model
         ));
