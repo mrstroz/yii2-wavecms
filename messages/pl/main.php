@@ -47,6 +47,9 @@ return [
     'Category' => 'Kategoria',
     'Message' => 'Wiadomość',
     'Translation' => 'Tłumaczenie',
+    'Cache' => 'Cache',
+    'Clear assets folders and cache' => 'Wyczyść foldery assets oraz cache',
+    'Assets folders and cache has been cleared' => 'Foldery assets oraz cache zostały wyczyszczone',
 
     /* COMMON WORDS */
     'Title' => 'Tytuł',
