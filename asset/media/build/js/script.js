@@ -30,6 +30,8 @@ function WaveCMS() {
     };
 
     this.sidebarNav = function () {
+        console.log('Sidebar nav');
+
         $('.sidebar .nav li a').on('click', function () {
 
             if ($(this).next('.nav-submenu').length) {
@@ -129,8 +131,9 @@ function WaveCMS() {
 
 WaveCMS = new WaveCMS();
 
-$(document).on('ready', function () {
+$(document).ready(function () {
     WaveCMS.onReady();
+
 });
 
 $(window).on('load', function () {
