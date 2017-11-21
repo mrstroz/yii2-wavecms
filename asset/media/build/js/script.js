@@ -30,7 +30,7 @@ function WaveCMS() {
     };
 
     this.sidebarNav = function () {
-        $('.sidebar .nav li a').click(function () {
+        $('.sidebar .nav li a').on('click', function () {
 
             if ($(this).next('.nav-submenu').length) {
                 $(this).next('.nav-submenu').slideToggle();
@@ -129,14 +129,14 @@ function WaveCMS() {
 
 WaveCMS = new WaveCMS();
 
-$(document).ready(function () {
+$(document).on('ready', function () {
     WaveCMS.onReady();
 });
 
-$(window).load(function () {
+$(window).on('load', function () {
     WaveCMS.onLoad();
 });
 
-$(window).resize(function () {
+$(window).on('resize', function () {
     WaveCMS.onResize();
 });
