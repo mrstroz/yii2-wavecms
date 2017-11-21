@@ -44,7 +44,7 @@ class SettingsController extends Controller
             $frontendAsset = scandir('../assets', 0);
             if ($frontendAsset) {
                 foreach ($frontendAsset as $folder) {
-                    if ($folder !== '.' && $folder !== '..' && strlen($folder) === 8) {
+                    if ($folder !== '.' && $folder !== '..' && (strlen($folder) === 7 || strlen($folder) === 8)) {
                         FileHelper::removeDirectory('../assets/' . $folder);
                     }
                 }
@@ -53,7 +53,7 @@ class SettingsController extends Controller
             $backendAsset = scandir('assets', 0);
             if ($backendAsset) {
                 foreach ($backendAsset as $folder) {
-                    if ($folder !== '.' && $folder !== '..' && strlen($folder) === 8) {
+                    if ($folder !== '.' && $folder !== '..' && (strlen($folder) === 7 || strlen($folder) === 8)) {
                         FileHelper::removeDirectory('assets/' . $folder);
                     }
                 }
