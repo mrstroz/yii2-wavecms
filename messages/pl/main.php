@@ -70,5 +70,6 @@ return [
     'Image' => 'Obraz',
     'Settings' => 'Ustawienia',
     'Created At' => 'Utworzono',
-    'Updated At' => 'Zaktualizowano'
+    'Updated At' => 'Zaktualizowano',
+    'New tab' => 'Nowa karta'
 ];
