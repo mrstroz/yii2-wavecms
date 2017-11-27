@@ -37,9 +37,12 @@ class SettingsController extends Controller
         $this->view->params['h1'] = Yii::t('wavecms/base/main', 'Cache');
         $this->view->title = Yii::t('wavecms/base/main', 'Cache');
 
-
         if (Yii::$app->request->isPost) {
             Yii::$app->cache->flush();
+
+            if (isset(Yii::$app->cacheFrontend)) {
+                Yii::$app->cacheFrontend->flush();
+            }
 
             $frontendAsset = scandir('../assets', 0);
             if ($frontendAsset) {
@@ -55,6 +58,15 @@ class SettingsController extends Controller
                 foreach ($backendAsset as $folder) {
                     if ($folder !== '.' && $folder !== '..' && (strlen($folder) === 7 || strlen($folder) === 8)) {
                         FileHelper::removeDirectory('assets/' . $folder);
+                    }
+                }
+            }
+
+            if (file_exists('../minify/')) {
+                $minifyAsset = FileHelper::findFiles('../minify/');
+                if ($minifyAsset) {
+                    foreach ($minifyAsset as $file) {
+                        unlink('../minify/' . $file);
                     }
                 }
             }
