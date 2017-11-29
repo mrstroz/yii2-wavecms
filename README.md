@@ -56,6 +56,10 @@ Required steps
         'class' => 'mrstroz\wavecms\WavecmsComponent',
         'languages' => ['en','pl'] //Edited languages in CMS
     ],
+    'cacheFrontend' => [
+        'class' => 'yii\caching\FileCache',
+        'cachePath' => Yii::getAlias('@frontend') . '/runtime/cache'
+    ],
     'settings' => [
         'class' => 'yii2mod\settings\components\Settings',
     ],
