@@ -133,7 +133,19 @@ Classes can be overridden by:
 
 Overriding controllers
 ----------------------
-
+Use `controllerMap` attribute for WaveCMS module to override controllers
+```php
+'modules' => [
+    // ...   
+    'wavecms' => [
+        'class' => 'mrstroz\wavecms\Module',
+        'languages' => ['en','pl'],
+        'controllerMap' => [
+            'user' => 'app\controllers\UserController'
+        ]
+    ],
+],
+```
 
 Overriding views
 --------------
@@ -204,8 +216,8 @@ Available WaveCMS modules
 
 [Form](https://github.com/mrstroz/yii2-wavecms-form) (form module) - https://github.com/mrstroz/yii2-wavecms-form
 
-> ![INWAVE LOGO](http://inwave.pl/html/img/logo.png)
-> <i>INWAVE - Internet Software House</i>  
+> ![INWAVE LOGO](http://inwave.pl/html/img/logo.png)  
+> INWAVE - Internet Software House  
 > [inwave.eu](http://inwave.eu/)
 
 
