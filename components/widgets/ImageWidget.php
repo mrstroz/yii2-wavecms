@@ -45,7 +45,7 @@ class ImageWidget extends InputWidget
                             echo Html::beginTag('div', [
                                 'class' => 'checkbox'
                             ]);
-                            echo Html::checkbox($this->attribute . '_image_delete', false, ['label' => Yii::t('wavecms/base/main', 'Delete ?')]);
+                            echo Html::checkbox($this->attribute . '_image_delete', false, ['label' => Yii::t('wavecms/main', 'Delete ?')]);
                             echo Html::endTag('div');
                             echo Html::endTag('div');
 
@@ -57,8 +57,8 @@ class ImageWidget extends InputWidget
                                 echo Html::beginTag('table', ['class' => 'table table-striped table-bordered']);
 
                                 echo Html::beginTag('tr');
-                                echo Html::tag('th', Yii::t('wavecms/base/main', 'Width'));
-                                echo Html::tag('th', Yii::t('wavecms/base/main', 'Height'));
+                                echo Html::tag('th', Yii::t('wavecms/main', 'Width'));
+                                echo Html::tag('th', Yii::t('wavecms/main', 'Height'));
                                 echo Html::tag('th', '', [
                                     'class' => 'action-column'
                                 ]);
@@ -68,7 +68,7 @@ class ImageWidget extends InputWidget
                                 foreach ($behavior->sizes as $size) {
 
                                     if (count($size) != 2)
-                                        throw new InvalidConfigException(Yii::t('wavecms/base/main', 'Size is wrong defined for attribute {attribute}', ['attribute' => $this->attribute]));
+                                        throw new InvalidConfigException(Yii::t('wavecms/main', 'Size is wrong defined for attribute {attribute}', ['attribute' => $this->attribute]));
 
                                     echo Html::beginTag('tr');
 

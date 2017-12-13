@@ -8,10 +8,10 @@ use mrstroz\wavecms\components\grid\ButtonColumn;
 use mrstroz\wavecms\components\helpers\Flash;
 use mrstroz\wavecms\components\helpers\NavHelper;
 use mrstroz\wavecms\components\web\Controller;
-use mrstroz\wavecms\models\AssignRoleForm;
+use mrstroz\wavecms\forms\AssignRoleForm;
 use mrstroz\wavecms\models\AuthAssignment;
+use mrstroz\wavecms\models\search\UserSearch;
 use mrstroz\wavecms\models\User;
-use mrstroz\wavecms\models\UserSearch;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\bootstrap\Html;
@@ -25,12 +25,12 @@ class UserController extends Controller
 
     public function init()
     {
-        $this->heading = Yii::t('wavecms/user/login', 'Users');
+        $this->heading = Yii::t('wavecms/user', 'Users');
 
         /** @var User $modelUser */
-        $modelUser = Yii::createObject($this->module->models['User']);
+        $userModel = Yii::createObject(User::class);
 
-        $this->query = $modelUser::find();
+        $this->query = $userModel::find();
 
         $this->dataProvider = new ActiveDataProvider([
             'query' => $this->query,
@@ -48,29 +48,31 @@ class UserController extends Controller
                 'class' => BoolColumn::className(),
                 'attribute' => 'is_admin',
                 'filter' => [
-                    User::IS_ADMIN_NO => Yii::t('wavecms/user/login', 'No'),
-                    User::IS_ADMIN_YES => Yii::t('wavecms/user/login', 'Yes')
+                    $userModel::IS_ADMIN_NO => Yii::t('wavecms/user', 'No'),
+                    $userModel::IS_ADMIN_YES => Yii::t('wavecms/user', 'Yes')
                 ],
             ],
             [
                 'class' => DataColumn::className(),
                 'attribute' => 'status',
                 'content' => function ($model, $key, $index, $column) {
-                    if ($model->status === User::STATUS_ACTIVE) {
-                        return '<span class="label label-success">' . Yii::t('wavecms/user/login', 'Active') . '</span>';
+                    $userModel = Yii::createObject(User::class);
+
+                    if ($model->status === $userModel::STATUS_ACTIVE) {
+                        return '<span class="label label-success">' . Yii::t('wavecms/user', 'Active') . '</span>';
                     }
 
-                    return '<span class="label label-light-gray">' . Yii::t('wavecms/user/login', 'Not active') . '</span>';
+                    return '<span class="label label-light-gray">' . Yii::t('wavecms/user', 'Not active') . '</span>';
                 },
                 'filter' => [
-                    User::STATUS_DELETED => Yii::t('wavecms/user/login', 'Not active'),
-                    User::STATUS_ACTIVE => Yii::t('wavecms/user/login', 'Active')
+                    $userModel::STATUS_DELETED => Yii::t('wavecms/user', 'Not active'),
+                    $userModel::STATUS_ACTIVE => Yii::t('wavecms/user', 'Active')
                 ]
             ],
             [
                 'class' => ButtonColumn::className(),
                 'faIcon' => 'exchange',
-                'label' => Yii::t('wavecms/user/login', 'Assign role'),
+                'label' => Yii::t('wavecms/user', 'Assign role'),
                 'url' => ['assign', 'id' => 'id']
             ],
             [
@@ -78,14 +80,14 @@ class UserController extends Controller
             ],
         );
 
-        $this->filterModel = new UserSearch();
+        $this->filterModel = Yii::createObject(UserSearch::class);
 
         $this->on(self::EVENT_BEFORE_MODEL_SAVE, function ($event) {
             if ($event->model->password) {
                 $event->model->setPassword($event->model->password);
                 $event->model->generateAuthKey();
 
-                Flash::message('password_changed', 'success', ['message' => Yii::t('wavecms/user/login', 'Password has been changed')]);
+                Flash::message('password_changed', 'success', ['message' => Yii::t('wavecms/user', 'Password has been changed')]);
             }
         });
 
@@ -118,16 +120,18 @@ class UserController extends Controller
         $model = $this->_fetchOne($id);
 
         $this->returnUrl = ['index'];
-        $this->view->params['h1'] = Yii::t('wavecms/user/login', 'Assign role to user <b>{user}</b>', ['user' => $model->email]);
+        $this->view->params['h1'] = Yii::t('wavecms/user', 'Assign role to user <b>{user}</b>', ['user' => $model->email]);
+        $this->view->title = $this->view->params['h1'];
 
         array_unshift($this->view->params['buttons_top'], Html::a('Return', $this->returnUrl, ['class' => 'btn btn-default']));
-        NavHelper::$active[] = Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/index';
+        NavHelper::$active[] = 'assign';
 
 
-        $roleForm = new AssignRoleForm();
+        $roleForm = Yii::createObject(AssignRoleForm::class);
+        $authAssignmentModel = Yii::createObject(AuthAssignment::class);
 
         $assignedRolesDataProvider = new ActiveDataProvider([
-            'query' => AuthAssignment::find()->where(['user_id' => $id])
+            'query' => $authAssignmentModel::find()->where(['user_id' => $id])
         ]);
 
         if (Yii::$app->request->isPost) {
@@ -137,14 +141,14 @@ class UserController extends Controller
                 $role = $auth->getRole($roleForm->role);
 
                 if (!$role)
-                    throw new NotFoundHttpException(Yii::t('wavecms/user/login', 'Role not found'));
+                    throw new NotFoundHttpException(Yii::t('wavecms/user', 'Role not found'));
 
                 $auth->assign($role, $id);
 
                 Flash::message(
                     'after_create',
                     'success',
-                    ['message' => Yii::t('wavecms/user/login', 'Role has been assigned')]
+                    ['message' => Yii::t('wavecms/user', 'Role has been assigned')]
                 );
 
                 return $this->redirect([
@@ -172,11 +176,11 @@ class UserController extends Controller
         $role = $auth->getRole($role);
 
         if (!$role)
-            throw new NotFoundHttpException(Yii::t('wavecms/user/login', 'Role not found'));
+            throw new NotFoundHttpException(Yii::t('wavecms/user', 'Role not found'));
 
         $auth->revoke($role, $model->id);
 
-        Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user/login', 'Role has been revoked')]);
+        Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user', 'Role has been revoked')]);
 
         return $this->redirect([
             'assign',
@@ -187,12 +191,13 @@ class UserController extends Controller
     protected function _fetchOne($id)
     {
         $query = $this->query;
-        $modelClass = $query->modelClass;
+        $modelClass = Yii::createObject($query->modelClass);
+
         /** @var ActiveRecord $model */
         $model = $query->andWhere([$modelClass::tableName() . '.id' => $id])->one();
 
         if (!$model)
-            throw new NotFoundHttpException(Yii::t('wavecms/base/main', 'Element not found'));
+            throw new NotFoundHttpException(Yii::t('wavecms/main', 'Element not found'));
 
         if ($this->scenario) {
             $model->scenario = $this->scenario;
@@ -208,10 +213,10 @@ class UserController extends Controller
     protected function _checkConfig()
     {
         if (!$this->query)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'The "query" property must be set.'));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'The "query" property must be set.'));
 
         if (!$this->query instanceof ActiveQuery)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'The "query" property is not instance of ActiveQuery.'));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'The "query" property is not instance of ActiveQuery.'));
     }
 
 }

@@ -17,10 +17,10 @@ use yii\grid\GridView;
     <?php echo Html::activeHiddenInput($permissionForm, 'role', ['value' => $model->name]); ?>
 
     <div class="col-md-4">
-        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user/login','Permission name'), 'panel_class' => 'panel-primary']); ?>
+        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user','Permission name'), 'panel_class' => 'panel-primary']); ?>
 
-        <?php echo $form->field($permissionForm, 'name')->hint( Yii::t('wavecms/user/login','Syntax: [module]/[controller]')) ?>
-        <?php echo \yii\helpers\Html::button( Yii::t('wavecms/user/login','Add permission'), ['class' => 'btn btn-primary', 'type' => 'submit']); ?>
+        <?php echo $form->field($permissionForm, 'name')->hint( Yii::t('wavecms/user','Syntax: [module]/[controller]')) ?>
+        <?php echo \yii\helpers\Html::button( Yii::t('wavecms/user','Add permission'), ['class' => 'btn btn-primary', 'type' => 'submit']); ?>
 
         <?php PanelWidget::end(); ?>
     </div>
@@ -29,14 +29,14 @@ use yii\grid\GridView;
 
 
     <div class="col-md-8">
-        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user/login','Assigned permissions')]); ?>
+        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user','Assigned permissions')]); ?>
 
         <?php echo GridView::widget([
             'dataProvider' => $permissionDataProvider,
             'columns' => [
                 [
                     'attribute' => 'child',
-                    'label' =>  Yii::t('wavecms/user/login','Permission')
+                    'label' =>  Yii::t('wavecms/user','Permission')
                 ],
                 [
                     'class' => DataColumn::className(),

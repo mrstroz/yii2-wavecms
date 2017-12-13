@@ -15,7 +15,7 @@ class LanguagesColumn extends DataColumn
 
     public function __construct(array $config = [])
     {
-        $this->label = Yii::t('wavecms/base/main', 'Languages');
+        $this->label = Yii::t('wavecms/main', 'Languages');
         parent::__construct($config);
     }
 

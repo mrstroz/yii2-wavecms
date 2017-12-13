@@ -36,7 +36,7 @@ class SubListAction extends Action
         array_unshift(
             $this->controller->view->params['buttons_sublist'],
             Html::a(
-                Yii::t('wavecms/base/main', 'Create new'),
+                Yii::t('wavecms/main', 'Create new'),
                 array_merge(['create', 'parentField' => $parentField, 'parentId' => $parentId, 'parentRoute' => $parentRoute], $this->_forwardParams()),
                 ['class' => 'btn btn-primary btn-sm btn-sub-list']
             )

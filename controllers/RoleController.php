@@ -8,7 +8,7 @@ use mrstroz\wavecms\components\helpers\Flash;
 use mrstroz\wavecms\components\helpers\FontAwesome;
 use mrstroz\wavecms\components\helpers\NavHelper;
 use mrstroz\wavecms\components\web\Controller;
-use mrstroz\wavecms\models\AddPermissionForm;
+use mrstroz\wavecms\forms\AddPermissionForm;
 use mrstroz\wavecms\models\AuthItem;
 use mrstroz\wavecms\models\AuthItemChild;
 use Yii;
@@ -31,8 +31,10 @@ class RoleController extends Controller
 
     public function init()
     {
-        $this->heading = Yii::t('wavecms/user/login', 'Roles');
-        $this->query = AuthItem::find()->where(['type' => 1]);
+        $authItemModel = Yii::createObject(AuthItem::class);
+
+        $this->heading = Yii::t('wavecms/user', 'Roles');
+        $this->query = $authItemModel::find()->where(['type' => 1]);
 //
         $this->dataProvider = new ActiveDataProvider([
             'query' => $this->query,
@@ -45,7 +47,7 @@ class RoleController extends Controller
             'name',
             [
                 'class' => DataColumn::className(),
-                'label' => Yii::t('wavecms/user/login', 'Add permissions'),
+                'label' => Yii::t('wavecms/user', 'Add permissions'),
                 'content' => function ($model, $key, $index) {
                     if ($model->name !== 'Super admin') {
                         return Html::a(FontAwesome::icon('plus'),
@@ -89,10 +91,9 @@ class RoleController extends Controller
         $this->view->params['h1'] = $this->heading;
 
         array_unshift($this->view->params['buttons_top'], Html::a('Return', $this->returnUrl, ['class' => 'btn btn-default']));
-        NavHelper::$active[] = Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/index';
+        NavHelper::$active[] = 'create';
 
-        $modelClass = $this->query->modelClass;
-        $model = new $modelClass();
+        $model = Yii::createObject($this->query->modelClass);
 
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
@@ -103,7 +104,7 @@ class RoleController extends Controller
                 $role = $auth->createRole($model->name);
                 $auth->add($role);
 
-                Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user/login', 'Role has been created')]);
+                Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user', 'Role has been created')]);
 
                 if (Yii::$app->request->post('save_and_return')) {
                     return $this->redirect($this->returnUrl);
@@ -127,19 +128,19 @@ class RoleController extends Controller
         $this->returnUrl = ['index'];
 
         if ($id === AuthItem::SUPER_ADMIN) {
-            Flash::message('delete', 'warning', ['message' => Yii::t('wavecms/user/login', '{super_admin} role cannot be changed', ['super_admin' => AuthItem::SUPER_ADMIN])]);
+            Flash::message('delete', 'warning', ['message' => Yii::t('wavecms/user', '{super_admin} role cannot be changed', ['super_admin' => AuthItem::SUPER_ADMIN])]);
             return $this->redirect($this->returnUrl);
         }
 
         $this->view->params['h1'] = $this->heading;
 
         array_unshift($this->view->params['buttons_top'], Html::a('Return', $this->returnUrl, ['class' => 'btn btn-default']));
-        NavHelper::$active[] = Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/index';
+        NavHelper::$active[] = 'update';
 
         $model = $this->query->andWhere(['name' => $id])->one();
 
         if (!$model)
-            throw new NotFoundHttpException(Yii::t('wavecms/user/login', 'Role not found'));
+            throw new NotFoundHttpException(Yii::t('wavecms/user', 'Role not found'));
 
         if (Yii::$app->request->isPost) {
 
@@ -150,7 +151,7 @@ class RoleController extends Controller
                 $model->save();
 
 
-                Flash::message('after_update', 'success', ['message' => Yii::t('wavecms/user/login', 'Role has been updated')]);
+                Flash::message('after_update', 'success', ['message' => Yii::t('wavecms/user', 'Role has been updated')]);
 
                 if (Yii::$app->request->post('save_and_return')) {
                     return $this->redirect($this->returnUrl);
@@ -172,18 +173,19 @@ class RoleController extends Controller
     {
         $this->returnUrl = ['index'];
 
-        if ($id === AuthItem::SUPER_ADMIN) {
-            Flash::message('delete', 'warning', ['message' => Yii::t('wavecms/user/login', '{super_admin} role cannot be deleted', ['super_admin' => AuthItem::SUPER_ADMIN])]);
+        $authItemModel = Yii::createObject(AuthItem::class);
+        if ($id === $authItemModel::SUPER_ADMIN) {
+            Flash::message('delete', 'warning', ['message' => Yii::t('wavecms/user', '{super_admin} role cannot be deleted', ['super_admin' => $authItemModel::SUPER_ADMIN])]);
             return $this->redirect($this->returnUrl);
         }
 
         $model = $this->query->andWhere(['name' => $id])->one();
 
         if (!$model)
-            throw new NotFoundHttpException(Yii::t('wavecms/user/login', 'Role not found'));
+            throw new NotFoundHttpException(Yii::t('wavecms/user', 'Role not found'));
 
         $model->delete();
-        Flash::message('delete', 'success', ['message' => Yii::t('wavecms/user/login', 'Role has been deleted')]);
+        Flash::message('delete', 'success', ['message' => Yii::t('wavecms/user', 'Role has been deleted')]);
 
         return $this->redirect($this->returnUrl);
     }
@@ -191,23 +193,26 @@ class RoleController extends Controller
     public function actionAddPermission($id)
     {
 
-        if ($id === AuthItem::SUPER_ADMIN) {
-            Flash::message('delete', 'warning', ['message' => Yii::t('wavecms/user/login', '{super_admin} role cannot be changed', ['super_admin' => AuthItem::SUPER_ADMIN])]);
+        $authItemModel = Yii::createObject(AuthItem::class);
+        $authItemChildModel = Yii::createObject(AuthItemChild::class);
+
+        if ($id === $authItemModel::SUPER_ADMIN) {
+            Flash::message('delete', 'warning', ['message' => Yii::t('wavecms/user', '{super_admin} role cannot be changed', ['super_admin' => $authItemModel::SUPER_ADMIN])]);
             return $this->redirect(['index']);
         }
 
         $model = $this->query->andWhere(['name' => $id])->one();
 
         if (!$model)
-            throw new NotFoundHttpException(Yii::t('wavecms/user/login', 'Role not found'));
+            throw new NotFoundHttpException(Yii::t('wavecms/user', 'Role not found'));
 
-        $this->view->params['h1'] = Yii::t('wavecms/user/login', 'Add permission to role <b>{name}</b>', ['name' => $id]);
-        NavHelper::$active[] = Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/index';
+        $this->view->params['h1'] = Yii::t('wavecms/user', 'Add permission to role <b>{name}</b>', ['name' => $id]);
+        NavHelper::$active[] = 'add-permission';
 
-        $permissionForm = new AddPermissionForm();
+        $permissionForm = Yii::createObject(AddPermissionForm::class);
 
         $permissionDataProvider = new ActiveDataProvider([
-            'query' => AuthItemChild::find()->where(['parent' => $id])
+            'query' => $authItemChildModel::find()->where(['parent' => $id])
         ]);
 
         if (Yii::$app->request->isPost) {
@@ -229,7 +234,7 @@ class RoleController extends Controller
 
                 $auth->addChild($role, $permission);
 
-                Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user/login', 'Permission has been assigned')]);
+                Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user', 'Permission has been assigned')]);
 
                 return $this->redirect([
                     'add-permission',
@@ -249,8 +254,10 @@ class RoleController extends Controller
 
     public function actionRemovePermission($id, $permission)
     {
-        if ($id === AuthItem::SUPER_ADMIN) {
-            Flash::message('delete', 'warning', ['message' => Yii::t('wavecms/user/login', '{super_admin} role cannot be changed', ['super_admin' => AuthItem::SUPER_ADMIN])]);
+        $authItemModel = Yii::createObject(AuthItem::class);
+
+        if ($id === $authItemModel::SUPER_ADMIN) {
+            Flash::message('delete', 'warning', ['message' => Yii::t('wavecms/user', '{super_admin} role cannot be changed', ['super_admin' => $authItemModel::SUPER_ADMIN])]);
             return $this->redirect(['index']);
         }
 
@@ -258,15 +265,15 @@ class RoleController extends Controller
 
         $permission = $auth->getPermission($permission);
         if (!$permission)
-            throw new NotFoundHttpException(Yii::t('wavecms/user/login', 'Permission not found'));
+            throw new NotFoundHttpException(Yii::t('wavecms/user', 'Permission not found'));
 
         $role = $auth->getRole($id);
         if (!$role)
-            throw new NotFoundHttpException(Yii::t('wavecms/user/login', 'Role not found'));
+            throw new NotFoundHttpException(Yii::t('wavecms/user', 'Role not found'));
 
         $auth->removeChild($role, $permission);
 
-        Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user/login', 'Permission has been revoked')]);
+        Flash::message('after_create', 'success', ['message' => Yii::t('wavecms/user', 'Permission has been revoked')]);
 
         return $this->redirect([
             'add-permission',

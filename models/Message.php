@@ -2,6 +2,7 @@
 
 namespace mrstroz\wavecms\models;
 
+use mrstroz\wavecms\models\query\MessageQuery;
 use Yii;
 
 /**
@@ -43,9 +44,9 @@ class Message extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('wavecms/base/main', 'ID'),
-            'language' => Yii::t('wavecms/base/main', 'Language'),
-            'translation' => Yii::t('wavecms/base/main', 'Translation'),
+            'id' => Yii::t('wavecms/main', 'ID'),
+            'language' => Yii::t('wavecms/main', 'Language'),
+            'translation' => Yii::t('wavecms/main', 'Translation'),
         ];
     }
 

@@ -29,5 +29,8 @@
     "psr-4": {
       "mrstroz\\wavecms\\": ""
     }
+  },
+  "extra": {
+    "bootstrap": "mrstroz\\wavecms\\Bootstrap"
   }
 }

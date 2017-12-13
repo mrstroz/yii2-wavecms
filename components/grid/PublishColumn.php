@@ -27,7 +27,7 @@ class PublishColumn extends DataColumn
                 ['publish', 'id' => $model->id],
                 [
                     'class' => 'btn btn-xs btn-success btn-publish',
-                    'title' => Yii::t('wavecms/base/main','Publish'),
+                    'title' => Yii::t('wavecms/main','Publish'),
                     'data-pjax' => 0
                 ]);
         } else {
@@ -36,7 +36,7 @@ class PublishColumn extends DataColumn
                 ['publish', 'id' => $model->id],
                 [
                     'class' => 'btn btn-xs btn-default btn-publish',
-                    'title' => Yii::t('wavecms/base/main','Publish'),
+                    'title' => Yii::t('wavecms/main','Publish'),
                     'data-pjax' => 0
                 ]);
         }

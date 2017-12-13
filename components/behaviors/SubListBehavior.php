@@ -27,11 +27,11 @@ class SubListBehavior extends Behavior
     {
 
         if (!$this->listId)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main','Property "listId" is not defined in SubListBehavior'));
+            throw new InvalidConfigException(Yii::t('wavecms/main','Property "listId" is not defined in SubListBehavior'));
 
 
         if (!$this->route)
-        throw new InvalidConfigException(Yii::t('wavecms/base/main','Property "route" is not defined in SubListBehavior'));
+        throw new InvalidConfigException(Yii::t('wavecms/main','Property "route" is not defined in SubListBehavior'));
 
 
         parent::init();

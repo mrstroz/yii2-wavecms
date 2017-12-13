@@ -2,6 +2,7 @@
 
 namespace mrstroz\wavecms\models;
 
+use mrstroz\wavecms\models\query\SourceMessageQuery;
 use Yii;
 
 /**
@@ -44,10 +45,10 @@ class SourceMessage extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('wavecms/base/main', 'ID'),
-            'category' => Yii::t('wavecms/base/main', 'Category'),
-            'message' => Yii::t('wavecms/base/main', 'Message'),
-            'translation' => Yii::t('wavecms/base/main', 'Translation'),
+            'id' => Yii::t('wavecms/main', 'ID'),
+            'category' => Yii::t('wavecms/main', 'Category'),
+            'message' => Yii::t('wavecms/main', 'Message'),
+            'translation' => Yii::t('wavecms/main', 'Translation'),
         ];
     }
 

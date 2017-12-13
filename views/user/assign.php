@@ -19,14 +19,14 @@ use yii\grid\GridView;
     <?php echo Html::activeHiddenInput($roleForm, 'user_id', ['value' => $model->id]); ?>
 
     <div class="col-md-4">
-        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user/login','Choose role'), 'panel_class' => 'panel-primary']); ?>
+        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user','Choose role'), 'panel_class' => 'panel-primary']); ?>
 
         <?php echo $form->field($roleForm, 'role')->dropDownList(
             AuthItem::find()->select(['name'])->where(['type' => 1])->indexBy('name')->column(),
-            ['prompt' => Yii::t('wavecms/user/login','Select role')]
+            ['prompt' => Yii::t('wavecms/user','Select role')]
         ); ?>
 
-        <?php echo Html::button(Yii::t('wavecms/user/login','Assign role'), ['class' => 'btn btn-primary', 'type' => 'submit']); ?>
+        <?php echo Html::button(Yii::t('wavecms/user','Assign role'), ['class' => 'btn btn-primary', 'type' => 'submit']); ?>
 
 
         <?php PanelWidget::end(); ?>
@@ -36,14 +36,14 @@ use yii\grid\GridView;
     <?php WavecmsForm::end(); ?>
 
     <div class="col-md-8">
-        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user/login','Assigned roles')]); ?>
+        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user','Assigned roles')]); ?>
 
         <?php echo GridView::widget([
             'dataProvider' => $assignedRolesDataProvider,
             'columns' => [
                 [
                     'attribute' => 'item_name',
-                    'label' => Yii::t('wavecms/user/login','Role')
+                    'label' => Yii::t('wavecms/user','Role')
                 ],
                 [
                     'class' => DataColumn::className(),

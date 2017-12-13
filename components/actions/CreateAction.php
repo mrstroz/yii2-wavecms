@@ -57,7 +57,7 @@ class CreateAction extends Action
         array_unshift(
             $this->controller->view->params['buttons_top'],
             Html::a(
-                Yii::t('wavecms/base/main', 'Return'),
+                Yii::t('wavecms/main', 'Return'),
                 $this->controller->returnUrl,
                 ['class' => 'btn btn-default']
             )
@@ -67,9 +67,8 @@ class CreateAction extends Action
         NavHelper::$active = $this->controller->activeActions;
 
 
-        $modelClass = $this->controller->query->modelClass;
         /** @var ActiveRecord $model */
-        $model = new $modelClass();
+        $model = Yii::createObject($this->controller->query->modelClass);
         /** Set scenario to ActiveRecord */
         if ($this->controller->scenario) {
             $model->scenario = $this->controller->scenario;
@@ -103,7 +102,7 @@ class CreateAction extends Action
                 Flash::message(
                     'after_create',
                     'success',
-                    ['message' => Yii::t('wavecms/base/main', 'Element has been created')]
+                    ['message' => Yii::t('wavecms/main', 'Element has been created')]
                 );
 
                 if (Yii::$app->request->post('save_and_return')) {

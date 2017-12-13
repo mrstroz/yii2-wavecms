@@ -17,7 +17,7 @@ use yii\helpers\Html;
 <div class="row">
 
     <div class="col-md-6">
-        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user/login', 'Login data'), 'panel_class' => 'panel-primary']); ?>
+        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user', 'Login data'), 'panel_class' => 'panel-primary']); ?>
 
         <?php echo $form->field($model, 'email'); ?>
         <?php echo $form->field($model, 'password')->passwordInput(); ?>
@@ -27,8 +27,8 @@ use yii\helpers\Html;
             <div class="col-md-6">
                 <?php echo $form->field($model, 'status')->dropDownList(
                     [
-                        User::STATUS_DELETED => Yii::t('wavecms/user/login', 'Not active'),
-                        User::STATUS_ACTIVE => Yii::t('wavecms/user/login', 'Active')
+                        User::STATUS_DELETED => Yii::t('wavecms/user', 'Not active'),
+                        User::STATUS_ACTIVE => Yii::t('wavecms/user', 'Active')
                     ]
                 ); ?>
             </div>
@@ -36,8 +36,8 @@ use yii\helpers\Html;
 
                 <?php echo $form->field($model, 'is_admin')->dropDownList(
                     [
-                        User::IS_ADMIN_NO => Yii::t('wavecms/user/login', 'No'),
-                        User::IS_ADMIN_YES => Yii::t('wavecms/user/login', 'Yes')
+                        User::IS_ADMIN_NO => Yii::t('wavecms/user', 'No'),
+                        User::IS_ADMIN_YES => Yii::t('wavecms/user', 'Yes')
                     ]
                 ); ?>
 
@@ -51,13 +51,13 @@ use yii\helpers\Html;
 
 
     <div class="col-md-6">
-        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user/login', 'User data')]); ?>
+        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user', 'User data')]); ?>
 
         <?php echo $form->field($model, 'first_name'); ?>
         <?php echo $form->field($model, 'last_name'); ?>
         <?php echo $form->field($model, 'lang')->dropDownList([
-            '' => Yii::t('wavecms/user/login', 'English'),
-            'pl' => Yii::t('wavecms/user/login', 'Polish')
+            '' => Yii::t('wavecms/user', 'English'),
+            'pl' => Yii::t('wavecms/user', 'Polish')
         ]); ?>
 
 
@@ -69,7 +69,7 @@ use yii\helpers\Html;
 <?php $extraButtons = [];
 
 if (!$model->isNewRecord) {
-    $extraButtons[] = Html::a(FontAwesome::icon('exchange') . ' ' . Yii::t('wavecms/user/login', 'Assign role'), ['assign', 'id' => $model->id], [
+    $extraButtons[] = Html::a(FontAwesome::icon('exchange') . ' ' . Yii::t('wavecms/user', 'Assign role'), ['assign', 'id' => $model->id], [
         'class' => 'btn btn-default'
     ]);
 }

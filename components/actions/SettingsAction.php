@@ -54,7 +54,7 @@ class SettingsAction extends Action
             Flash::message(
                 'after_update',
                 'success',
-                ['message' => Yii::t('wavecms/base/main', 'Element has been updated')]);
+                ['message' => Yii::t('wavecms/main', 'Element has been updated')]);
 
             return $this->controller->refresh();
         }

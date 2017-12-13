@@ -31,7 +31,7 @@ class FileBehavior extends Behavior
     {
 
         if (!$this->attribute) {
-            throw new InvalidConfigException(Yii::t('wavecms/base/main','Property "attribute" is not defined in FileBehavior'));
+            throw new InvalidConfigException(Yii::t('wavecms/main','Property "attribute" is not defined in FileBehavior'));
         }
 
         parent::init();
@@ -40,7 +40,7 @@ class FileBehavior extends Behavior
     public function uploadImage($event)
     {
         if (!array_key_exists($this->attribute, $event->sender->attributes)) {
-            throw new InvalidConfigException( Yii::t('wavecms/base/main', 'Attribute {attribute} not found in model {model}',['attribute' => $this->attribute,'model' => $event->sender->className()]));
+            throw new InvalidConfigException( Yii::t('wavecms/main', 'Attribute {attribute} not found in model {model}',['attribute' => $this->attribute,'model' => $event->sender->className()]));
         }
 
         $oldFile = false;

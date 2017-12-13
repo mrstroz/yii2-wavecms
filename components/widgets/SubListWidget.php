@@ -18,10 +18,10 @@ class SubListWidget extends Widget
     public function run()
     {
         if (!$this->listId)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'Property "listId" is not defined in SubListWidget'));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Property "listId" is not defined in SubListWidget'));
 
         if (!$this->model)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'Property "model" is not defined in SubListWidget'));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Property "model" is not defined in SubListWidget'));
 
         $modelBehaviors = $this->model->behaviors;
 
@@ -36,7 +36,7 @@ class SubListWidget extends Widget
                                 'parentRoute' => Yii::$app->requestedRoute
                             ]);
                         }
-                        return '<div class="alert alert-info">' . FontAwesome::icon('info-circle') . ' ' . Yii::t('wavecms/base/main', 'Save changes to add sub list elements') . '</div>';
+                        return '<div class="alert alert-info">' . FontAwesome::icon('info-circle') . ' ' . Yii::t('wavecms/main', 'Save changes to add sub list elements') . '</div>';
                     }
                 }
             }

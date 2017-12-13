@@ -36,7 +36,7 @@ class IndexAction extends Action
         array_unshift(
             $this->controller->view->params['buttons_top'],
             Html::a(
-                Yii::t('wavecms/base/main', 'Create new'),
+                Yii::t('wavecms/main', 'Create new'),
                 array_merge(['create'], $this->_forwardParams()),
                 ['class' => 'btn btn-primary']
             )

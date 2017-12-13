@@ -40,11 +40,11 @@ class LanguageController extends Controller
     {
 
         if (!in_array($lang, Yii::$app->wavecms->languages))
-            throw new InvalidParamException(Yii::t('wavecms/base/main', 'Wrong language'));
+            throw new InvalidParamException(Yii::t('wavecms/main', 'Wrong language'));
 
         Yii::$app->session->set('editedLanguage',$lang);
 
-        Flash::message('language_change', 'success', ['message' => Yii::t('wavecms/base/main', 'Edited language has been changed to {lang}',['lang' => $lang])]);
+        Flash::message('language_change', 'success', ['message' => Yii::t('wavecms/main', 'Edited language has been changed to {lang}',['lang' => $lang])]);
 
         return $this->redirect(Yii::$app->request->referrer);
 

@@ -34,8 +34,8 @@ class SettingsController extends Controller
 
     public function actionCache()
     {
-        $this->view->params['h1'] = Yii::t('wavecms/base/main', 'Cache');
-        $this->view->title = Yii::t('wavecms/base/main', 'Cache');
+        $this->view->params['h1'] = Yii::t('wavecms/main', 'Cache');
+        $this->view->title = Yii::t('wavecms/main', 'Cache');
 
         if (Yii::$app->request->isPost) {
             Yii::$app->cache->flush();
@@ -74,7 +74,7 @@ class SettingsController extends Controller
             Flash::message(
                 'after_clear_cache',
                 'success',
-                ['message' => Yii::t('wavecms/base/main', 'Assets folders and cache has been cleared')]
+                ['message' => Yii::t('wavecms/main', 'Assets folders and cache has been cleared')]
             );
 
             return $this->refresh();

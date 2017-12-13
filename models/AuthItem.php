@@ -46,7 +46,7 @@ class AuthItem extends \yii\db\ActiveRecord
             [['description', 'data'], 'string'],
             ['name', 'unique',
                 'targetClass' => '\mrstroz\wavecms\models\AuthItem',
-                'message' => Yii::t('wavecms/user/login','This name has already been taken.')
+                'message' => Yii::t('wavecms/user','This name has already been taken.')
             ],
             [['name', 'rule_name'], 'string', 'max' => 64],
             [['rule_name'], 'exist', 'skipOnError' => true, 'targetClass' => AuthRule::className(), 'targetAttribute' => ['rule_name' => 'name']],
@@ -59,13 +59,13 @@ class AuthItem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('wavecms/user/login','Name'),
-            'type' => Yii::t('wavecms/user/login','Type'),
-            'description' => Yii::t('wavecms/user/login','Description'),
-            'rule_name' => Yii::t('wavecms/user/login','Rule name'),
-            'data' => Yii::t('wavecms/user/login','Data'),
-            'created_at' => Yii::t('wavecms/user/login','Created at'),
-            'updated_at' => Yii::t('wavecms/user/login','Updated at'),
+            'name' => Yii::t('wavecms/user','Name'),
+            'type' => Yii::t('wavecms/user','Type'),
+            'description' => Yii::t('wavecms/user','Description'),
+            'rule_name' => Yii::t('wavecms/user','Rule name'),
+            'data' => Yii::t('wavecms/user','Data'),
+            'created_at' => Yii::t('wavecms/user','Created at'),
+            'updated_at' => Yii::t('wavecms/user','Updated at'),
         ];
     }
 

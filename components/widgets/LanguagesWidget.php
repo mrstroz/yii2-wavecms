@@ -16,18 +16,18 @@ class LanguagesWidget extends Widget
     public function init()
     {
         if (!$this->form)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'Attribute {attribute} is not defined', ['attribute' => 'form']));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Attribute {attribute} is not defined', ['attribute' => 'form']));
 
         if (!$this->model)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'Attribute {attribute} is not defined', ['attribute' => 'model']));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Attribute {attribute} is not defined', ['attribute' => 'model']));
 
         parent::init();
     }
 
     public function run()
     {
-        PanelWidget::begin(['heading' => Yii::t('wavecms/base/main', 'Languages') . '*']);
-        echo Yii::t('wavecms/page/main', 'Element will be displayed in following languages:');
+        PanelWidget::begin(['heading' => Yii::t('wavecms/main', 'Languages') . '*']);
+        echo Yii::t('wavecms/main', 'Element will be displayed in following languages:');
         echo $this->form->field($this->model, $this->languagesAttribute)
             ->checkboxList(Yii::$app->wavecms->languageCheckboxItems(),['class' => 'language-checkboxes'])
             ->label(false);

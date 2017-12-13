@@ -41,8 +41,7 @@ class PageAction extends Action
 
         /** Create model if not exist */
         if (!$model) {
-            $modelClass = $query->modelClass;
-            $model = new $modelClass();
+            $model = Yii::createObject($query->modelClass);
         }
 
         /** Set scenario to ActiveRecord */
@@ -73,7 +72,7 @@ class PageAction extends Action
                 Flash::message(
                     'after_update',
                     'success',
-                    ['message' => Yii::t('wavecms/base/main', 'Element has been updated')]
+                    ['message' => Yii::t('wavecms/main', 'Element has been updated')]
                 );
             } else {
                 Flash::message(

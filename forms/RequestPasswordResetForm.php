@@ -1,9 +1,11 @@
 <?php
 
-namespace mrstroz\wavecms\models;
+namespace mrstroz\wavecms\forms;
 
+use mrstroz\wavecms\models\User;
 use Yii;
 use yii\base\Model;
+use yii\helpers\VarDumper;
 
 /**
  * Password reset request form
@@ -25,7 +27,7 @@ class RequestPasswordResetForm extends Model
             ['email', 'exist',
                 'targetClass' => '\mrstroz\wavecms\models\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => Yii::t('wavecms/user/login', 'There is no user with this email address.')
+                'message' => Yii::t('wavecms/user', 'There is no user with this email address.')
             ],
         ];
     }

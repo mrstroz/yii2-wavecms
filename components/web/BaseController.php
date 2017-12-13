@@ -37,7 +37,7 @@ class BaseController extends yiiController
             if (!Yii::$app->user->can(AuthItem::SUPER_ADMIN)) {
                 if (!Yii::$app->user->can(Yii::$app->controller->module->id . '/' . Yii::$app->controller->id)) {
                     if (!Yii::$app->user->isGuest) {
-                        throw new ForbiddenHttpException(Yii::t('wavecms/base/main', 'You are not allowed to perform this action'));
+                        throw new ForbiddenHttpException(Yii::t('wavecms/main', 'You are not allowed to perform this action'));
                     }
                 }
             }

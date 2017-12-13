@@ -5,8 +5,9 @@ namespace mrstroz\wavecms\controllers;
 use mrstroz\wavecms\components\grid\ActionColumn;
 use mrstroz\wavecms\components\web\Controller;
 use mrstroz\wavecms\models\Message;
+use mrstroz\wavecms\models\search\SourceMessagerSearch;
+use mrstroz\wavecms\models\search\SourceMessageSearch;
 use mrstroz\wavecms\models\SourceMessage;
-use mrstroz\wavecms\models\SourceMessagerSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -15,17 +16,20 @@ class TranslationController extends Controller
 
     public function init()
     {
-        $this->heading = Yii::t('wavecms/base/main', 'Translations');
+        $this->heading = Yii::t('wavecms/main', 'Translations');
 
 
-        $this->query = SourceMessage::find()
+        $sourceMessageModel = Yii::createObject(SourceMessage::class);
+        $messageModel = Yii::createObject(Message::class);
+
+        $this->query = $sourceMessageModel::find()
             ->select([
-                SourceMessage::tableName() . '.*',
-                Message::tableName() . '.translation'
+                $sourceMessageModel::tableName() . '.*',
+                $messageModel::tableName() . '.translation'
             ])
-            ->leftJoin(Message::tableName(),
-                SourceMessage::tableName() . '.id = ' . Message::tableName() . '.id 
-            AND ' . Message::tableName() . '.language = "' . Yii::$app->wavecms->editedLanguage . '"'
+            ->leftJoin($messageModel::tableName(),
+                $sourceMessageModel::tableName() . '.id = ' . $messageModel::tableName() . '.id 
+            AND ' . $messageModel::tableName() . '.language = "' . Yii::$app->wavecms->editedLanguage . '"'
             );
 
         $this->dataProvider = new ActiveDataProvider([
@@ -36,11 +40,11 @@ class TranslationController extends Controller
         ]);
 
         $this->dataProvider->sort->attributes['translation'] = [
-            'asc' => [Message::tableName() . '.translation' => SORT_ASC],
-            'desc' => [Message::tableName() . '.translation' => SORT_DESC],
+            'asc' => [$messageModel::tableName() . '.translation' => SORT_ASC],
+            'desc' => [$messageModel::tableName() . '.translation' => SORT_DESC],
         ];
 
-        $this->filterModel = new SourceMessagerSearch();
+        $this->filterModel = Yii::createObject(SourceMessageSearch::class);
 
         $this->columns = array(
             'category',
@@ -54,13 +58,15 @@ class TranslationController extends Controller
 
         $this->on(self::EVENT_AFTER_MODEL_SAVE, function ($event) {
 
+            $messageModel = Yii::createObject(Message::class);
+
             if ($event->model) {
-                $message = Message::find()->where(
+                $message = $messageModel::find()->where(
                     ['id' => $event->model->id, 'language' => Yii::$app->wavecms->editedLanguage]
                 )->one();
 
                 if (!$message) {
-                    $message = new Message();
+                    $message = Yii::createObject(Message::class);
                     $message->id = $event->model->id;
                     $message->language = Yii::$app->wavecms->editedLanguage;
                 }

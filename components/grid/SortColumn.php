@@ -25,7 +25,7 @@ class SortColumn extends DataColumn
             ['up-down', 'id' => $model->id, 'dir' => 'up'],
             [
                 'class' => 'btn btn-xs btn-default btn-sort',
-                'title' => Yii::t('wavecms/base/main','Move up'),
+                'title' => Yii::t('wavecms/main','Move up'),
                 'data-pjax' => 0
             ]);
 
@@ -34,7 +34,7 @@ class SortColumn extends DataColumn
                 ['up-down', 'id' => $model->id, 'dir' => 'down'],
                 [
                     'class' => 'btn btn-xs btn-default btn-sort',
-                    'title' => Yii::t('wavecms/base/main','Move down'),
+                    'title' => Yii::t('wavecms/main','Move down'),
                     'data-pjax' => 0
                 ]);
 

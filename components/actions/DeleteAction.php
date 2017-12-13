@@ -59,7 +59,7 @@ class DeleteAction extends Action
         Flash::message(
             'delete',
             'success',
-            ['message' => Yii::t('wavecms/base/main', 'Element has been deleted')]
+            ['message' => Yii::t('wavecms/main', 'Element has been deleted')]
         );
 
         return $this->controller->redirect($this->controller->returnUrl);

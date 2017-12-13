@@ -30,12 +30,12 @@ class Action extends BaseAction
     protected function _fetchOne($id)
     {
         $query = $this->controller->query;
-        $modelClass = $query->modelClass;
+        $modelClass = Yii::createObject($query->modelClass);
         /** @var ActiveRecord $model */
         $model = $query->andWhere([$modelClass::tableName() . '.id' => $id])->one();
 
         if (!$model)
-            throw new NotFoundHttpException(Yii::t('wavecms/base/main', 'Element not found'));
+            throw new NotFoundHttpException(Yii::t('wavecms/main', 'Element not found'));
 
         if ($this->controller->scenario) {
             $model->scenario = $this->controller->scenario;
@@ -51,10 +51,10 @@ class Action extends BaseAction
     protected function _checkConfig()
     {
         if (!$this->controller->query)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'The "query" property must be set.'));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'The "query" property must be set.'));
 
         if (!$this->controller->query instanceof ActiveQuery)
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'The "query" property is not instance of ActiveQuery.'));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'The "query" property is not instance of ActiveQuery.'));
     }
 
     /**

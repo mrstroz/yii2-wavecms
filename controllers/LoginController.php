@@ -5,16 +5,22 @@ namespace mrstroz\wavecms\controllers;
 use mrstroz\wavecms\components\helpers\Flash;
 use mrstroz\wavecms\components\helpers\NavHelper;
 use mrstroz\wavecms\components\web\Controller;
-use mrstroz\wavecms\models\LoginForm;
-use mrstroz\wavecms\models\RequestPasswordResetForm;
-use mrstroz\wavecms\models\ResetPasswordForm;
+use mrstroz\wavecms\forms\LoginForm;
+use mrstroz\wavecms\forms\RequestPasswordResetForm;
+use mrstroz\wavecms\forms\ResetPasswordForm;
 use mrstroz\wavecms\models\User;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\base\Module;
 use yii\web\BadRequestHttpException;
 
 class LoginController extends Controller
 {
+
+    public function __construct($id, Module $module, array $config = [])
+    {
+        parent::__construct($id, $module, $config);
+    }
 
     public function actions()
     {
@@ -73,9 +79,8 @@ class LoginController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
+        $model = Yii::createObject(LoginForm::class);
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
             return $this->goBack();
         }
 
@@ -88,23 +93,24 @@ class LoginController extends Controller
     public function actionMyAccount()
     {
 
-        $this->view->params['h1'] = Yii::t('wavecms/user/login', 'My account');
+        $this->view->params['h1'] = Yii::t('wavecms/user', 'My account');
         NavHelper::$active[] = 'my-account';
 
         /** @var User $model */
-        $model = User::find()->where(['id' => Yii::$app->user->id])->one();
-        $model->scenario = User::SCENARIO_MY_ACCOUNT;
+        $modelObj = Yii::createObject(User::class);
+        $model = $modelObj::find()->byId(Yii::$app->user->id)->one();
+        $model->scenario = $modelObj::SCENARIO_MY_ACCOUNT;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
             if ($model->password) {
                 $model->setPassword($model->password);
                 $model->generateAuthKey();
-                Flash::message('password_changed', 'success', ['message' => Yii::t('wavecms/user/login', 'Password has been changed')]);
+                Flash::message('password_changed', 'success', ['message' => Yii::t('wavecms/user', 'Password has been changed')]);
             }
 
             $model->save();
-            Flash::message('after_update', 'success', ['message' => Yii::t('wavecms/user/login', 'Data has been changed')]);
+            Flash::message('after_update', 'success', ['message' => Yii::t('wavecms/user', 'Data has been changed')]);
             return $this->refresh();
         }
 
@@ -118,8 +124,7 @@ class LoginController extends Controller
     {
         Yii::$app->user->logout();
 
-        Flash::message('logout', 'success', ['message' => Yii::t('wavecms/user/login', 'Correctly logged out')]);
-
+        Flash::message('logout', 'success', ['message' => Yii::t('wavecms/user', 'Correctly logged out')]);
 
         return $this->redirect(['/login']);
     }
@@ -129,15 +134,15 @@ class LoginController extends Controller
 
         $this->layout = '@wavecms/views/layouts/login.php';
 
-        $model = new RequestPasswordResetForm();
+        $model = Yii::createObject(RequestPasswordResetForm::class);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Flash::message('request_password_reset', 'success', ['message' => Yii::t('wavecms/user/login', 'Please check the email you provided for further instructions.')]);
+                Flash::message('request_password_reset', 'success', ['message' => Yii::t('wavecms/user', 'Please check the email you provided for further instructions.')]);
 
                 return $this->redirect(['login']);
             }
 
-            Flash::message('request_password_reset', 'danger', ['message' => Yii::t('wavecms/user/login', 'Sorry, we are unable to reset password for the provided email address.')]);
+            Flash::message('request_password_reset', 'danger', ['message' => Yii::t('wavecms/user', 'Sorry, we are unable to reset password for the provided email address.')]);
         }
 
         return $this->render('request-password-reset', [
@@ -152,13 +157,14 @@ class LoginController extends Controller
         $this->layout = '@wavecms/views/layouts/login.php';
 
         try {
-            $model = new ResetPasswordForm($token);
+//            $model = new ResetPasswordForm($token);
+            $model = Yii::createObject(ResetPasswordForm::class, [$token]);
         } catch (InvalidParamException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Flash::message('request_password_reset', 'success', ['message' => Yii::t('wavecms/user/login', 'New password saved.')]);
+            Flash::message('request_password_reset', 'success', ['message' => Yii::t('wavecms/user', 'New password saved.')]);
 
             return $this->redirect(['login']);
         }

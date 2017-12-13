@@ -1,5 +1,5 @@
 # yii2-wavecms
-Yii2 Wavecms
+Yii2 WaveCMS
 
 **It is recommended to install on [Yii 2 Advanced Project Template](https://github.com/yiisoft/yii2-app-advanced)**
 
@@ -11,13 +11,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Run
 
 ```
-composer require --prefer-source "mrstroz/yii2-wavecms" "dev-master"
+composer require --prefer-source "mrstroz/yii2-wavecms" "~0.1.0"
 ```
 
 or add
 
 ```
-"mrstroz/yii2-wavecms": "dev-master"
+"mrstroz/yii2-wavecms": "~0.1.0"
 ```
 
 to the require section of your `composer.json` file.
@@ -28,21 +28,11 @@ Required steps
 
 1. Update `backend/config/main.php` (Yii2 advanced template) 
 ```php
-'bootstrap' => [
-    // ...
-    'mrstroz\wavecms\Bootstrap',
-],
 'modules' => [
-    // ...
-    
+    // ...   
     'wavecms' => [
         'class' => 'mrstroz\wavecms\Module',
-        /*
-         * Overwrite model classes and form views
-         'models' => [
-            'User' => 'mrstroz\wavecms\models\User',
-         ],
-         */
+        'languages' => ['en','pl']
     ],
 ],
 
@@ -51,26 +41,6 @@ Required steps
     'user' => [
         'identityClass' => 'mrstroz\wavecms\models\User', //Change identity class
         // ...
-    ],
-    'wavecms' => [
-        'class' => 'mrstroz\wavecms\WavecmsComponent',
-        'languages' => ['en','pl'] //Edited languages in CMS
-    ],
-    'cacheFrontend' => [
-        'class' => 'yii\caching\FileCache',
-        'cachePath' => Yii::getAlias('@frontend') . '/runtime/cache'
-    ],
-    'settings' => [
-        'class' => 'yii2mod\settings\components\Settings',
-    ],
-    'i18n' => [
-        'translations' => [
-            'yii2mod.settings' => [
-                'class' => 'yii\i18n\PhpMessageSource',
-                'basePath' => '@yii2mod/settings/messages',
-            ],
-            // ...
-        ],
     ],
 ]
 
@@ -135,12 +105,39 @@ yii migrate --migrationPath=@vendor/yii2mod/yii2-settings/migrations
 ```
 yii wavecms/create [email] [password]
 ```
+Overriding classes
+------------------
+Classes can be overridden by:
+1. `classMap` attribute for WaveCMS module
+```php
+'modules' => [
+    // ...   
+    'wavecms' => [
+        'class' => 'mrstroz\wavecms\Module',
+        'languages' => ['en','pl'],
+        'classMap' => [
+            'User' => \common\models\User::class
+        ]
+    ],
+],
+```
 
-Optional steps
+2. Yii2 Dependency Injection configuration in `backend/config/main.php`
+```php
+'container' => [
+    'definitions' => [
+        mrstroz\wavecms\models\User::class => common\models\User::class
+    ],
+],
+```
+
+Overriding controllers
+----------------------
+
+
+Overriding views
 --------------
-
-1. For **shared hosting**, copy and replace `environments` folder from `vendor/mrstroz/wavecms` and type `php init`. Frontend url: `/public`, Backend url: `/public/admin`
-2. Use **[themes](http://www.yiiframework.com/doc-2.0/guide-output-theming.html)** for better code structure.
+Use **[themes](http://www.yiiframework.com/doc-2.0/guide-output-theming.html)** for override views
 ```php
 'components' => [
     // ...
@@ -149,7 +146,7 @@ Optional steps
             'basePath' => '@app/themes/basic',
             'baseUrl' => '@web/themes/basic',
             'pathMap' => [
-                '@app/views' => '@app/themes/basic',
+                '@wavecms/views' => '@app/themes/basic',
             ],
         ],
     ],
@@ -161,13 +158,13 @@ Multilingual
 --------------
 1. Many languages can be handle by [yii2-localeurls](https://github.com/codemix/yii2-localeurls). Follow all steps from Locale Urls installation.
 
-2. Change CMS languages in `backend/config/main.php` component
+2. Set CMS languages in `backend/config/main.php` for WaveCMS module
 ```php
-'components' => [
+'modules' => [
     // ...
     'wavecms' => [
-        'class' => 'mrstroz\wavecms\WavecmsComponent',
-        'languages' => ['en','pl'] //Edited languages in CMS
+        'class' => 'mrstroz\wavecms\Module',
+        'languages' => ['en','pl']
     ],
     // ...
 ]
@@ -193,6 +190,11 @@ yii message/config-template path/to/config.php
 yii message path/to/config.php
 ```
 
+Shared hosting
+--------------
+For **shared hosting**, copy and replace `environments` folder from `vendor/mrstroz/wavecms` and type `php init`. Frontend url: `/public`, Backend url: `/public/admin`
+
+
 Available WaveCMS modules
 -------------------------
 
@@ -200,7 +202,10 @@ Available WaveCMS modules
 
 [Example](https://github.com/mrstroz/yii2-wavecms-example) (example module) - https://github.com/mrstroz/yii2-wavecms-example
 
-
 [Form](https://github.com/mrstroz/yii2-wavecms-form) (form module) - https://github.com/mrstroz/yii2-wavecms-form
+
+> ![INWAVE LOGO](http://inwave.pl/html/img/logo.png)
+> <i>INWAVE - Internet Software House</i>  
+> [inwave.eu](http://inwave.eu/)
 
 

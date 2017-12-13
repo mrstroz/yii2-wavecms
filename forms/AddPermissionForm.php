@@ -1,7 +1,8 @@
 <?php
 
-namespace mrstroz\wavecms\models;
+namespace mrstroz\wavecms\forms;
 
+use mrstroz\wavecms\models\AuthItemChild;
 use Yii;
 use yii\base\Model;
 
@@ -29,8 +30,8 @@ class AddPermissionForm extends Model
     {
         $labels = parent::attributeLabels();
 
-        $labels['name'] = Yii::t('wavecms/user/login','Name');
-        $labels['role'] = Yii::t('wavecms/user/login','Role');
+        $labels['name'] = Yii::t('wavecms/user','Name');
+        $labels['role'] = Yii::t('wavecms/user','Role');
 
         return $labels;
     }
@@ -38,7 +39,7 @@ class AddPermissionForm extends Model
     public function permission_assigned($attribute, $params)
     {
         if (AuthItemChild::find()->where(['parent' => $this->role, 'child' => $this->name])->one()) {
-            $this->addError($attribute, Yii::t('wavecms/user/login', 'This permission is already assigned'));
+            $this->addError($attribute, Yii::t('wavecms/user', 'This permission is already assigned'));
             return true;
         }
         return false;

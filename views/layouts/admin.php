@@ -83,7 +83,7 @@ $bundle = WavecmsAsset::register($this);
                                 ['/my-account'],
                                 [
                                     'class' => 'btn btn-sm btn-light-gray',
-                                    'title' => Yii::t('wavecms/user/login', 'My account')
+                                    'title' => Yii::t('wavecms/user', 'My account')
                                 ]
                             ),
                             Html::a(
@@ -91,7 +91,7 @@ $bundle = WavecmsAsset::register($this);
                                 ['/logout'],
                                 [
                                     'class' => 'btn btn-sm btn-light-gray',
-                                    'title' => Yii::t('wavecms/user/login', 'Logout')
+                                    'title' => Yii::t('wavecms/user', 'Logout')
                                 ]
                             ),
                         ]

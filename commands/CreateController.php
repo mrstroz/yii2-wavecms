@@ -35,9 +35,9 @@ class CreateController extends Controller
             }
             $auth->assign($role, $model->id);
 
-            $this->stdout(Yii::t('wavecms/user/login', 'User has been created') . "!\n", Console::FG_GREEN);
+            $this->stdout(Yii::t('wavecms/user', 'User has been created') . "!\n", Console::FG_GREEN);
         } else {
-            $this->stdout(Yii::t('wavecms/user/login', 'Please fix following errors:') . "\n", Console::FG_RED);
+            $this->stdout(Yii::t('wavecms/user', 'Please fix following errors:') . "\n", Console::FG_RED);
             foreach ($model->errors as $errors) {
                 foreach ($errors as $error) {
                     $this->stdout(' - ' . $error . "\n", Console::FG_RED);
@@ -52,7 +52,7 @@ class CreateController extends Controller
         $model = User::findOne(['email' => $email]);
 
         if (!$model)
-            return $this->stdout(Yii::t('wavecms/user/login', 'User not found') . "\n", Console::FG_RED);
+            return $this->stdout(Yii::t('wavecms/user', 'User not found') . "\n", Console::FG_RED);
 
         $auth = Yii::$app->authManager;
         $role = $auth->getRole(AuthItem::SUPER_ADMIN);
@@ -70,7 +70,7 @@ class CreateController extends Controller
         if ($model->save()) {
 
         } else {
-            $this->stdout(Yii::t('wavecms/user/login', 'Please fix following errors:') . "\n", Console::FG_RED);
+            $this->stdout(Yii::t('wavecms/user', 'Please fix following errors:') . "\n", Console::FG_RED);
             foreach ($model->errors as $errors) {
                 foreach ($errors as $error) {
                     $this->stdout(' - ' . $error . "\n", Console::FG_RED);
@@ -79,6 +79,6 @@ class CreateController extends Controller
         }
 
 
-        return $this->stdout(Yii::t('wavecms/user/login', 'User assigned to "Super admin" role') . "\n", Console::FG_GREEN);
+        return $this->stdout(Yii::t('wavecms/user', 'User assigned to "Super admin" role') . "\n", Console::FG_GREEN);
     }
 }

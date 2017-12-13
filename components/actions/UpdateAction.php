@@ -59,7 +59,7 @@ class UpdateAction extends Action
         array_unshift(
             $this->controller->view->params['buttons_top'],
             Html::a(
-                Yii::t('wavecms/base/main', 'Return'),
+                Yii::t('wavecms/main', 'Return'),
                 $this->controller->returnUrl,
                 ['class' => 'btn btn-default']
             )
@@ -95,7 +95,7 @@ class UpdateAction extends Action
                 Flash::message(
                     'after_update',
                     'success',
-                    ['message' => Yii::t('wavecms/base/main', 'Element has been updated')]);
+                    ['message' => Yii::t('wavecms/main', 'Element has been updated')]);
 
                 if (Yii::$app->request->post('save_and_return')) {
                     return $this->controller->redirect($this->controller->returnUrl);

@@ -19,10 +19,10 @@ class BoolColumn extends DataColumn
     {
 
         if ($model->{$this->attribute}) {
-            return '<span class="label label-success">'. Yii::t('wavecms/base/main','Yes').'</span>';
+            return '<span class="label label-success">'. Yii::t('wavecms/main','Yes').'</span>';
         }
 
-        return '<span class="label label-light-gray">'. Yii::t('wavecms/base/main','No').'</span>';
+        return '<span class="label label-light-gray">'. Yii::t('wavecms/main','No').'</span>';
     }
 
 }

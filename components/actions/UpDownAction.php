@@ -26,7 +26,7 @@ class UpDownAction extends Action
         $model = $this->_fetchOne($id);
 
         if (!$model)
-            throw new NotFoundHttpException(Yii::t('wavecms/base/main', 'Element not found'));
+            throw new NotFoundHttpException(Yii::t('wavecms/main', 'Element not found'));
 
         $compare = '<';
         $order = 'sort DESC';
@@ -52,13 +52,13 @@ class UpDownAction extends Action
                 Flash::message(
                     'up_down',
                     'success',
-                    ['message' => Yii::t('wavecms/base/main', 'Elements has been moved up')]
+                    ['message' => Yii::t('wavecms/main', 'Elements has been moved up')]
                 );
             } else {
                 Flash::message(
                     'up_down',
                     'success',
-                    ['message' => Yii::t('wavecms/base/main', 'Elements has been moved down')]
+                    ['message' => Yii::t('wavecms/main', 'Elements has been moved down')]
                 );
             }
 
@@ -67,13 +67,13 @@ class UpDownAction extends Action
                 Flash::message(
                     'up_down',
                     'warning',
-                    ['message' => Yii::t('wavecms/base/main', 'Elements cannot be moved up')]
+                    ['message' => Yii::t('wavecms/main', 'Elements cannot be moved up')]
                 );
             } else {
                 Flash::message(
                     'up_down',
                     'warning',
-                    ['message' => Yii::t('wavecms/base/main', 'Elements cannot be moved down')]
+                    ['message' => Yii::t('wavecms/main', 'Elements cannot be moved down')]
                 );
             }
         }

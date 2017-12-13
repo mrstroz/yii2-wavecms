@@ -47,7 +47,7 @@ class DeleteSubListAction extends Action
         Flash::message(
             'delete_sub_list',
             'success',
-            ['message' => Yii::t('wavecms/base/main', 'Elements from list "{heading}" has been deleted', ['heading' => $this->controller->heading])]
+            ['message' => Yii::t('wavecms/main', 'Elements from list "{heading}" has been deleted', ['heading' => $this->controller->heading])]
         );
     }
 }

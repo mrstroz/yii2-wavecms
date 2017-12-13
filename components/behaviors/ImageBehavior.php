@@ -35,11 +35,11 @@ class ImageBehavior extends Behavior
     {
 
         if (!$this->attribute) {
-            throw new InvalidConfigException(Yii::t('wavecms/base/main','Property "attribute" is not defined in ImageBehavior'));
+            throw new InvalidConfigException(Yii::t('wavecms/main','Property "attribute" is not defined in ImageBehavior'));
         }
 
         if (!is_array($this->sizes)) {
-            throw new InvalidConfigException(Yii::t('wavecms/base/main','Property "sizes" is not defined in ImageBehavior'));
+            throw new InvalidConfigException(Yii::t('wavecms/main','Property "sizes" is not defined in ImageBehavior'));
         }
 
         parent::init();
@@ -48,7 +48,7 @@ class ImageBehavior extends Behavior
     public function uploadImage($event)
     {
         if (!array_key_exists($this->attribute, $event->sender->attributes)) {
-            throw new InvalidConfigException(Yii::t('wavecms/base/main', 'Attribute {attribute} not found in model {model}', ['attribute' => $this->attribute, 'model' => $event->sender->className()]));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Attribute {attribute} not found in model {model}', ['attribute' => $this->attribute, 'model' => $event->sender->className()]));
         }
 
         $oldFile = false;

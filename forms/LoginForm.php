@@ -1,10 +1,10 @@
 <?php
 
-namespace mrstroz\wavecms\models;
+namespace mrstroz\wavecms\forms;
 
+use mrstroz\wavecms\models\User;
 use Yii;
 use yii\base\Model;
-use yii\helpers\VarDumper;
 
 /**
  * Login form
@@ -37,9 +37,9 @@ class LoginForm extends Model
     {
         $labels = parent::attributeLabels();
 
-        $labels['email'] = Yii::t('wavecms/user/login','Email');
-        $labels['password'] = Yii::t('wavecms/user/login','Password');
-        $labels['rememberMe'] = Yii::t('wavecms/user/login','Remember me');
+        $labels['email'] = Yii::t('wavecms/user', 'Email');
+        $labels['password'] = Yii::t('wavecms/user', 'Password');
+        $labels['rememberMe'] = Yii::t('wavecms/user', 'Remember me');
 
         return $labels;
     }
@@ -56,7 +56,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Yii::t('wavecms/user/login', 'Incorrect username or password.'));
+                $this->addError($attribute, Yii::t('wavecms/user', 'Incorrect username or password.'));
             }
         }
     }

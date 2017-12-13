@@ -4,7 +4,6 @@ namespace mrstroz\wavecms\controllers;
 
 use mrstroz\wavecms\components\web\Controller;
 use Yii;
-use yii\helpers\VarDumper;
 
 class DashboardController extends Controller
 {
@@ -27,7 +26,7 @@ class DashboardController extends Controller
 
     public function actionIndex()
     {
-        $this->view->params['h1'] = Yii::t('wavecms/base/main', 'Dashboard');
+        $this->view->params['h1'] = Yii::t('wavecms/main', 'Dashboard');
 
         $this->view->title = $this->view->params['h1'];
         return $this->render('index');

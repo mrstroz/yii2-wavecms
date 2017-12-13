@@ -1,11 +1,13 @@
 <?php
 
-namespace mrstroz\wavecms\models;
+namespace mrstroz\wavecms\models\search;
 
+use mrstroz\wavecms\models\Message;
+use mrstroz\wavecms\models\SourceMessage;
 use Yii;
 use yii\data\ActiveDataProvider;
 
-class SourceMessagerSearch extends SourceMessage
+class SourceMessageSearch extends SourceMessage
 {
 
 
@@ -29,9 +31,9 @@ class SourceMessagerSearch extends SourceMessage
         }
 
         $dataProvider->query->andFilterWhere(['or',
-            ['like', SourceMessage::tableName().'.category', $this->category],
-            ['like', SourceMessage::tableName().'.message', $this->message],
-            ['like', MEssage::tableName().'.translation', $this->translation]
+            ['like', SourceMessage::tableName() . '.category', $this->category],
+            ['like', SourceMessage::tableName() . '.message', $this->message],
+            ['like', Message::tableName() . '.translation', $this->translation]
         ]);
 
 

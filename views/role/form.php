@@ -16,7 +16,7 @@ use yii\bootstrap\Html;
 <div class="row">
 
     <div class="col-md-12">
-        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user/login', 'Role'), 'panel_class' => 'panel-primary']); ?>
+        <?php PanelWidget::begin(['heading' => Yii::t('wavecms/user', 'Role'), 'panel_class' => 'panel-primary']); ?>
 
         <?php echo $form->field($model, 'name'); ?>
 
@@ -31,7 +31,7 @@ use yii\bootstrap\Html;
 <?php $extraButtons = [];
 
 if (!$model->isNewRecord) {
-    $extraButtons[] = Html::a(FontAwesome::icon('plus') . ' ' . Yii::t('wavecms/user/login', 'Add permissions'), ['add-permission', 'id' => $model->name], [
+    $extraButtons[] = Html::a(FontAwesome::icon('plus') . ' ' . Yii::t('wavecms/user', 'Add permissions'), ['add-permission', 'id' => $model->name], [
         'class' => 'btn btn-default'
     ]);
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace mrstroz\wavecms\models;
+namespace mrstroz\wavecms\models\query;
 
 /**
  * This is the ActiveQuery class for [[Message]].

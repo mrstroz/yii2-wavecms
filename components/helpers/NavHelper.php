@@ -5,6 +5,7 @@ namespace mrstroz\wavecms\components\helpers;
 use mrstroz\wavecms\models\AuthItem;
 use Yii;
 use yii\base\Component;
+use yii\helpers\VarDumper;
 
 class NavHelper extends Component
 {
@@ -112,7 +113,8 @@ class NavHelper extends Component
             foreach ($Nav as &$one) {
                 if (!isset($one['visible'])) {
                     if (isset($one['permission'])) {
-                        $one['visible'] = Yii::$app->user->can(AuthItem::SUPER_ADMIN) || Yii::$app->user->can($one['permission']);
+                        $authItemModel = Yii::createObject(AuthItem::class);
+                        $one['visible'] = Yii::$app->user->can($authItemModel::SUPER_ADMIN) || Yii::$app->user->can($one['permission']);
                     } else {
                         if (is_array($one['url'])) {
                             $url = explode('/', trim($one['url'][0], '/'));
