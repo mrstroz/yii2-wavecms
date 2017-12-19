@@ -16,7 +16,7 @@ use mrstroz\wavecms\models\Message;
 use mrstroz\wavecms\models\query\MessageQuery;
 use mrstroz\wavecms\models\query\SourceMessageQuery;
 use mrstroz\wavecms\models\query\UserQuery;
-use mrstroz\wavecms\models\search\SourceMessagerSearch;
+use mrstroz\wavecms\models\search\SourceMessageSearch;
 use mrstroz\wavecms\models\search\UserSearch;
 use mrstroz\wavecms\models\SourceMessage;
 use mrstroz\wavecms\models\User;
@@ -103,7 +103,7 @@ class Bootstrap implements BootstrapInterface
      */
     protected function initTranslations()
     {
-        Yii::$app->i18n->translations['wavecms*'] = [
+        Yii::$app->i18n->translations['wavecms/*'] = [
             'class' => PhpMessageSource::class,
             'basePath' => '@wavecms/messages',
             'fileMap' => [
@@ -200,7 +200,7 @@ class Bootstrap implements BootstrapInterface
             'UserQuery' => UserQuery::class,
 
             /* SEARCH */
-            'SourceMessagerSearch' => SourceMessagerSearch::class,
+            'SourceMessageSearch' => SourceMessageSearch::class,
             'UserSearch' => UserSearch::class,
         ];
 
@@ -227,7 +227,7 @@ class Bootstrap implements BootstrapInterface
                 'UserQuery',
             ],
             'mrstroz\\wavecms\\models\\search' => [
-                'SourceMessagerSearch',
+                'SourceMessageSearch',
                 'UserSearch',
             ]
         ];

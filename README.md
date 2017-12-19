@@ -89,10 +89,6 @@ yii migrate --migrationPath=@vendor/yii2mod/yii2-settings/migrations
 
 5. Update `console/config/main.php` (Yii2 advanced template)
 ```php
-'bootstrap' => [
-    // ...
-    'mrstroz\wavecms\Bootstrap'
-],
 'modules' => [
     // ...
     'wavecms' => [
@@ -105,6 +101,7 @@ yii migrate --migrationPath=@vendor/yii2mod/yii2-settings/migrations
 ```
 yii wavecms/create [email] [password]
 ```
+
 Overriding classes
 ------------------
 Classes can be overridden by:
@@ -141,7 +138,7 @@ Use `controllerMap` attribute for WaveCMS module to override controllers
         'class' => 'mrstroz\wavecms\Module',
         'languages' => ['en','pl'],
         'controllerMap' => [
-            'user' => 'app\controllers\UserController'
+            'user' => 'backend\controllers\UserController'
         ]
     ],
 ],
@@ -158,7 +155,7 @@ Use **[themes](http://www.yiiframework.com/doc-2.0/guide-output-theming.html)** 
             'basePath' => '@app/themes/basic',
             'baseUrl' => '@web/themes/basic',
             'pathMap' => [
-                '@wavecms/views' => '@app/themes/basic',
+                '@wavecms/views' => '@app/themes/basic/wavecms',
             ],
         ],
     ],
@@ -215,6 +212,7 @@ Available WaveCMS modules
 [Example](https://github.com/mrstroz/yii2-wavecms-example) (example module) - https://github.com/mrstroz/yii2-wavecms-example
 
 [Form](https://github.com/mrstroz/yii2-wavecms-form) (form module) - https://github.com/mrstroz/yii2-wavecms-form
+
 
 > ![INWAVE LOGO](http://inwave.pl/html/img/logo.png)  
 > INWAVE - Internet Software House  

@@ -7,7 +7,7 @@ use yii\base\Module as BaseModule;
 /**
  * Class Module
  * @package mrstroz\wavecms
- * This is the main module class of the yii2-wavecms extension.
+ * This is the main module class of the yii2-wavecms.
  */
 class Module extends BaseModule
 {
