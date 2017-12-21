@@ -8,6 +8,8 @@ use mrstroz\wavecms\components\web\Controller;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\caching\Cache;
+use yii2mod\settings\components\Settings;
 
 /**
  * Index action - display GridView with all entries form $this->controller->query model.
@@ -59,6 +61,12 @@ class SettingsAction extends Action
                 Yii::$app->settings->set($model->formName(), $key, $value);
             }
             $this->controller->trigger(Controller::EVENT_AFTER_MODEL_SAVE, $eventModel);
+
+            if (Yii::$app->cacheFrontend instanceof Cache) {
+                /** @var Settings $settingsComponent */
+                $settingsComponent = Yii::createObject(Settings::class);
+                Yii::$app->cacheFrontend->delete($settingsComponent->cacheKey);
+            }
 
             Flash::message(
                 'after_update',

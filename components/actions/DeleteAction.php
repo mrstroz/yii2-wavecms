@@ -62,6 +62,6 @@ class DeleteAction extends Action
             ['message' => Yii::t('wavecms/main', 'Element has been deleted')]
         );
 
-        return $this->controller->redirect($this->controller->returnUrl);
+        return $this->controller->redirect(Yii::$app->request->referrer);
     }
 }
