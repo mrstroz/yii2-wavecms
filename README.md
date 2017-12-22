@@ -71,7 +71,7 @@ Add the `migrationPath` in `console/config/main.php` and run `yii migrate`:
             '@app/migrations',
             '@yii/rbac/migrations/',
             '@yii/i18n/migrations/',
-            '@wavecms/migrations/',
+            '@vendor/mrstroz/yii2-wavecms/migrations/',
             '@vendor/yii2mod/yii2-settings/migrations/'    
         ],
     ],
