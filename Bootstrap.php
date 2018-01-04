@@ -254,13 +254,13 @@ class Bootstrap implements BootstrapInterface
      */
     protected function initNavigation()
     {
-        Yii::$app->params['nav']['dashboard'] = [
+        Yii::$app->params['nav']['wavecms_dashboard'] = [
             'label' => FontAwesome::icon('home') . Yii::t('wavecms/main', 'Dashboard'),
             'url' => ['/'],
             'position' => 500
         ];
 
-        Yii::$app->params['nav']['user'] = [
+        Yii::$app->params['nav']['wavecms_user'] = [
             'label' => FontAwesome::icon('users') . Yii::t('wavecms/user', 'Users'),
             'url' => 'javascript: ;',
             'options' => [

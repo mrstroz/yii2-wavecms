@@ -5,6 +5,7 @@ namespace mrstroz\wavecms\controllers;
 use mrstroz\wavecms\components\grid\ActionColumn;
 use mrstroz\wavecms\components\grid\BoolColumn;
 use mrstroz\wavecms\components\grid\ButtonColumn;
+use mrstroz\wavecms\components\grid\CheckboxColumn;
 use mrstroz\wavecms\components\helpers\Flash;
 use mrstroz\wavecms\components\helpers\NavHelper;
 use mrstroz\wavecms\components\web\Controller;
@@ -37,6 +38,9 @@ class UserController extends Controller
         ]);
 
         $this->columns = array(
+            [
+                'class' => CheckboxColumn::className()
+            ],
             'id',
             'first_name',
             'last_name',

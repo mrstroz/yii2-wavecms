@@ -16,4 +16,23 @@
     @include mb;
   }
 
+  .bulk-actions {
+    margin-bottom: 5px;
+
+    i {
+      margin: 9px 12px 0 13px;
+      float: left;
+    }
+
+    select {
+      float: left;
+      width: auto;
+    }
+
+    button {
+      margin-left: 10px;
+      float: left;
+    }
+
+  }
 }

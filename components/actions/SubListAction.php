@@ -33,7 +33,7 @@ class SubListAction extends Action
         $this->_checkConfig();
         $this->controller->layout = false;
 
-        /** Set top buttons */
+        /** Set sublist buttons */
         array_unshift(
             $this->controller->view->params['buttons_sublist'],
             Html::a(

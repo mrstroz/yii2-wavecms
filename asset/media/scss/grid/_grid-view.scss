@@ -1,7 +1,8 @@
 .grid-view {
 
-
   table {
+    margin-bottom: 5px;
+
     .ui-sortable {
       tr {
         cursor: move;
@@ -48,11 +49,19 @@
         &.publish-column {
           width: 41px;
         }
+
+        &.checkbox-column {
+          width: 30px;
+        }
       }
       td {
         vertical-align: middle;
 
       }
     }
+  }
+
+  .pagination {
+    margin: 5px 0 5px 0;
   }
 }

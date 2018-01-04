@@ -3,6 +3,7 @@
 namespace mrstroz\wavecms\controllers;
 
 use mrstroz\wavecms\components\grid\ActionColumn;
+use mrstroz\wavecms\components\grid\CheckboxColumn;
 use mrstroz\wavecms\components\web\Controller;
 use mrstroz\wavecms\models\Message;
 use mrstroz\wavecms\models\search\SourceMessagerSearch;
@@ -17,7 +18,6 @@ class TranslationController extends Controller
     public function init()
     {
         $this->heading = Yii::t('wavecms/main', 'Translations');
-
 
         $sourceMessageModel = Yii::createObject(SourceMessage::class);
         $messageModel = Yii::createObject(Message::class);
@@ -44,6 +44,9 @@ class TranslationController extends Controller
         $this->filterModel = Yii::createObject(SourceMessageSearch::class);
 
         $this->columns = array(
+            [
+                'class' => CheckboxColumn::className()
+            ],
             'category',
             'message',
             'translation',

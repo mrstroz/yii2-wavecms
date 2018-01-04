@@ -73,7 +73,8 @@ class IndexAction extends Action
             'dataProvider' => $this->controller->dataProvider,
             'filterModel' => $this->controller->filterModel,
             'columns' => $this->controller->columns,
-            'sort' => $this->controller->sort
+            'sort' => $this->controller->sort,
+            'bulkActions' => $this->controller->bulkActions
         ));
     }
 

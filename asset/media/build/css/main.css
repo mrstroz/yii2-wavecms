@@ -8355,37 +8355,47 @@ code {
   .main .header-title {
     margin-top: 18px;
     margin-bottom: 18px; }
+  .main .bulk-actions {
+    margin-bottom: 5px; }
+    .main .bulk-actions i {
+      margin: 9px 12px 0 13px;
+      float: left; }
+    .main .bulk-actions select {
+      float: left;
+      width: auto; }
+    .main .bulk-actions button {
+      margin-left: 10px;
+      float: left; }
 
-.grid-view table .ui-sortable tr {
-  cursor: move; }
+.grid-view table {
+  margin-bottom: 5px; }
+  .grid-view table .ui-sortable tr {
+    cursor: move; }
+  .grid-view table tr.filters .form-control {
+    font-size: 12px;
+    height: 28px;
+    padding: 2px 8px; }
+  .grid-view table tr th .asc:before, .grid-view table tr th .desc:before {
+    margin-right: 10px;
+    font-family: 'FontAwesome';
+    font-weight: 400; }
+  .grid-view table tr th .asc:before {
+    content: "\f160"; }
+  .grid-view table tr th .desc:before {
+    content: "\f161"; }
+  .grid-view table tr th.action-column {
+    width: 65px; }
+  .grid-view table tr th.sort-column {
+    width: 67px; }
+  .grid-view table tr th.publish-column {
+    width: 41px; }
+  .grid-view table tr th.checkbox-column {
+    width: 30px; }
+  .grid-view table tr td {
+    vertical-align: middle; }
 
-.grid-view table tr.filters .form-control {
-  font-size: 12px;
-  height: 28px;
-  padding: 2px 8px; }
-
-.grid-view table tr th .asc:before, .grid-view table tr th .desc:before {
-  margin-right: 10px;
-  font-family: 'FontAwesome';
-  font-weight: 400; }
-
-.grid-view table tr th .asc:before {
-  content: "\f160"; }
-
-.grid-view table tr th .desc:before {
-  content: "\f161"; }
-
-.grid-view table tr th.action-column {
-  width: 65px; }
-
-.grid-view table tr th.sort-column {
-  width: 67px; }
-
-.grid-view table tr th.publish-column {
-  width: 41px; }
-
-.grid-view table tr td {
-  vertical-align: middle; }
+.grid-view .pagination {
+  margin: 5px 0 5px 0; }
 
 .wavecms-form .form-group.required label.control-label:after {
   content: '*'; }

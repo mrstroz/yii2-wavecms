@@ -33,6 +33,8 @@ class RoleController extends Controller
     {
         $authItemModel = Yii::createObject(AuthItem::class);
 
+        $this->bulkActions = false;
+
         $this->heading = Yii::t('wavecms/user', 'Roles');
         $this->query = $authItemModel::find()->where(['type' => 1]);
 //
