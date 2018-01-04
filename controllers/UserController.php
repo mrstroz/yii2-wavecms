@@ -34,9 +34,6 @@ class UserController extends Controller
 
         $this->dataProvider = new ActiveDataProvider([
             'query' => $this->query,
-            'pagination' => [
-                'pageSize' => 10,
-            ]
         ]);
 
         $this->columns = array(

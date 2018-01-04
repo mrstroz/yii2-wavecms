@@ -7,6 +7,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * Index action - display GridView with all entries form $this->controller->query model.
@@ -27,6 +28,9 @@ class IndexAction extends Action
     public function run()
     {
         $this->_checkConfig();
+
+        /** Remember url for backFunction */
+        Url::remember();
 
         /** Set header of page */
         $this->controller->view->params['h1'] = $this->controller->heading;

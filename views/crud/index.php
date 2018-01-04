@@ -2,7 +2,6 @@
 
 use himiklab\sortablegrid\SortableGridView;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
 
 ?>
 
@@ -11,7 +10,7 @@ use yii\widgets\Pjax;
 
 if ($sort) {
 
-    Pjax::begin(['id' => 'grid']);
+//    Pjax::begin(['id' => 'grid']);
 
     echo SortableGridView::widget(array(
         'dataProvider' => $dataProvider,
@@ -23,11 +22,11 @@ if ($sort) {
         ]
     ));
 
-    Pjax::end();
+//    Pjax::end();
 
 } else {
 
-    Pjax::begin(['id' => 'grid']);
+//    Pjax::begin(['id' => 'grid']);
 
     echo GridView::widget(array(
         'dataProvider' => $dataProvider,
@@ -39,7 +38,7 @@ if ($sort) {
         ]
     ));
 
-    Pjax::end();
+//    Pjax::end();
 
 }
 

@@ -98,7 +98,11 @@ class UpdateAction extends Action
                     ['message' => Yii::t('wavecms/main', 'Element has been updated')]);
 
                 if (Yii::$app->request->post('save_and_return')) {
-                    return $this->controller->redirect($this->controller->returnUrl);
+                    /** Back to parent element when use subList */
+                    if ($parentField && $parentId && $parentRoute) {
+                        return $this->controller->redirect($this->controller->returnUrl);
+                    }
+                    return $this->controller->goBack();
                 }
 
                 return $this->controller->redirect(array_merge([

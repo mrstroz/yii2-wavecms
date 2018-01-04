@@ -34,9 +34,6 @@ class TranslationController extends Controller
 
         $this->dataProvider = new ActiveDataProvider([
             'query' => $this->query,
-            'pagination' => [
-                'pageSize' => 10,
-            ]
         ]);
 
         $this->dataProvider->sort->attributes['translation'] = [
