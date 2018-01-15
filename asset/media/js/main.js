@@ -19,7 +19,6 @@ function WaveCMS() {
     };
 
     this.sidebarNav = function () {
-        console.log('Sidebar nav');
 
         $('.sidebar .nav li a').on('click', function () {
 

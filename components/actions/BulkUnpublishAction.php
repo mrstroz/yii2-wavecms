@@ -32,6 +32,7 @@ class BulkUnpublishAction extends Action
         $selection = Yii::$app->request->post('selection');
 
         if ($selection) {
+            $selection = explode(',',$selection);
             foreach ($selection as $item) {
                 /**
                  * Fetch item and delete

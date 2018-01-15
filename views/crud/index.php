@@ -1,10 +1,10 @@
 <?php
 
 use himiklab\sortablegrid\SortableGridView;
+use yii\bootstrap\ActiveForm;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\bootstrap\ActiveForm;
 
 
 /** @var array $bulkActions */
@@ -17,7 +17,7 @@ use yii\bootstrap\ActiveForm;
 
 <?php
 
-$form = ActiveForm::begin();
+$form = ActiveForm::begin(['id' => 'bulk_actions_form']);
 
 ?>
 
@@ -42,19 +42,29 @@ $form = ActiveForm::begin();
                 ]
             );
 
+            echo Html::hiddenInput('selection', null, [
+                'id' => 'selection'
+            ]);
+
             $this->registerJs('
                 $("#bulk_action").change(function(){
                     $(this).parents("form").attr("action",$(this).val());
                 });
+                
+                $("#bulk_actions_form").submit(function(e){
+                    $("#selection").val($("#grid").yiiGridView("getSelectedRows").join(","));
+                });
+                
             ');
 
             ?>
-            <?php echo Html::submitButton(Yii::t('wavecms/main', 'Submit'), ['class' => 'btn btn-light btn-sm','data-confirm' => Yii::t('wavecms/main','Are you sure ?')]); ?>
+            <?php echo Html::submitButton(Yii::t('wavecms/main', 'Submit'), ['class' => 'btn btn-light btn-sm', 'data-confirm' => Yii::t('wavecms/main', 'Are you sure ?')]); ?>
         </div>
 
     </div>
 <?php endif; ?>
 
+<?php ActiveForm::end(); ?>
 
 <?php
 
@@ -65,6 +75,7 @@ if ($sort) {
         'filterModel' => $filterModel,
         'columns' => $columns,
         'layout' => '{items}{summary}{pager}',
+        'id' => 'grid',
         'tableOptions' => [
             'class' => 'table table-striped table-bordered table-hover'
         ]
@@ -77,6 +88,7 @@ if ($sort) {
         'filterModel' => $filterModel,
         'columns' => $columns,
         'layout' => '{items}{summary}{pager}',
+        'id' => 'grid',
         'tableOptions' => [
             'class' => 'table table-striped table-bordered table-hover'
         ]
@@ -89,6 +101,6 @@ if ($sort) {
 ?>
 
 
-<?php ActiveForm::end(); ?>
+
 
 
