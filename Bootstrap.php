@@ -46,6 +46,14 @@ class Bootstrap implements BootstrapInterface
     {
         Yii::setAlias('@wavecms', '@vendor/mrstroz/yii2-wavecms');
 
+        /** Set extra aliases required in Wavecms with shared hostings*/
+        Yii::setAlias('@frontWeb',
+            str_replace('/admin', '', Yii::getAlias('@web'))
+        );
+        Yii::setAlias('@frontWebroot',
+            str_replace('/admin', '', Yii::getAlias('@webroot'))
+        );
+
         $this->initTranslations();
 
         /** @var Module $module */
@@ -57,14 +65,6 @@ class Bootstrap implements BootstrapInterface
                 $module->controllerNamespace = 'mrstroz\wavecms\controllers';
 
                 if ($app->id === 'app-backend') {
-
-                    /** Set extra aliases required in Wavecms with shared hostings*/
-                    Yii::setAlias('@frontWeb',
-                        str_replace('/admin', '', Yii::getAlias('@web'))
-                    );
-                    Yii::setAlias('@frontWebroot',
-                        str_replace('/admin', '', Yii::getAlias('@webroot'))
-                    );
 
                     /** @var string errorAction Set error action */
                     Yii::$app->errorHandler->errorAction = $module->errorAction;
