@@ -46,13 +46,17 @@ class Bootstrap implements BootstrapInterface
     {
         Yii::setAlias('@wavecms', '@vendor/mrstroz/yii2-wavecms');
 
-        /** Set extra aliases required in Wavecms with shared hostings*/
-        Yii::setAlias('@frontWeb',
-            str_replace('/admin', '', Yii::getAlias('@web'))
-        );
-        Yii::setAlias('@frontWebroot',
-            str_replace('/admin', '', Yii::getAlias('@webroot'))
-        );
+        if ($app->id === 'app-backend' || $app->id === 'app-frontend') {
+
+            /** Set extra aliases required in Wavecms with shared hostings*/
+            Yii::setAlias('@frontWeb',
+                str_replace('/admin', '', Yii::getAlias('@web'))
+            );
+            Yii::setAlias('@frontWebroot',
+                str_replace('/admin', '', Yii::getAlias('@webroot'))
+            );
+
+        }
 
         $this->initTranslations();
 
