@@ -35,13 +35,29 @@ Required steps
         'languages' => ['en','pl']
     ],
 ],
-
+// ...
 'components' => [
     // ...
     'user' => [
         'identityClass' => 'mrstroz\wavecms\models\User', //Change identity class
         // ...
     ],
+]
+// ...
+'controllerMap' => [
+    'elfinder' => [
+        'class' => 'mihaildev\elfinder\Controller',
+        'access' => ['@'],
+        'disabledCommands' => ['netmount'],
+        'roots' => [
+            [
+                'baseUrl'=>'@frontWeb',
+                'basePath'=>'@frontWebroot',
+                'path' => 'userfiles',
+                'name' => 'Files'
+            ]
+        ]
+    ]
 ]
 
 ```
