@@ -62,7 +62,7 @@ class SettingsController extends Controller
                 }
             }
 
-            if (file_exists('../minify/')) {
+            if (@file_exists('../minify/')) {
                 $minifyAsset = FileHelper::findFiles('../minify/');
                 if ($minifyAsset) {
                     foreach ($minifyAsset as $file) {

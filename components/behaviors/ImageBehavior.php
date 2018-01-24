@@ -69,7 +69,7 @@ class ImageBehavior extends Behavior
             $baseName = $uploadedFile->baseName;
             $fileName = $baseName . '.' . $uploadedFile->extension;
 
-            while (file_exists($folder . '/' . $fileName)) {
+            while (@file_exists($folder . '/' . $fileName)) {
                 $baseName .= '_';
                 $fileName = $baseName . '.' . $uploadedFile->extension;
             }
@@ -122,16 +122,16 @@ class ImageBehavior extends Behavior
         $folder = $this->getWebrootFolder();
 
         if ($fileName) {
-            if (file_exists($folder . '/' . $fileName)) {
+            if (@file_exists($folder . '/' . $fileName)) {
                 unlink($folder . '/' . $fileName);
             }
-            if (file_exists($folder . '/' . $this->thumbFolder . '/' . $fileName)) {
+            if (@file_exists($folder . '/' . $this->thumbFolder . '/' . $fileName)) {
                 unlink($folder . '/' . $this->thumbFolder . '/' . $fileName);
             }
             if (is_array($this->sizes)) {
                 $i = 0;
                 foreach ($this->sizes as $size) {
-                    if (file_exists($folder . '/' . $i . '/' . $fileName)) {
+                    if (@file_exists($folder . '/' . $i . '/' . $fileName)) {
                         unlink($folder . '/' . $i . '/' . $fileName);
                     }
                     $i++;

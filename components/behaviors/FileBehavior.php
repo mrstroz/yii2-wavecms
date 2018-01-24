@@ -61,7 +61,7 @@ class FileBehavior extends Behavior
             $baseName = $uploadedFile->baseName;
             $fileName = $baseName . '.' . $uploadedFile->extension;
 
-            while (file_exists($folder . '/' . $fileName)) {
+            while (@file_exists($folder . '/' . $fileName)) {
                 $baseName .= '_';
                 $fileName = $baseName . '.' . $uploadedFile->extension;
             }
@@ -100,7 +100,7 @@ class FileBehavior extends Behavior
         $folder = $this->getWebrootFolder();
 
         if ($fileName) {
-            if (file_exists($folder . '/' . $fileName)) {
+            if (@file_exists($folder . '/' . $fileName)) {
                 unlink($folder . '/' . $fileName);
             }
         }
