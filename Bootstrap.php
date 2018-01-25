@@ -53,7 +53,7 @@ class Bootstrap implements BootstrapInterface
                 str_replace('/admin', '', Yii::getAlias('@web'))
             );
             Yii::setAlias('@frontWebroot',
-                str_replace('/admin', '', Yii::getAlias('@webroot'))
+                str_replace('/public/admin', '/public', Yii::getAlias('@webroot'))
             );
 
         }
