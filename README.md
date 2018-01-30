@@ -26,7 +26,7 @@ to the require section of your `composer.json` file.
 Required steps
 --------------
 
-1. Update `backend/config/main.php` (Yii2 advanced template) 
+1. Update `blocaackend/config/main.php` (Yii2 advanced template) 
 ```php
 'modules' => [
     // ...   

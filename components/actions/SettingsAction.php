@@ -58,7 +58,11 @@ class SettingsAction extends Action
 
             $this->controller->trigger(Controller::EVENT_BEFORE_MODEL_SAVE, $eventModel);
             foreach ($model->toArray() as $key => $value) {
-                Yii::$app->settings->set($model->formName(), $key, $value);
+                if (!$value) {
+                    Yii::$app->settings->remove($model->formName(), $key);
+                } else {
+                    Yii::$app->settings->set($model->formName(), $key, $value);
+                }
             }
             $this->controller->trigger(Controller::EVENT_AFTER_MODEL_SAVE, $eventModel);
 

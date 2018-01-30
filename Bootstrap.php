@@ -89,6 +89,7 @@ class Bootstrap implements BootstrapInterface
                     ]);
 
                     Yii::$app->i18n->translations['yii2mod.settings'] = [
+                        'class' => 'yii\i18n\PhpMessageSource',
                         'basePath' => '@yii2mod/settings/messages'
                     ];
 
