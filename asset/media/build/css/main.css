@@ -8298,9 +8298,15 @@ code {
 .sidebar {
   padding: 0; }
   .sidebar .brand {
-    margin-left: 15px; }
-    .sidebar .brand span {
-      font-weight: 900; }
+    margin-left: 15px;
+    line-height: 48px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #00aecc; }
+    .sidebar .brand img {
+      height: 40px;
+      float: left; }
   .sidebar .nav {
     margin-top: 18px; }
     .sidebar .nav li a {
@@ -8444,10 +8450,26 @@ code {
       width: 460px;
       top: 30%;
       transform: translate(-50%, -30%); } }
-  #login-form h2 {
+  #login-form .logo-outer {
+    text-align: center;
     margin-bottom: 20px; }
-    #login-form h2 span {
-      font-weight: 900; }
+    #login-form .logo-outer .logo {
+      display: inline-block;
+      position: relative; }
+      #login-form .logo-outer .logo h2 {
+        margin: 0px;
+        position: absolute;
+        bottom: 5px;
+        right: 25px;
+        font-size: 16px;
+        color: #fff;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400; }
+        #login-form .logo-outer .logo h2 strong {
+          font-family: 'Open Sans', sans-serif;
+          font-weight: 700; }
+      #login-form .logo-outer .logo img {
+        height: 75px; }
 
 .wavecms-tabs li a:before {
   content: "";

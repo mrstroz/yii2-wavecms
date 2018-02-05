@@ -3,9 +3,18 @@
 
   .brand {
     margin-left: 15px;
+    line-height: 48px;
+    @include font-opensans-regular;
+    font-size: 18px;
+    color: $brand-primary;
 
-    span {
-      font-weight: 900;
+    img {
+      height: 40px;
+      float: left;
+    }
+
+    strong {
+
     }
   }
 

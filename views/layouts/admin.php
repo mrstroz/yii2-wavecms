@@ -44,7 +44,10 @@ $bundle = WavecmsAsset::register($this);
     <div class="row">
         <?php if (!Yii::$app->user->isGuest): ?>
             <div class="col-sm-3 col-md-2 sidebar">
-                <h3 class="brand">Wave<span>CMS</span></h3>
+                <h3 class="brand">
+                    <?php echo Html::img($bundle->baseUrl . '/img/logo.svg', ['alt' => 'waveCMS']); ?>
+                    wave<strong>CMS</strong>
+                </h3>
 
                 <?php
                 NavHelper::sortNav(Yii::$app->params['nav']);

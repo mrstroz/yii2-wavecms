@@ -23,6 +23,11 @@ class WavecmsAsset extends AssetBundle
     ];
 
 
+//    public $publishOptions = [
+//        'forceCopy'=>true,
+//    ];
+
+
     public function init()
     {
         parent::init();

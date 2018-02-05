@@ -19,11 +19,31 @@
     transform: translate(-50%, -30%);
   }
 
-  h2 {
+  .logo-outer {
+    text-align: center;
     margin-bottom: 20px;
 
-    span {
-      font-weight: 900;
+    .logo {
+      display: inline-block;
+      position: relative;
+
+      h2 {
+        margin: 0px;
+        position: absolute;
+        bottom: 5px;
+        right: 25px;
+        font-size: 16px;
+        color: #fff;
+        @include font-opensans-regular;
+
+        strong {
+          @include font-opensans-bold;
+        }
+      }
+
+      img {
+        height: 75px;
+      }
     }
   }
 }

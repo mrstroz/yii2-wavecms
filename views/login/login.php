@@ -10,7 +10,16 @@ $this->title = Yii::t('wavecms/user', 'Login to WaveCMS');
 
 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-<h2><?php echo Yii::t('wavecms/user', 'Login to Wave<span>CMS</span>'); ?></h2>
+<div class="logo-outer">
+    <div class="logo">
+        <?php
+        $asset = \mrstroz\wavecms\asset\WavecmsAsset::register($this);
+        echo Html::img($asset->baseUrl . '/img/logo.svg', ['alt' => 'waveCMS']);
+        ?>
+        <h2>wave<strong>CMS</strong></h2>
+    </div>
+</div>
+
 
 <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'placeholder' => Yii::t('wavecms/user', 'Email')])->label(false) ?>
 <?= $form->field($model, 'password')->passwordInput(['placeholder' => Yii::t('wavecms/user', 'Password')])->label(false) ?>

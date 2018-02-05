@@ -75,7 +75,7 @@ return [
     'Translation' => 'Tłumaczenie',
     'Translations' => 'Tłumaczenia',
     'Unpublish' => 'Cofnij publikację',
-    'Welcome in WaveCMS!' => 'Witaj w WaveCMS!',
+    'Welcome in wave<strong>CMS</strong>!' => 'Witaj w wave<strong>CMS</strong>!',
     'Width' => 'Szerokość',
     'Wrong language' => 'Zły język',
     'Yes' => 'Tak',
