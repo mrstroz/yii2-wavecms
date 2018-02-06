@@ -8455,7 +8455,8 @@ code {
     margin-bottom: 20px; }
     #login-form .logo-outer .logo {
       display: inline-block;
-      position: relative; }
+      position: relative;
+      margin-left: -10px; }
       #login-form .logo-outer .logo h2 {
         margin: 0px;
         position: absolute;
