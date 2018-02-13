@@ -13,10 +13,12 @@ class ButtonColumn extends DataColumn
 
     public $label = '';
     public $faIcon = 'edit';
-    public $class = 'btn btn-xs btn-default';
     public $url = ['index'];
     public $dataPjax = 0;
     public $headerOptions = ['class' => 'button-column'];
+    public $options = [
+        'class' => 'btn btn-xs btn-default'
+    ];
 
 
     public function renderDataCellContent($model, $key, $index)
@@ -29,10 +31,8 @@ class ButtonColumn extends DataColumn
         $Buttons = Html::a(
             FontAwesome::icon($this->faIcon),
             $this->url,
-            [
-                'class' => $this->class,
-                'data-pjax' => $this->dataPjax
-            ]);
+            $this->options
+        );
 
 
         return $Buttons;

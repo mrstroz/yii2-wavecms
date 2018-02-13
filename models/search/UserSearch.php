@@ -15,7 +15,7 @@ class UserSearch extends User
         return [
             [['id'], 'integer'],
             [['is_admin'], 'boolean'],
-            [['first_name', 'last_name', 'email', 'status'], 'safe'],
+            [['first_name', 'last_name', 'email', 'status','roles'], 'safe'],
         ];
     }
 
@@ -40,6 +40,7 @@ class UserSearch extends User
 
         $dataProvider->query->andFilterWhere(['user.is_admin' => $this->is_admin]);
         $dataProvider->query->andFilterWhere(['user.status' => $this->status]);
+        $dataProvider->query->andFilterWhere(['auth_assignment.item_name' => $this->roles]);
 
         return $dataProvider;
     }

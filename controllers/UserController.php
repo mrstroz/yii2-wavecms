@@ -4,9 +4,9 @@ namespace mrstroz\wavecms\controllers;
 
 use mrstroz\wavecms\components\grid\ActionColumn;
 use mrstroz\wavecms\components\grid\BoolColumn;
-use mrstroz\wavecms\components\grid\ButtonColumn;
 use mrstroz\wavecms\components\grid\CheckboxColumn;
 use mrstroz\wavecms\components\helpers\Flash;
+use mrstroz\wavecms\components\helpers\FontAwesome;
 use mrstroz\wavecms\components\helpers\NavHelper;
 use mrstroz\wavecms\components\web\Controller;
 use mrstroz\wavecms\forms\AssignRoleForm;
@@ -19,6 +19,7 @@ use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\grid\DataColumn;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
 class UserController extends Controller
@@ -31,7 +32,10 @@ class UserController extends Controller
         /** @var User $modelUser */
         $userModel = Yii::createObject(User::class);
 
-        $this->query = $userModel::find();
+        $this->query = $userModel::find()
+            ->select(['user.*', 'roles' => 'GROUP_CONCAT(auth_assignment.item_name SEPARATOR ",")'])
+            ->leftJoin('auth_assignment', 'user.id = auth_assignment.user_id')
+            ->groupBy('user.id');
 
         $this->dataProvider = new ActiveDataProvider([
             'query' => $this->query,
@@ -71,10 +75,30 @@ class UserController extends Controller
                 ]
             ],
             [
-                'class' => ButtonColumn::className(),
-                'faIcon' => 'exchange',
-                'label' => Yii::t('wavecms/user', 'Assign role'),
-                'url' => ['assign', 'id' => 'id']
+                'class' => DataColumn::className(),
+                'attribute' => 'roles',
+                'content' => function ($model, $key, $index, $column) {
+                    $roles = explode(',', $model->roles);
+
+                    $column = [];
+                    foreach (explode(',', $model->roles) as $role) {
+                        $class = 'label-light-gray';
+
+                        if ($role === 'Super admin') {
+                            $class = 'label-primary';
+                        }
+
+                        $column[] = '<span class="label ' . $class . '">' . $role . '</span>';
+                    }
+
+                    return Html::a(
+                            FontAwesome::icon('exchange'),
+                            ['assign', 'id' => $model->id],
+                            [
+                                'class' => 'btn btn-xs btn-default'
+                            ]) . ' ' . implode(' ', $column);
+                },
+                'filter' => ArrayHelper::map(AuthAssignment::find()->select('item_name')->asArray()->all(), 'item_name', 'item_name')
             ],
             [
                 'class' => ActionColumn::className(),

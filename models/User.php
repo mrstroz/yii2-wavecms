@@ -25,6 +25,7 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property string $roles
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -38,6 +39,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     public $password;
     public $password_repeat;
+
+    public $roles;
 
 
     /**
@@ -110,6 +113,7 @@ class User extends ActiveRecord implements IdentityInterface
         $labels['password_repeat'] = Yii::t('wavecms/user', 'Repeat password');
         $labels['lang'] = Yii::t('wavecms/user', 'Language');
         $labels['is_admin'] = Yii::t('wavecms/user', 'Is admin ?');
+        $labels['roles'] = Yii::t('wavecms/user', 'Roles');
 
         return $labels;
     }
