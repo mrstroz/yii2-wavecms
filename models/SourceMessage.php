@@ -12,12 +12,14 @@ use Yii;
  * @property string $category
  * @property string $message
  * @property string $translation
+ * @property string $message_id
  *
  * @property Message[] $messages
  */
 class SourceMessage extends \yii\db\ActiveRecord
 {
     public $translation;
+    public $message_id;
 
     /**
      * @inheritdoc

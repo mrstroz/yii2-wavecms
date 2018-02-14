@@ -2,6 +2,7 @@
 
 namespace mrstroz\wavecms\controllers;
 
+use dosamigos\editable\Editable;
 use mrstroz\wavecms\components\grid\ActionColumn;
 use mrstroz\wavecms\components\grid\CheckboxColumn;
 use mrstroz\wavecms\components\web\Controller;
@@ -11,6 +12,7 @@ use mrstroz\wavecms\models\search\SourceMessageSearch;
 use mrstroz\wavecms\models\SourceMessage;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\grid\DataColumn;
 
 class TranslationController extends Controller
 {
@@ -49,7 +51,21 @@ class TranslationController extends Controller
             ],
             'category',
             'message',
-            'translation',
+            [
+                'class' => DataColumn::className(),
+                'attribute' => 'translation',
+                'content' => function ($model, $key, $index, $column) {
+                    return Editable::widget([
+                        'model' => $model,
+                        'attribute' => 'translation',
+                        'type' => 'textarea',
+                        'url' => ['translation-editable'],
+                        'id' => $model->message_id,
+                        'mode' => 'popup',
+                        'placement' => 'left'
+                    ]);
+                }
+            ],
             [
                 'class' => ActionColumn::className(),
             ],
@@ -78,6 +94,60 @@ class TranslationController extends Controller
 
 
         parent::init();
+    }
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+
+        $behaviors['access']['rules'][] = [
+            'allow' => true,
+            'actions' => [
+                'translation-editable',
+            ],
+            'roles' => [
+                '@'
+            ],
+        ];
+
+        return $behaviors;
+    }
+
+    public function actionTranslationEditable()
+    {
+
+        $pk = Yii::$app->request->post('pk');
+        $pk = unserialize(base64_decode($pk));
+        $attribute = Yii::$app->request->post('name');
+        $value = Yii::$app->request->post('value');
+
+        if ($attribute === null) {
+            throw new BadRequestHttpException("'name' parameter cannot be empty.");
+        }
+        if ($value === null) {
+            throw new BadRequestHttpException("'value' parameter cannot be empty.");
+        }
+
+        $messageModel = Yii::createObject(Message::class);
+
+        /** @var \yii\db\ActiveRecord $model */
+        $model = $messageModel::find()->where(['id' => $pk, 'language' => Yii::$app->wavecms->editedLanguage])->one();
+        if (!$model) {
+            $model = Yii::createObject(Message::class);
+            $model->id = $pk;
+            $model->language = Yii::$app->wavecms->editedLanguage;
+        }
+
+        if ($this->scenario !== null) {
+            $model->setScenario($this->scenario);
+        }
+        $model->$attribute = $value;
+
+        if ($model->validate([$attribute])) {
+            // no need to specify which attributes as Yii2 handles that via [[BaseActiveRecord::getDirtyAttributes]]
+            return $model->save(false);
+        }
+        throw new BadRequestHttpException($model->getFirstError($attribute));
     }
 
 

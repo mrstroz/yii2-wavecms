@@ -2,6 +2,7 @@
 
 namespace mrstroz\wavecms\components\web;
 
+use dosamigos\editable\EditableAction;
 use himiklab\sortablegrid\SortableGridAction;
 use mrstroz\wavecms\components\actions\BulkDeleteAction;
 use mrstroz\wavecms\components\actions\BulkPublishAction;
@@ -196,6 +197,13 @@ class Controller extends BaseController
                 'class' => UpDownAction::className()
             ];
 
+            if (isset($this->query)) {
+                $actions['editable'] = [
+                    'class' => EditableAction::className(),
+                    'modelClass' => $this->query->modelClass
+                ];
+            }
+
             if (isset($this->bulkActions['bulk-delete'])) {
                 $actions['bulk-delete'] = [
                     'class' => BulkDeleteAction::className()
@@ -251,6 +259,7 @@ class Controller extends BaseController
                             'delete-sub-list',
                             'publish',
                             'up-down',
+                            'editable',
                             'bulk-delete',
                             'bulk-publish',
                             'bulk-unpublish',

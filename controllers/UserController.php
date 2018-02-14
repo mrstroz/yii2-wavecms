@@ -2,8 +2,8 @@
 
 namespace mrstroz\wavecms\controllers;
 
+use dosamigos\editable\Editable;
 use mrstroz\wavecms\components\grid\ActionColumn;
-use mrstroz\wavecms\components\grid\BoolColumn;
 use mrstroz\wavecms\components\grid\CheckboxColumn;
 use mrstroz\wavecms\components\helpers\Flash;
 use mrstroz\wavecms\components\helpers\FontAwesome;
@@ -30,7 +30,7 @@ class UserController extends Controller
         $this->heading = Yii::t('wavecms/user', 'Users');
 
         /** @var User $modelUser */
-        $userModel = Yii::createObject(User::class);
+        $userModel = Yii::createObject(User::className());
 
         $this->query = $userModel::find()
             ->select(['user.*', 'roles' => 'GROUP_CONCAT(auth_assignment.item_name SEPARATOR ",")'])
@@ -46,12 +46,77 @@ class UserController extends Controller
                 'class' => CheckboxColumn::className()
             ],
             'id',
-            'first_name',
-            'last_name',
-            'email',
             [
-                'class' => BoolColumn::className(),
+                'class' => DataColumn::className(),
+                'attribute' => 'first_name',
+                'content' => function ($model, $key, $index, $column) {
+                    return Editable::widget([
+                        'model' => $model,
+                        'attribute' => 'first_name',
+                        'type' => 'text',
+                        'url' => ['editable'],
+                        'mode' => 'popup',
+                        'placement' => 'top',
+                    ]);
+                }
+            ],
+            [
+                'class' => DataColumn::className(),
+                'attribute' => 'last_name',
+                'content' => function ($model, $key, $index, $column) {
+                    return Editable::widget([
+                        'model' => $model,
+                        'attribute' => 'last_name',
+                        'type' => 'text',
+                        'url' => ['editable'],
+                        'mode' => 'popup',
+                        'placement' => 'top',
+                    ]);
+                }
+            ],
+            [
+                'class' => DataColumn::className(),
+                'attribute' => 'email',
+                'content' => function ($model, $key, $index, $column) {
+                    return Editable::widget([
+                        'model' => $model,
+                        'attribute' => 'email',
+                        'type' => 'text',
+                        'url' => ['editable'],
+                        'mode' => 'popup',
+                        'placement' => 'top',
+                    ]);
+                }
+            ],
+            [
+                'class' => DataColumn::className(),
                 'attribute' => 'is_admin',
+                'content' => function ($model, $key, $index, $column) {
+                    $userModel = Yii::createObject(User::className());
+
+                    $value = Yii::t('wavecms/user', 'No');
+                    if ($model->is_admin === $userModel::IS_ADMIN_YES) {
+                        $value = Yii::t('wavecms/user', 'Yes');
+                    }
+
+                    return Editable::widget([
+                        'model' => $model,
+                        'attribute' => 'is_admin',
+                        'type' => 'select',
+                        'url' => ['editable'],
+                        'mode' => 'popup',
+                        'placement' => 'top',
+                        'value' => $value,
+
+                        'clientOptions' => [
+                            'value' => $model->is_admin,
+                            'source' => [
+                                ['value' => $userModel::IS_ADMIN_NO, 'text' => Yii::t('wavecms/user', 'No')],
+                                ['value' => $userModel::IS_ADMIN_YES, 'text' => Yii::t('wavecms/user', 'Yes')]
+                            ],
+                        ]
+                    ]);
+                },
                 'filter' => [
                     $userModel::IS_ADMIN_NO => Yii::t('wavecms/user', 'No'),
                     $userModel::IS_ADMIN_YES => Yii::t('wavecms/user', 'Yes')
@@ -61,19 +126,37 @@ class UserController extends Controller
                 'class' => DataColumn::className(),
                 'attribute' => 'status',
                 'content' => function ($model, $key, $index, $column) {
-                    $userModel = Yii::createObject(User::class);
+                    $userModel = Yii::createObject(User::className());
 
+                    $value = Yii::t('wavecms/user', 'Not active');
                     if ($model->status === $userModel::STATUS_ACTIVE) {
-                        return '<span class="label label-success">' . Yii::t('wavecms/user', 'Active') . '</span>';
+                        $value = Yii::t('wavecms/user', 'Active');
                     }
 
-                    return '<span class="label label-light-gray">' . Yii::t('wavecms/user', 'Not active') . '</span>';
+                    return Editable::widget([
+                        'model' => $model,
+                        'attribute' => 'status',
+                        'type' => 'select',
+                        'url' => ['editable'],
+                        'mode' => 'popup',
+                        'placement' => 'top',
+                        'value' => $value,
+
+                        'clientOptions' => [
+                            'value' => $model->status,
+                            'source' => [
+                                ['value' => $userModel::STATUS_DELETED, 'text' => Yii::t('wavecms/user', 'Not active')],
+                                ['value' => $userModel::STATUS_ACTIVE, 'text' => Yii::t('wavecms/user', 'Active')]
+                            ],
+                        ]
+                    ]);
                 },
                 'filter' => [
-                    $userModel::STATUS_DELETED => Yii::t('wavecms/user', 'Not active'),
-                    $userModel::STATUS_ACTIVE => Yii::t('wavecms/user', 'Active')
-                ]
+                    $userModel::IS_ADMIN_NO => Yii::t('wavecms/user', 'No'),
+                    $userModel::IS_ADMIN_YES => Yii::t('wavecms/user', 'Yes')
+                ],
             ],
+
             [
                 'class' => DataColumn::className(),
                 'attribute' => 'roles',
@@ -105,7 +188,7 @@ class UserController extends Controller
             ],
         );
 
-        $this->filterModel = Yii::createObject(UserSearch::class);
+        $this->filterModel = Yii::createObject(UserSearch::className());
 
         $this->on(self::EVENT_BEFORE_MODEL_SAVE, function ($event) {
             if ($event->model->password) {
@@ -152,8 +235,8 @@ class UserController extends Controller
         NavHelper::$active[] = 'assign';
 
 
-        $roleForm = Yii::createObject(AssignRoleForm::class);
-        $authAssignmentModel = Yii::createObject(AuthAssignment::class);
+        $roleForm = Yii::createObject(AssignRoleForm::className());
+        $authAssignmentModel = Yii::createObject(AuthAssignment::className());
 
         $assignedRolesDataProvider = new ActiveDataProvider([
             'query' => $authAssignmentModel::find()->where(['user_id' => $id])
