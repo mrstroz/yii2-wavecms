@@ -46,9 +46,11 @@ use yii\grid\GridView;
     ?>
 
     <?php if ($this->params['buttons_sublist']): ?>
-        <?= ButtonGroup::widget([
-            'buttons' => $this->params['buttons_sublist'],
-        ]); ?>
+        <?php if (isset($this->params['buttons_sublist'][Yii::$app->controller->id])): ?>
+            <?= ButtonGroup::widget([
+                'buttons' => $this->params['buttons_sublist'][Yii::$app->controller->id],
+            ]); ?>
+        <?php endif; ?>
     <?php endif; ?>
 
 </div>

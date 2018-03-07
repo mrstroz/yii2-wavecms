@@ -33,9 +33,13 @@ class SubListAction extends Action
         $this->_checkConfig();
         $this->controller->layout = false;
 
+        if (!isset($this->controller->view->params['buttons_sublist'][$this->controller->id])) {
+            $this->controller->view->params['buttons_sublist'][$this->controller->id] = [];
+        }
+
         /** Set sublist buttons */
         array_unshift(
-            $this->controller->view->params['buttons_sublist'],
+            $this->controller->view->params['buttons_sublist'][$this->controller->id],
             Html::a(
                 Yii::t('wavecms/main', 'Create new'),
                 array_merge(['create', 'parentField' => $parentField, 'parentId' => $parentId, 'parentRoute' => $parentRoute], $this->_forwardParams()),
