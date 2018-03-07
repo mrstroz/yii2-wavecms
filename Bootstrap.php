@@ -88,6 +88,8 @@ class Bootstrap implements BootstrapInterface
                         'class' => 'yii2mod\settings\components\Settings',
                     ]);
 
+                    Yii::$app->assetManager->appendTimestamp = true;
+
                     Yii::$app->i18n->translations['yii2mod.settings'] = [
                         'class' => 'yii\i18n\PhpMessageSource',
                         'basePath' => '@yii2mod/settings/messages'

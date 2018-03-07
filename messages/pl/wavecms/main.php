@@ -54,6 +54,7 @@ return [
     'Move down' => 'Przenieś na dół',
     'Move up' => 'Przenieś do góry',
     'No' => 'Nie',
+    'Property "{property}" is not defined in {class}' => 'Właściwość "{property}" nie jest zdefiniowana dla {class}',
     'Property "attribute" is not defined in FileBehavior' => 'Właściwość "attribute" nie jest zdefiniowana dla FileBehavior',
     'Property "attribute" is not defined in ImageBehavior' => 'Właściwość "attribute" nie jest zdefiniowana dla ImageBehavior',
     'Property "languages" is not defined in config file for component "wavecms"' => 'Właściwość "languages" nie zdefiniowana w pliku config dla componentu "wavecms',

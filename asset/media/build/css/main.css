@@ -8499,3 +8499,8 @@ code {
 
 .select2-container--krajee .select2-selection {
   border-color: #ddd; }
+
+.editable {
+  cursor: pointer;
+  float: left;
+  border-bottom: none !important; }

@@ -45,7 +45,6 @@ return [
     'List of users' => 'Lista użytkowników',
     'Login' => 'Zaloguj',
     'Login data' => 'Dane logowania',
-    'Login to Wave<span>CMS</span>' => 'Zaloguj się do Wave<span>CMS</span>',
     'Login to WaveCMS' => 'Zaloguj się do WaveCMS',
     'Logout' => 'Wyloguj',
     'My account' => 'Moje konto',
