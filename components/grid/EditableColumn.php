@@ -25,6 +25,10 @@ class EditableColumn extends DataColumn
             'url' => $this->url,
             'mode' => $this->mode,
             'placement' => $this->placement,
+
+            'clientOptions' => [
+                'emptytext' => \Yii::t('wavecms/main','[no data]'),
+            ]
         ]);
     }
 

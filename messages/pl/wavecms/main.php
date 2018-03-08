@@ -17,8 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Elements has been published' => 'Elementy zostały opublikowane',
-    'Elements has been unpublished' => 'Elementom została cofnięta publikacja',
+    '[no data]' => '[brak danych]',
     '... choose action' => '... wybierz akcję',
     '<i>Not set</i>' => '<i>Nie ustawione</i>',
     'Are you sure ?' => 'Czy jesteś pewien ?',
@@ -45,6 +44,8 @@ return [
     'Elements has been deleted' => 'Elementy zostały usunięte',
     'Elements has been moved down' => 'Element został przeniesiony na dół',
     'Elements has been moved up' => 'Element został przeniesiony do góry',
+    'Elements has been published' => 'Elementy zostały opublikowane',
+    'Elements has been unpublished' => 'Elementom została cofnięta publikacja',
     'Elements has not been choosed' => 'Żadne elementy nie zostały wybrane',
     'Height' => 'Wysokość',
     'ID' => 'ID',
@@ -54,7 +55,6 @@ return [
     'Move down' => 'Przenieś na dół',
     'Move up' => 'Przenieś do góry',
     'No' => 'Nie',
-    'Property "{property}" is not defined in {class}' => 'Właściwość "{property}" nie jest zdefiniowana dla {class}',
     'Property "attribute" is not defined in FileBehavior' => 'Właściwość "attribute" nie jest zdefiniowana dla FileBehavior',
     'Property "attribute" is not defined in ImageBehavior' => 'Właściwość "attribute" nie jest zdefiniowana dla ImageBehavior',
     'Property "languages" is not defined in config file for component "wavecms"' => 'Właściwość "languages" nie zdefiniowana w pliku config dla componentu "wavecms',
@@ -63,6 +63,7 @@ return [
     'Property "model" is not defined in SubListWidget' => 'Właściwość "model" nie jest zdefiniowana dla SubListWidget',
     'Property "route" is not defined in SubListBehavior' => 'Właściwość "route" nie jest zdefiniowana dla SubListBehavior',
     'Property "sizes" is not defined in ImageBehavior' => 'Właściwość "sizes" nie jest zdefiniowana dla ImageBehavior',
+    'Property "{property}" is not defined in {class}' => 'Właściwość "{property}" nie jest zdefiniowana dla {class}',
     'Publish' => 'Publikuj',
     'Return' => 'Powrót',
     'Save' => 'Zapisz',

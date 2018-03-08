@@ -36,7 +36,9 @@ class EditableSelectColumn extends EditableColumn
             'placement' => $this->placement,
             'value' => $valueText,
 
+
             'clientOptions' => [
+                'emptytext' => \Yii::t('wavecms/main','[no data]'),
                 'value' => $model->{$this->attribute},
                 'source' => $this->source,
                 'display' => new JsExpression("function(value, sourceData) {
