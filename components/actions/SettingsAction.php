@@ -9,6 +9,7 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\caching\Cache;
+use yii\db\ActiveRecord;
 use yii2mod\settings\components\Settings;
 
 /**
@@ -54,9 +55,15 @@ class SettingsAction extends Action
         $eventModel->model = $model;
         $this->controller->trigger(Controller::EVENT_AFTER_MODEL_CREATE, $eventModel);
 
+        foreach ($model->attributes() as $attribute) {
+            $model->setOldAttribute($attribute, Yii::$app->settings->get($model->formName(), $attribute));
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
+            $model->trigger(ActiveRecord::EVENT_BEFORE_UPDATE);
             $this->controller->trigger(Controller::EVENT_BEFORE_MODEL_SAVE, $eventModel);
+
             foreach ($model->toArray() as $key => $value) {
                 if (!$value) {
                     Yii::$app->settings->remove($model->formName(), $key);

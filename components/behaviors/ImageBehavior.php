@@ -51,10 +51,7 @@ class ImageBehavior extends Behavior
             throw new InvalidConfigException(Yii::t('wavecms/main', 'Attribute {attribute} not found in model {model}', ['attribute' => $this->attribute, 'model' => $event->sender->className()]));
         }
 
-        $oldFile = false;
-        if (isset($event->sender->oldAttributes[$this->attribute])) {
-            $oldFile = $event->sender->oldAttributes[$this->attribute];
-        }
+        $oldFile = $event->sender->getOldAttribute($this->attribute);
 
         $uploadedFile = UploadedFile::getInstance($event->sender, $this->attribute);
 
