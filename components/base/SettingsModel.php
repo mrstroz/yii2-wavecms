@@ -7,8 +7,26 @@ use yii\base\Model;
 class SettingsModel extends Model
 {
 
+    /** @var array $languageAttributes Attributes saved for every language separately */
+    private $languageAttributes = [];
+
     private $_oldAttributes;
 
+    /**
+     * @return array
+     */
+    public function getLanguageAttributes()
+    {
+        return $this->languageAttributes;
+    }
+
+    /**
+     * @param array $languageAttributes
+     */
+    public function setLanguageAttributes($languageAttributes)
+    {
+        $this->languageAttributes = $languageAttributes;
+    }
 
     /**
      * Returns a value indicating whether the model has an attribute with the specified name.

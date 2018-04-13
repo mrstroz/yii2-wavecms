@@ -2,6 +2,7 @@
 
 namespace mrstroz\wavecms\components\actions;
 
+use mrstroz\wavecms\components\base\SettingsModel;
 use mrstroz\wavecms\components\event\ModelEvent;
 use mrstroz\wavecms\components\helpers\Flash;
 use mrstroz\wavecms\components\web\Controller;
@@ -43,7 +44,7 @@ class SettingsAction extends Action
      */
     public function run()
     {
-        /* @var $model Model */
+        /* @var SettingsModel $model */
         $model = Yii::createObject($this->controller->modelClass);
 
         /** Set header of page */
@@ -56,7 +57,11 @@ class SettingsAction extends Action
         $this->controller->trigger(Controller::EVENT_AFTER_MODEL_CREATE, $eventModel);
 
         foreach ($model->attributes() as $attribute) {
-            $model->setOldAttribute($attribute, Yii::$app->settings->get($model->formName(), $attribute));
+            $section = $model->formName();
+            if (in_array($attribute, $model->getLanguageAttributes())) {
+                $section .= '_' . Yii::$app->wavecms->editedLanguage;
+            }
+            $model->setOldAttribute($attribute, Yii::$app->settings->get($section, $attribute));
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -65,10 +70,14 @@ class SettingsAction extends Action
             $this->controller->trigger(Controller::EVENT_BEFORE_MODEL_SAVE, $eventModel);
 
             foreach ($model->toArray() as $key => $value) {
+                $section = $model->formName();
+                if (in_array($key, $model->getLanguageAttributes())) {
+                    $section .= '_' . Yii::$app->wavecms->editedLanguage;
+                }
                 if (!$value) {
-                    Yii::$app->settings->remove($model->formName(), $key);
+                    Yii::$app->settings->remove($section, $key);
                 } else {
-                    Yii::$app->settings->set($model->formName(), $key, $value);
+                    Yii::$app->settings->set($section, $key, $value);
                 }
             }
             $this->controller->trigger(Controller::EVENT_AFTER_MODEL_SAVE, $eventModel);
@@ -88,7 +97,11 @@ class SettingsAction extends Action
         }
 
         foreach ($model->attributes() as $attribute) {
-            $model->{$attribute} = Yii::$app->settings->get($model->formName(), $attribute);
+            $section = $model->formName();
+            if (in_array($attribute, $model->getLanguageAttributes())) {
+                $section .= '_' . Yii::$app->wavecms->editedLanguage;
+            }
+            $model->{$attribute} = Yii::$app->settings->get($section, $attribute);
         }
 
         $this->controller->trigger(Controller::EVENT_BEFORE_RENDER);
