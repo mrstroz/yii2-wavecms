@@ -8,17 +8,20 @@ use mihaildev\elfinder\ElFinder;
 class CKEditorWidget extends CKEditor
 {
 
+    public $height = 400;
+
     public function init()
     {
         if (!$this->editorOptions) {
             $this->editorOptions = ElFinder::ckeditorOptions(['elfinder'], [
                 'preset' => 'full',
                 'inline' => false,
+                'height' => $this->height,
                 'toolbar' => [
                     ['Source'],
                     ['PasteText', '-', 'Undo', 'Redo'],
                     ['Replace', 'SelectAll', 'Scayt'],
-                    ['Format', 'FontSize','Styles'],
+                    ['Format', 'FontSize', 'Styles'],
                     ['Bold', 'Italic', 'Underline', 'TextColor', 'StrikeThrough', '-', 'Outdent', 'Indent', 'RemoveFormat',
                         'Blockquote', 'HorizontalRule'],
                     ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
