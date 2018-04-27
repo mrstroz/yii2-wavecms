@@ -2,45 +2,70 @@
 
 namespace mrstroz\wavecms\components\behaviors;
 
-
 use Yii;
 use yii\base\Behavior;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 use yii\helpers\FileHelper;
-use yii\imagine\Image;
 use yii\web\UploadedFile;
 
+/**
+ * Class FileBehavior
+ * @package mrstroz\wavecms\components\behaviors
+ * Behavior used for save files in WaveCMS
+ */
 class FileBehavior extends Behavior
 {
 
+    /**
+     * @var string Attribute used in behavior
+     */
     public $attribute;
-    public $folder = 'files';
-    public $sizes = [];
 
+    /**
+     * @var string Folder name used for save files
+     */
+    public $folder = 'files';
+
+    /**
+     * Events
+     * @inheritdoc
+     * @return array
+     */
     public function events()
     {
         return [
-            ActiveRecord::EVENT_BEFORE_INSERT => 'uploadImage',
-            ActiveRecord::EVENT_BEFORE_UPDATE => 'uploadImage',
-            ActiveRecord::EVENT_AFTER_DELETE => 'deleteImage'
+            ActiveRecord::EVENT_BEFORE_INSERT => 'uploadFile',
+            ActiveRecord::EVENT_BEFORE_UPDATE => 'uploadFile',
+            ActiveRecord::EVENT_AFTER_DELETE => 'deleteFile'
         ];
     }
 
+    /**
+     * Init function
+     * @inheritdoc
+     * @throws InvalidConfigException
+     */
     public function init()
     {
 
         if (!$this->attribute) {
-            throw new InvalidConfigException(Yii::t('wavecms/main','Property "attribute" is not defined in FileBehavior'));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Property "attribute" is not defined in FileBehavior'));
         }
 
         parent::init();
     }
 
-    public function uploadImage($event)
+    /**
+     * Upload files on save and update event
+     * @param $event
+     * @throws InvalidConfigException
+     * @throws \yii\base\Exception
+     */
+    public function uploadFile($event)
     {
         if (!array_key_exists($this->attribute, $event->sender->attributes)) {
-            throw new InvalidConfigException( Yii::t('wavecms/main', 'Attribute {attribute} not found in model {model}',['attribute' => $this->attribute,'model' => $event->sender->className()]));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Attribute {attribute} not found in model {model}', ['attribute' => $this->attribute, 'model' => $event->sender->className()]));
         }
 
         $oldFile = false;
@@ -80,21 +105,37 @@ class FileBehavior extends Behavior
         }
     }
 
-    public function deleteImage($event)
+    /**
+     * Delete file on delete event
+     * @param $event
+     */
+    public function deleteFile($event)
     {
         $this->unlinkFiles($event->sender->{$this->attribute});
     }
 
+    /**
+     * Helper function
+     * @return string
+     */
     public function getWebFolder()
     {
-        return Yii::getAlias('@frontWeb').'/'.$this->folder;
+        return Yii::getAlias('@frontWeb') . '/' . $this->folder;
     }
 
+    /**
+     * Helper function
+     * @return string
+     */
     public function getWebrootFolder()
     {
-        return Yii::getAlias('@frontWebroot').'/'.$this->folder;
+        return Yii::getAlias('@frontWebroot') . '/' . $this->folder;
     }
 
+    /**
+     * Helper function used for unlink files
+     * @return string
+     */
     public function unlinkFiles($fileName)
     {
         $folder = $this->getWebrootFolder();

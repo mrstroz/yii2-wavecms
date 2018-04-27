@@ -2,15 +2,26 @@
 
 namespace mrstroz\wavecms\components\behaviors;
 
-
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 
+/**
+ * Class CheckboxListBehavior
+ * @package mrstroz\wavecms\components\behaviors
+ * Behavior used for save checkboxes list in WaveCMS
+ */
 class CheckboxListBehavior extends Behavior
 {
 
+    /**
+     * @var array List of fields proceed by behavior
+     */
     public $fields = [];
 
+    /**
+     * @inheritdoc
+     * @return array
+     */
     public function events()
     {
         return [
@@ -20,6 +31,10 @@ class CheckboxListBehavior extends Behavior
         ];
     }
 
+    /**
+     * Change array to string separate by ;
+     * @param $event
+     */
     public function beforeUpdate($event)
     {
 
@@ -33,6 +48,10 @@ class CheckboxListBehavior extends Behavior
 
     }
 
+    /**
+     * Change string separated by ; to array
+     * @param $event
+     */
     public function afterFind($event)
     {
 

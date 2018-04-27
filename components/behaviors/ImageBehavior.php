@@ -2,7 +2,6 @@
 
 namespace mrstroz\wavecms\components\behaviors;
 
-
 use Yii;
 use yii\base\Behavior;
 use yii\base\InvalidConfigException;
@@ -11,17 +10,54 @@ use yii\helpers\FileHelper;
 use yii\imagine\Image;
 use yii\web\UploadedFile;
 
+/**
+ * Class ImageBehavior
+ * @package mrstroz\wavecms\components\behaviors
+ * Behavior used for save images in WaveCMS
+ */
 class ImageBehavior extends Behavior
 {
 
+    /**
+     * @var string Attribute used in behavior
+     */
     public $attribute;
+
+    /**
+     * @var string Folder name used for save images
+     */
     public $folder = 'images';
+
+    /**
+     * @var array Array of image sizes
+     */
     public $sizes = [];
 
+    /**
+     * @var integer Quality of images
+     */
+    public $quality = 100;
+
+    /**
+     * @var string Thumbs folder name
+     */
     public $thumbFolder = 'thumbs';
+
+    /**
+     * @var integer Thumbs width
+     */
     public $thumbWidth = 320;
+
+    /**
+     * @var integer Thumbs height
+     */
     public $thumbHeight;
 
+    /**
+     * Events
+     * @inheritdoc
+     * @return array
+     */
     public function events()
     {
         return [
@@ -31,20 +67,31 @@ class ImageBehavior extends Behavior
         ];
     }
 
+    /**
+     * Init function
+     * @inheritdoc
+     * @throws InvalidConfigException
+     */
     public function init()
     {
 
         if (!$this->attribute) {
-            throw new InvalidConfigException(Yii::t('wavecms/main','Property "attribute" is not defined in ImageBehavior'));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Property "attribute" is not defined in ImageBehavior'));
         }
 
         if (!is_array($this->sizes)) {
-            throw new InvalidConfigException(Yii::t('wavecms/main','Property "sizes" is not defined in ImageBehavior'));
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Property "sizes" is not defined in ImageBehavior'));
         }
 
         parent::init();
     }
 
+    /**
+     * Upload images on save and update event
+     * @param $event
+     * @throws InvalidConfigException
+     * @throws \yii\base\Exception
+     */
     public function uploadImage($event)
     {
         if (!array_key_exists($this->attribute, $event->sender->attributes)) {
@@ -76,14 +123,14 @@ class ImageBehavior extends Behavior
 
             FileHelper::createDirectory($folder . '/' . $this->thumbFolder, 0777);
             Image::thumbnail($folder . '/' . $fileName, $this->thumbWidth, $this->thumbHeight)
-                ->save($folder . '/' . $this->thumbFolder . '/' . $fileName);
+                ->save($folder . '/' . $this->thumbFolder . '/' . $fileName, ['quality' => $this->quality]);
 
             if (is_array($this->sizes)) {
                 $i = 0;
                 foreach ($this->sizes as $size) {
                     FileHelper::createDirectory($folder . '/' . $i, 0777);
                     Image::thumbnail($folder . '/' . $fileName, $size[0], $size[1])
-                        ->save($folder . '/' . $i . '/' . $fileName);
+                        ->save($folder . '/' . $i . '/' . $fileName, ['quality' => $this->quality]);
                     $i++;
                 }
             }
@@ -99,21 +146,37 @@ class ImageBehavior extends Behavior
         }
     }
 
+    /**
+     * Delete images on delete event
+     * @param $event
+     */
     public function deleteImage($event)
     {
         $this->unlinkFiles($event->sender->{$this->attribute});
     }
 
+    /**
+     * Helper function
+     * @return string
+     */
     public function getWebFolder()
     {
-        return Yii::getAlias('@frontWeb').'/'.$this->folder;
+        return Yii::getAlias('@frontWeb') . '/' . $this->folder;
     }
 
+    /**
+     * Helper function
+     * @return string
+     */
     public function getWebrootFolder()
     {
-        return Yii::getAlias('@frontWebroot').'/'.$this->folder;
+        return Yii::getAlias('@frontWebroot') . '/' . $this->folder;
     }
 
+    /**
+     * Helper function for unlink files
+     * @param $fileName
+     */
     public function unlinkFiles($fileName)
     {
         $folder = $this->getWebrootFolder();
