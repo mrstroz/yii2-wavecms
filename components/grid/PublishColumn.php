@@ -23,7 +23,7 @@ class PublishColumn extends DataColumn
     {
         if ($model->{$this->attribute} == 1) {
             return Html::a(
-                FontAwesome::icon('globe'),
+                FontAwesome::icon('toggle-on'),
                 ['publish', 'id' => $model->id],
                 [
                     'class' => 'btn btn-xs btn-success btn-publish',
@@ -32,7 +32,7 @@ class PublishColumn extends DataColumn
                 ]);
         } else {
             return Html::a(
-                FontAwesome::icon('globe'),
+                FontAwesome::icon('toggle-off'),
                 ['publish', 'id' => $model->id],
                 [
                     'class' => 'btn btn-xs btn-default btn-publish',

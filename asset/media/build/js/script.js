@@ -59,8 +59,10 @@ function WaveCMS() {
             $.get($(this).attr('href'), function (data) {
                 if (data.publish) {
                     $btn.removeClass('btn-default').addClass('btn-success');
+                    $btn.find('.fas').removeClass('fa-toggle-off').addClass('fa-toggle-on');
                 } else {
                     $btn.removeClass('btn-success').addClass('btn-default');
+                    $btn.find('.fas').removeClass('fa-toggle-on').addClass('fa-toggle-off');
                 }
                 $btn.blur();
             }).fail(function (data) {

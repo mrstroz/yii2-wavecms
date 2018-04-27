@@ -24,7 +24,7 @@ $form = ActiveForm::begin(['id' => 'bulk_actions_form']);
 <?php if ($bulkActions): ?>
     <div class="row bulk-actions">
         <div class="col-md-12">
-            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+            <i class="fa fa-long-arrow-alt-down" aria-hidden="true"></i>
             <?php
 
             $items = [];

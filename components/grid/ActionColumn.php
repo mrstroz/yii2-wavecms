@@ -13,8 +13,8 @@ class ActionColumn extends \yii\grid\ActionColumn
     protected function initDefaultButtons()
     {
 //        $this->initDefaultButton('view', 'eye');
-        $this->initDefaultButton('update', 'pencil', ['class' => 'btn btn-primary btn-xs']);
-        $this->initDefaultButton('delete', 'trash', [
+        $this->initDefaultButton('update', 'pencil-alt', ['class' => 'btn btn-primary btn-xs']);
+        $this->initDefaultButton('delete', 'trash-alt', [
             'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
             'data-method' => 'post',
             'class' => ['btn btn-danger btn-xs']

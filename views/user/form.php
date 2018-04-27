@@ -69,7 +69,7 @@ use yii\helpers\Html;
 <?php $extraButtons = [];
 
 if (!$model->isNewRecord) {
-    $extraButtons[] = Html::a(FontAwesome::icon('exchange') . ' ' . Yii::t('wavecms/user', 'Assign role'), ['assign', 'id' => $model->id], [
+    $extraButtons[] = Html::a(FontAwesome::icon('user-plus') . ' ' . Yii::t('wavecms/user', 'Assign role'), ['assign', 'id' => $model->id], [
         'class' => 'btn btn-default'
     ]);
 }

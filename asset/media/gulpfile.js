@@ -18,7 +18,8 @@ var paths = {
     ],
     scss: [
         './node_modules/bootstrap-sass/assets/stylesheets',
-        './node_modules/font-awesome/scss',
+        // './node_modules/font-awesome/scss',
+        './node_modules/@fortawesome/fontawesome-free-webfonts/scss',
         'scss/**/*.scss'
     ],
     images: 'img/**/*'
@@ -63,7 +64,8 @@ gulp.task('sass', function () {
 
 gulp.task('fonts', function () {
     return gulp.src([
-        './node_modules/font-awesome/fonts/fontawesome-webfont.*',
+        // './node_modules/font-awesome/fonts/fontawesome-webfont.*',
+        './node_modules/@fortawesome/fontawesome-free-webfonts/webfonts/*',
         './node_modules/bootstrap-sass/assets/fonts/bootstrap/*'
     ])
         .pipe(gulp.dest('build/fonts/'));

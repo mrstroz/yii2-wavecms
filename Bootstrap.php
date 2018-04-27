@@ -284,7 +284,7 @@ class Bootstrap implements BootstrapInterface
             'position' => 9000,
             'items' => [
                 [
-                    'label' => FontAwesome::icon('list') . Yii::t('wavecms/user', 'List of users'),
+                    'label' => FontAwesome::icon('user') . Yii::t('wavecms/user', 'List of users'),
                     'url' => ['/wavecms/user/index']
                 ],
                 [

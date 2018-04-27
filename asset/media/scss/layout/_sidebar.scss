@@ -26,9 +26,11 @@
         border-right: 4px solid #fff;
         color: $gray-dark;
 
-        .fa {
+        .fas {
           margin-right: 10px;
           color: $gray;
+          width: 20px;
+          text-align: center;
         }
 
         &:hover {

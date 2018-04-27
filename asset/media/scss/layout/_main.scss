@@ -9,6 +9,12 @@
     float: right;
     @include mt;
     @include mb;
+
+    .btn {
+      .fas {
+        margin-right: 7px;
+      }
+    }
   }
 
   .header-title {

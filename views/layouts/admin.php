@@ -85,7 +85,7 @@ $bundle = WavecmsAsset::register($this);
                     echo ButtonGroup::widget([
                         'buttons' => [
                             Html::a(
-                                FontAwesome::icon('user'),
+                                FontAwesome::icon('user-circle'),
                                 ['/my-account'],
                                 [
                                     'class' => 'btn btn-sm btn-light-gray',
@@ -93,7 +93,7 @@ $bundle = WavecmsAsset::register($this);
                                 ]
                             ),
                             Html::a(
-                                FontAwesome::icon('sign-out'),
+                                FontAwesome::icon('sign-out-alt'),
                                 ['/logout'],
                                 [
                                     'class' => 'btn btn-sm btn-light-gray',

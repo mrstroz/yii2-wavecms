@@ -6,6 +6,7 @@
   "author": "Mariusz Stróż <mariusz.stroz@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-free-webfonts": "^1.0.6",
     "bootstrap-sass": "^3.3.7",
     "del": "^2.2.2",
     "font-awesome": "^4.7.0",

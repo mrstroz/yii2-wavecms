@@ -119,7 +119,7 @@ class UserController extends Controller
                     }
 
                     return Html::a(
-                            FontAwesome::icon('exchange'),
+                            FontAwesome::icon('user-plus'),
                             ['assign', 'id' => $model->id],
                             [
                                 'class' => 'btn btn-xs btn-default'

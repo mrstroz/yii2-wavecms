@@ -7,7 +7,7 @@ class FontAwesome
 
     public static function icon($icon)
     {
-        return '<i class="fa fa-' . $icon . '" aria-hidden="true"></i>';
+        return '<i class="fas fa-fw fa-' . $icon . '" aria-hidden="true"></i>';
     }
 
 
