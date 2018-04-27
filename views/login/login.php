@@ -1,6 +1,6 @@
 <?php
 
-use yii\bootstrap\ActiveForm;
+use mrstroz\wavecms\components\helpers\WavecmsForm;
 use yii\bootstrap\Html;
 
 
@@ -8,7 +8,7 @@ $this->title = Yii::t('wavecms/user', 'Login to WaveCMS');
 
 ?>
 
-<?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+<?php $form = WavecmsForm::begin(['options' => ['id' => 'login-form']]); ?>
 
 <div class="logo-outer">
     <div class="logo">
@@ -31,4 +31,4 @@ $this->title = Yii::t('wavecms/user', 'Login to WaveCMS');
 
 <?php echo Html::a(Yii::t('wavecms/user', 'Forgot password ?'), ['/request-password-reset']); ?>
 
-<?php ActiveForm::end(); ?>
+<?php WavecmsForm::end(); ?>

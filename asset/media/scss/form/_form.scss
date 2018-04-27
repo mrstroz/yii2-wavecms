@@ -50,3 +50,19 @@
     }
   }
 }
+
+input[type="checkbox"].styled,
+input[type="radio"].styled,
+.checkbox input[type=checkbox] {
+  cursor: pointer;
+  margin-left: -17px;
+  width: 17px;
+  height: 17px;
+}
+
+input[type="checkbox"].styled:checked + label:after,
+input[type="radio"].styled:checked + label:after,
+.checkbox input[type=checkbox]:checked + label:after {
+  @include font-awesome;
+  content: "\f00c";
+}

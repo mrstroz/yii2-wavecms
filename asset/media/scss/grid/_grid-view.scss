@@ -61,6 +61,22 @@
     }
   }
 
+  .checkbox {
+    margin: 0px;
+    padding-left: 17px;
+
+    label {
+      padding: 0px;
+
+      &::before {
+        margin-left: -17px;
+      }
+      &::after {
+        margin-left: -17px;
+      }
+    }
+  }
+
   .pagination {
     margin: 5px 0 5px 0;
   }

@@ -13,4 +13,18 @@ class CheckboxColumn extends YiiCheckboxColumn
         'class' => 'checkbox-column'
     ];
 
+    protected function renderHeaderCellContent()
+    {
+        $html = parent::renderHeaderCellContent();
+
+        return '<div class="checkbox">' . $html . '<label></label></div>';
+    }
+
+    protected function renderDataCellContent($model, $key, $index)
+    {
+        $html = parent::renderDataCellContent($model, $key, $index);
+
+        return '<div class="checkbox">' . $html . '<label></label></div>';
+    }
+
 }
