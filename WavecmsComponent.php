@@ -31,7 +31,7 @@ class WavecmsComponent extends Component
     {
         $items = [];
         foreach (Yii::$app->wavecms->languages as $language) {
-            $items[$language] = Html::tag('span', $language, ['class' => 'label label-default text-uppercase']);
+            $items[$language] = Html::tag('span', $language, ['class' => 'country-code']);
         }
 
         return $items;

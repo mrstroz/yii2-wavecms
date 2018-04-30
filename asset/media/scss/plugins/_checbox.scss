@@ -1,0 +1,26 @@
+.checkbox {
+  padding-left: 17px;
+
+  label::after,
+  label::before {
+    margin-left: -17px;
+  }
+}
+
+input[type="checkbox"].styled,
+input[type="radio"].styled,
+.checkbox input[type=checkbox],
+.checkbox input[type=radio] {
+  cursor: pointer;
+  margin-left: -17px;
+  width: 17px;
+  height: 17px;
+}
+
+input[type="checkbox"].styled:checked + label:after,
+input[type="radio"].styled:checked + label:after,
+.checkbox input[type=checkbox]:checked + label:after,
+.checkbox input[type=radio]:checked + label:after {
+  @include font-awesome;
+  content: "\f00c";
+}

@@ -29,6 +29,7 @@ class LanguagesWidget extends Widget
         PanelWidget::begin(['heading' => Yii::t('wavecms/main', 'Languages') . '*']);
         echo Yii::t('wavecms/main', 'Element will be displayed in following languages:');
         echo $this->form->field($this->model, $this->languagesAttribute)
+            ->inline(true)
             ->checkboxList(Yii::$app->wavecms->languageCheckboxItems(),['class' => 'language-checkboxes','encode' => false])
             ->label(false);
         PanelWidget::end();

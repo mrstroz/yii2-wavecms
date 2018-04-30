@@ -9189,9 +9189,10 @@ code {
   clear: both; }
 
 .wavecms-form .form-group .language-checkboxes .checkbox {
-  float: left;
-  margin-top: 10px;
-  margin-right: 15px; }
+  margin-top: 10px; }
+  .wavecms-form .form-group .language-checkboxes .checkbox .country-code {
+    font-weight: bold;
+    text-transform: uppercase; }
 
 .wavecms-form .sub-list {
   margin-bottom: 18px; }
@@ -9208,21 +9209,6 @@ code {
     margin-bottom: 5px; }
   .wavecms-form .thumbnail-outer .action-column {
     width: 41px; }
-
-input[type="checkbox"].styled,
-input[type="radio"].styled,
-.checkbox input[type=checkbox] {
-  cursor: pointer;
-  margin-left: -17px;
-  width: 17px;
-  height: 17px; }
-
-input[type="checkbox"].styled:checked + label:after,
-input[type="radio"].styled:checked + label:after,
-.checkbox input[type=checkbox]:checked + label:after {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900;
-  content: "\f00c"; }
 
 #login-form {
   display: block;
@@ -9291,3 +9277,26 @@ input[type="radio"].styled:checked + label:after,
   cursor: pointer;
   float: left;
   border-bottom: none !important; }
+
+.checkbox {
+  padding-left: 17px; }
+  .checkbox label::after,
+  .checkbox label::before {
+    margin-left: -17px; }
+
+input[type="checkbox"].styled,
+input[type="radio"].styled,
+.checkbox input[type=checkbox],
+.checkbox input[type=radio] {
+  cursor: pointer;
+  margin-left: -17px;
+  width: 17px;
+  height: 17px; }
+
+input[type="checkbox"].styled:checked + label:after,
+input[type="radio"].styled:checked + label:after,
+.checkbox input[type=checkbox]:checked + label:after,
+.checkbox input[type=radio]:checked + label:after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: "\f00c"; }
