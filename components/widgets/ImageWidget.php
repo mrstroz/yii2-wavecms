@@ -45,7 +45,8 @@ class ImageWidget extends InputWidget
                             echo Html::beginTag('div', [
                                 'class' => 'checkbox'
                             ]);
-                            echo Html::checkbox($this->attribute . '_image_delete', false, ['label' => Yii::t('wavecms/main', 'Delete ?')]);
+                            echo Html::input('checkbox', $this->attribute . '_image_delete', 1, ['id' => $this->attribute . '_image_delete']);
+                            echo Html::label(Yii::t('wavecms/main', 'Delete ?'), $this->attribute . '_image_delete');
                             echo Html::endTag('div');
                             echo Html::endTag('div');
 

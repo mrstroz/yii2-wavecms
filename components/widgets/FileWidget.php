@@ -43,7 +43,8 @@ class FileWidget extends InputWidget
                             echo Html::beginTag('div', [
                                 'class' => 'checkbox'
                             ]);
-                            echo Html::checkbox($this->attribute . '_file_delete', false, ['label' => Yii::t('wavecms/main','Delete ?')]);
+                            echo Html::input('checkbox', $this->attribute . '_file_delete', 1, ['id' => $this->attribute . '_file_delete']);
+                            echo Html::label(Yii::t('wavecms/main', 'Delete ?'), $this->attribute . '_file_delete');
 
                             echo Html::endTag('div');
 
