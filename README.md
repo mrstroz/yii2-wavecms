@@ -11,13 +11,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Run
 
 ```
-composer require --prefer-source "mrstroz/yii2-wavecms" "~0.1.5"
+composer require --prefer-source "mrstroz/yii2-wavecms" "~0.2.0"
 ```
 
 or add
 
 ```
-"mrstroz/yii2-wavecms": "~0.1.5"
+"mrstroz/yii2-wavecms": "~0.2.0"
 ```
 
 to the require section of your `composer.json` file.
@@ -26,7 +26,7 @@ to the require section of your `composer.json` file.
 Required steps
 --------------
 
-1. Update `blocaackend/config/main.php` (Yii2 advanced template) 
+1. Update `backend/config/main.php` (Yii2 advanced template) 
 ```php
 'modules' => [
     // ...   

@@ -34,6 +34,7 @@ class LoginController extends Controller
         $behaviors['access']['rules'][] = [
             'allow' => true,
             'actions' => [
+                'login',
                 'logout',
                 'my-account'
             ],
