@@ -36,6 +36,7 @@ class User extends ActiveRecord implements IdentityInterface
     const IS_ADMIN_NO = 0;
 
     const SCENARIO_MY_ACCOUNT = 'my_account';
+    const SCENARIO_CREATE = 'create';
 
     public $password;
     public $password_repeat;
@@ -93,6 +94,7 @@ class User extends ActiveRecord implements IdentityInterface
             ],
             [['first_name', 'last_name', 'lang'], 'string'],
             [['password'], 'safe'],
+            ['password', 'required','on' => self::SCENARIO_CREATE],
             ['password', 'compare', 'compareAttribute' => 'password_repeat', 'on' => self::SCENARIO_MY_ACCOUNT],
             [['is_admin'], 'boolean'],
             ['username', 'default', 'value' => function ($model, $attribute) {
