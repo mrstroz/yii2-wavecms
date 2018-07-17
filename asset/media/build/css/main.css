@@ -9142,6 +9142,8 @@ code {
   margin-bottom: 5px; }
   .grid-view table .ui-sortable tr {
     cursor: move; }
+  .grid-view table .thumbnail {
+    margin-bottom: 0px !important; }
   .grid-view table tr.filters .form-control {
     font-size: 12px;
     height: 28px;
