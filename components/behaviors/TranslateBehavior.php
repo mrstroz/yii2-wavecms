@@ -9,6 +9,8 @@ use Yii;
 class TranslateBehavior extends TranslateableBehavior
 {
 
+    public $skipSavingDuplicateTranslation = true;
+
     public function afterFind($event)
     {
         if (isset(Yii::$app->wavecms)) {
