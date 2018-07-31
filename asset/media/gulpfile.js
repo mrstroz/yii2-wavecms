@@ -9,7 +9,7 @@ var compressCss = require('gulp-minify-css');
 
 var paths = {
     scripts: [
-        './node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+        // './node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
         './node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
         'js/**/*.js'
     ],

@@ -20,6 +20,7 @@ class WavecmsAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset'
     ];
 
 
@@ -36,9 +37,9 @@ class WavecmsAsset extends AssetBundle
             'css' => []
         ];
 
-        Yii::$app->assetManager->bundles['yii\\bootstrap\\BootstrapPluginAsset'] = [
-            'js' => []
-        ];
+//        Yii::$app->assetManager->bundles['yii\\bootstrap\\BootstrapPluginAsset'] = [
+//            'js' => []
+//        ];
 
     }
 }
