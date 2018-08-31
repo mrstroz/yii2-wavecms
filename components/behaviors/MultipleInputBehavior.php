@@ -17,13 +17,19 @@ class MultipleInputBehavior extends Behavior
 
     public $attribute;
     public $viaRelation;
+    public $parentKeyColumn;
     public $sortColumn = 'sort';
+
 
     public function init()
     {
 
         if (!$this->attribute) {
             throw new InvalidConfigException(Yii::t('wavecms/main', 'Property "{property}" is not defined in {class}', ['property' => 'attribute', 'class' => __CLASS__]));
+        }
+
+        if (!$this->parentKeyColumn) {
+            throw new InvalidConfigException(Yii::t('wavecms/main', 'Property "{property}" is not defined in {class}', ['property' => 'parentKeyColumn', 'class' => __CLASS__]));
         }
 
         if (!$this->viaRelation) {
@@ -85,7 +91,7 @@ class MultipleInputBehavior extends Behavior
 
                 if (!$item) {
                     $item = new $className();
-                    $item->series_id = $sender->primaryKey;
+                    $item->{$this->parentKeyColumn} = $sender->primaryKey;
                 }
 
                 foreach ($column as $key => $value) {
