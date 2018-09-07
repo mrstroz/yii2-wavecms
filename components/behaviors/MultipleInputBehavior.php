@@ -19,6 +19,7 @@ class MultipleInputBehavior extends Behavior
     public $viaRelation;
     public $parentKeyColumn;
     public $sortColumn = 'sort';
+    public $order = false;
 
 
     public function init()
@@ -118,8 +119,11 @@ class MultipleInputBehavior extends Behavior
         if ($this->sortColumn) {
             $query->orderBy($this->sortColumn);
         }
+        if ($this->order) {
+            $query->orderBy($this->order);
+        }
 
-        $items = $query->asArray()->all();
+        $items = $query->all();
         $sender->{$this->attribute} = $items;
     }
 
