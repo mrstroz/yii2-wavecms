@@ -51,7 +51,7 @@ return [
     'Name' => 'Nazwa',
     'New password saved.' => 'Nowe hasło zostało zapisane.',
     'No' => 'Nie',
-    'Not active' => 'Nie aktywny',
+    'Not active' => 'Nieaktywny',
     'Password' => 'Hasło',
     'Password has been changed' => 'Hasło zostało zmienione',
     'Permission' => 'Uprawnienie',
