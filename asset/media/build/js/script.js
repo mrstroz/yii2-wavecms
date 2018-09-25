@@ -10,6 +10,7 @@ function WaveCMS() {
         this_.magnificPopup();
         this_.activeTab();
         this_.errorTab();
+        this_.toggleMobileMenu();
     };
 
     this.onLoad = function () {
@@ -118,6 +119,12 @@ function WaveCMS() {
                     i++;
                 });
             }
+        });
+    };
+
+    this.toggleMobileMenu = function () {
+        $(document).on('click', '.mobile-menu-btn', function (event) {
+            $('.mobile-menu-outer').toggle();
         });
     };
 
