@@ -8,6 +8,7 @@
 use mrstroz\wavecms\asset\WavecmsAsset;
 use mrstroz\wavecms\components\helpers\FontAwesome;
 use mrstroz\wavecms\components\helpers\NavHelper;
+use mrstroz\wavecms\components\widgets\Copyright;
 use yii\bootstrap\ButtonGroup;
 use yii\helpers\Html;
 use yii\widgets\Menu;
@@ -52,58 +53,66 @@ $bundle = WavecmsAsset::register($this);
                     wave<strong>CMS</strong>
                 </h3>
 
-                <?php
-                NavHelper::sortNav(Yii::$app->params['nav']);
-                NavHelper::applyActive(Yii::$app->params['nav']);
-                NavHelper::applyVisible(Yii::$app->params['nav']);
+                <a href="javascript:;" class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
 
-                echo Menu::widget(
-                    [
-                        'items' => Yii::$app->params['nav'],
-                        'options' => [
-                            'class' => 'nav'
-                        ],
-                        'activeCssClass' => 'active opened',
-                        'activateParents' => true,
-                        'encodeLabels' => false,
-                        'submenuTemplate' => "\n<ul class='nav nav-submenu'>\n{items}\n</ul>\n"
-                    ]
-                );
-
-                ?>
-
-                <div class="clearfix">
+                <div class="mobile-menu-outer">
                     <?php
+                    NavHelper::sortNav(Yii::$app->params['nav']);
+                    NavHelper::applyActive(Yii::$app->params['nav']);
+                    NavHelper::applyVisible(Yii::$app->params['nav']);
 
-                    echo ButtonGroup::widget([
-                        'buttons' => Yii::$app->wavecms->languageButtons(),
-                        'options' => [
-                            'class' => 'uppercase'
+                    echo Menu::widget(
+                        [
+                            'items' => Yii::$app->params['nav'],
+                            'options' => [
+                                'class' => 'nav'
+                            ],
+                            'activeCssClass' => 'active opened',
+                            'activateParents' => true,
+                            'encodeLabels' => false,
+                            'submenuTemplate' => "\n<ul class='nav nav-submenu'>\n{items}\n</ul>\n"
                         ]
-                    ]);
-
-                    echo ButtonGroup::widget([
-                        'buttons' => [
-                            Html::a(
-                                FontAwesome::icon('user-circle'),
-                                ['/my-account'],
-                                [
-                                    'class' => 'btn btn-sm btn-light-gray',
-                                    'title' => Yii::t('wavecms/user', 'My account')
-                                ]
-                            ),
-                            Html::a(
-                                FontAwesome::icon('sign-out-alt'),
-                                ['/logout'],
-                                [
-                                    'class' => 'btn btn-sm btn-light-gray',
-                                    'title' => Yii::t('wavecms/user', 'Logout')
-                                ]
-                            ),
-                        ]
-                    ]);
+                    );
 
                     ?>
+
+                    <div class="clearfix">
+                        <?php
+
+                        echo ButtonGroup::widget([
+                            'buttons' => Yii::$app->wavecms->languageButtons(),
+                            'options' => [
+                                'class' => 'uppercase'
+                            ]
+                        ]);
+
+                        echo ButtonGroup::widget([
+                            'buttons' => [
+                                Html::a(
+                                    FontAwesome::icon('user-circle'),
+                                    ['/my-account'],
+                                    [
+                                        'class' => 'btn btn-sm btn-light-gray',
+                                        'title' => Yii::t('wavecms/user', 'My account')
+                                    ]
+                                ),
+                                Html::a(
+                                    FontAwesome::icon('sign-out-alt'),
+                                    ['/logout'],
+                                    [
+                                        'class' => 'btn btn-sm btn-light-gray',
+                                        'title' => Yii::t('wavecms/user', 'Logout')
+                                    ]
+                                ),
+                            ]
+                        ]);
+
+                        ?>
+                    </div>
                 </div>
 
             </div>
@@ -167,6 +176,7 @@ $bundle = WavecmsAsset::register($this);
                 ]); ?>
             <?php endif; ?>
 
+            <?= Copyright::widget(); ?>
         </div>
     </div>
 </div>

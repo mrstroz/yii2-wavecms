@@ -1,5 +1,9 @@
 .grid-view {
 
+  @media (max-width: $screen-md) {
+    overflow-x: scroll;
+  }
+
   table {
     margin-bottom: 5px;
 

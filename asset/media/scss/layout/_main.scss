@@ -1,14 +1,16 @@
 .main {
-
   background-color: #fff;
   border-left: 1px solid $gray-lighter;
 
   padding-bottom: 20px;
 
   .btn-group-top {
-    float: right;
-    @include mt;
     @include mb;
+
+    @media (min-width: $screen-md) {
+      float: right;
+      @include mt;
+    }
 
     .btn {
       .fas {
@@ -40,5 +42,16 @@
       float: left;
     }
 
+  }
+
+  .copyright {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: $gray-lighter;
   }
 }

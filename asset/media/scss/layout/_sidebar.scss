@@ -18,6 +18,51 @@
     }
   }
 
+  .mobile-menu-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    display: block;
+    width: 40px;
+    height: 25px;
+
+    span {
+      display: block;
+      position: absolute;
+      height: 5px;
+      width: 100%;
+      opacity: 1;
+      left: 0;
+
+      &:nth-child(1) {
+        top: 0;
+        background: #0cc;
+      }
+
+      &:nth-child(2) {
+        top: 10px;
+        background: #00b9cc;
+      }
+
+      &:nth-child(3) {
+        bottom: 0;
+        background: #00aecc;
+      }
+    }
+
+    @media (min-width: $screen-md) {
+      display: none;
+    }
+  }
+
+  .mobile-menu-outer {
+    display: none;
+
+    @media (min-width: $screen-md) {
+      display: block;
+    }
+  }
+
   .nav {
     @include mt;
 
@@ -54,7 +99,6 @@
           display: block;
         }
       }
-
 
     }
 
