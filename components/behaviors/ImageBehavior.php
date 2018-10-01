@@ -2,6 +2,7 @@
 
 namespace mrstroz\wavecms\components\behaviors;
 
+use Imagine\Image\ManipulatorInterface;
 use Yii;
 use yii\base\Behavior;
 use yii\base\InvalidConfigException;
@@ -128,8 +129,14 @@ class ImageBehavior extends Behavior
             if (is_array($this->sizes)) {
                 $i = 0;
                 foreach ($this->sizes as $size) {
+                    $manipulatorInterface = ManipulatorInterface::THUMBNAIL_OUTBOUND;
+
+                    if (isset($size[2]) && in_array($size[2], [ManipulatorInterface::THUMBNAIL_OUTBOUND, ManipulatorInterface::THUMBNAIL_INSET], true)) {
+                        $manipulatorInterface = $size[2];
+                    }
+
                     FileHelper::createDirectory($folder . '/' . $i, 0777);
-                    Image::thumbnail($folder . '/' . $fileName, $size[0], $size[1])
+                    Image::thumbnail($folder . '/' . $fileName, $size[0], $size[1], $manipulatorInterface)
                         ->save($folder . '/' . $i . '/' . $fileName, ['quality' => $this->quality]);
                     $i++;
                 }

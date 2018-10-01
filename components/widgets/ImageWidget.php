@@ -68,7 +68,7 @@ class ImageWidget extends InputWidget
                                 $i = 0;
                                 foreach ($behavior->sizes as $size) {
 
-                                    if (count($size) != 2)
+                                    if (count($size) != 2 && count($size) != 3)
                                         throw new InvalidConfigException(Yii::t('wavecms/main', 'Size is wrong defined for attribute {attribute}', ['attribute' => $this->attribute]));
 
                                     echo Html::beginTag('tr');
