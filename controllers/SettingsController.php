@@ -44,20 +44,24 @@ class SettingsController extends Controller
                 Yii::$app->cacheFrontend->flush();
             }
 
-            $frontendAsset = scandir('../assets', 0);
-            if ($frontendAsset) {
-                foreach ($frontendAsset as $folder) {
-                    if ($folder !== '.' && $folder !== '..' && (strlen($folder) === 7 || strlen($folder) === 8)) {
-                        FileHelper::removeDirectory('../assets/' . $folder);
+            if (is_dir('../assets')) {
+                $frontendAsset = scandir('../assets', 0);
+                if ($frontendAsset) {
+                    foreach ($frontendAsset as $folder) {
+                        if ($folder !== '.' && $folder !== '..' && (strlen($folder) === 7 || strlen($folder) === 8)) {
+                            FileHelper::removeDirectory('../assets/' . $folder);
+                        }
                     }
                 }
             }
 
-            $backendAsset = scandir('assets', 0);
-            if ($backendAsset) {
-                foreach ($backendAsset as $folder) {
-                    if ($folder !== '.' && $folder !== '..' && (strlen($folder) === 7 || strlen($folder) === 8)) {
-                        FileHelper::removeDirectory('assets/' . $folder);
+            if (is_dir('assets')) {
+                $backendAsset = scandir('assets', 0);
+                if ($backendAsset) {
+                    foreach ($backendAsset as $folder) {
+                        if ($folder !== '.' && $folder !== '..' && (strlen($folder) === 7 || strlen($folder) === 8)) {
+                            FileHelper::removeDirectory('assets/' . $folder);
+                        }
                     }
                 }
             }
