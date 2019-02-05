@@ -21,8 +21,9 @@ class EditableSelectColumn extends EditableColumn
             throw new InvalidParamException(Yii::t('wavecms/main', 'Property "{property}" is not defined in {class}', ['property' => 'source', 'class' => 'EditableSelectColumn']));
         }
 
+        $valueText = '';
         foreach ($this->source as $option) {
-            if ($option['value'] == $model->{$this->attribute}) {
+            if ($option['value'] === $model->{$this->attribute}) {
                 $valueText = $option['text'];
             }
         }
