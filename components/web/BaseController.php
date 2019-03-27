@@ -29,15 +29,17 @@ class BaseController extends yiiController
      * @param \yii\base\Action $action
      * @return bool
      * @throws \yii\web\ForbiddenHttpException
+     * @throws \yii\web\BadRequestHttpException
      */
     public function beforeAction($action)
     {
         /** Check access to admin panel */
-        if (!in_array(Yii::$app->controller->action->id, $this->actionsDisabledFromAccessControl)) {
+        if (!in_array(Yii::$app->controller->action->id, $this->actionsDisabledFromAccessControl, true)) {
             if (!Yii::$app->user->can(AuthItem::SUPER_ADMIN)) {
-                if (!Yii::$app->user->can(Yii::$app->controller->module->id . '/' . Yii::$app->controller->id)) {
+                $privilege = Yii::$app->controller->module->id . '/' . Yii::$app->controller->id;
+                if (!Yii::$app->user->can($privilege)) {
                     if (!Yii::$app->user->isGuest) {
-                        throw new ForbiddenHttpException(Yii::t('wavecms/main', 'You are not allowed to perform this action'));
+                        throw new ForbiddenHttpException(Yii::t('wavecms/main', 'You are not allowed to perform this action ({action})', ['action' => $privilege]));
                     }
                 }
             }

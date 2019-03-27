@@ -280,7 +280,7 @@ class Bootstrap implements BootstrapInterface
             'options' => [
                 'class' => 'drop-down'
             ],
-            'permission' => 'user',
+            'permission' => 'wavecms-user',
             'position' => 9000,
             'items' => [
                 [
@@ -300,7 +300,7 @@ class Bootstrap implements BootstrapInterface
             'options' => [
                 'class' => 'drop-down'
             ],
-            'permission' => 'user',
+            'permission' => 'wavecms-settings',
             'position' => 10000,
             'items' => [
                 [
