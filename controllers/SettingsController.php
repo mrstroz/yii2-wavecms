@@ -48,9 +48,9 @@ class SettingsController extends Controller
                 $frontendAsset = scandir('../assets', 0);
                 if ($frontendAsset) {
                     foreach ($frontendAsset as $folder) {
-                        if ($folder !== '.' && $folder !== '..' && (strlen($folder) === 7 || strlen($folder) === 8)) {
+                        if ($folder !== '.' && $folder !== '..' && ( (in_array(strlen($folder), [6, 7, 8])) || in_array($folder,['css-compress','js-compress'])) ){
                             FileHelper::removeDirectory('../assets/' . $folder);
-                        }
+                    }
                     }
                 }
             }
