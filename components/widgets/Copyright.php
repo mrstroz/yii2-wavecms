@@ -20,7 +20,7 @@ class Copyright extends Widget
         $data = array();
         $packages = json_decode(file_get_contents(Yii::getAlias('@vendor') . '/composer/installed.json'));
         foreach ($packages as $package) {
-            if ($package->name === 'mrstroz/yii2-wavecms') {
+            if (isset($package->name) && $package->name === 'mrstroz/yii2-wavecms') {
                 if (strpos($package->version, 'dev') === false) {
                     self::$version = $package->version;
                 }
